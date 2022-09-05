@@ -26,7 +26,7 @@
   - [ ] Displaying (image, title, date created, date updated, text, number of views, number of  comments, author name, category).
 - [ ] On scrolling more posts must be added (Infinite scrolling).
 - [ ] User can pull to refresh the last 21 posts.
-- [ ] User can comment a post on detail page.
+- [ ] User can comment a post on detail page (Realtime).
 - [ ] User can save post to see later.
   - [ ] User can delete saved post.
   - [ ] All saved post must be listed within an another page. 
@@ -53,7 +53,7 @@
 **Extended / Optional Stories**
 - [ ] Forgot password.
 - [ ] Email verification.
-- [ ] Push notifications.
+- [ ] Push notifications (When the app isn't running).
   - [ ] When admin add news post.
   - [ ] When receiving request blood.
   - [ ] When receiving alert.
@@ -61,7 +61,7 @@
 - [ ] Settings (Allowed notifications).
 - [ ] System theming.
 - [ ] Radio online
-- [ ] User can alert other users about events.
+- [ ] User can alert other users about events (including location of the device) .
 - [ ] Include an ecommerce.
 
 ***Only for admin, superuser, staff.****
