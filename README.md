@@ -6,12 +6,12 @@
 
 ## Overview
 ### Description
-**DDJJ News** is a local publishing news application, allowing to stay informed about the situations in the country...
+**DDJJ News** is a local publishing news application, allowing USERS to stay informed about the situations in the country...
 
 ### App Evaluation
 - **Category:** News / Education
 - **Mobile:** This app would be primarily developed for mobile, also including the administration parts for adding news post.
-- **Story:** While staying informed about news, users have possibility for reading articles, got alerted about an event, request blood, etc.
+- **Story:** While staying informed, users have possibility for reading articles, got alerted about an event, request blood, etc.
 - **Market:** Any individual could choose to use this app.
 - **Habit:** This app could be used as often or unoften as the user wanted.
 - **Scope:** First we would start with creating the administration parts(Super-user, staff) and allowing standard users to receive news posts even no logged in in the app.
