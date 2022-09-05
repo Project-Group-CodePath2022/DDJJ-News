@@ -112,7 +112,7 @@
 * Settings -> Toggle settings
 
 ## Wireframes
-<img src=" width=800><br>
+<img src="DDJJ News.png" width=800><br>
 
 ### [BONUS] Digital Wireframes & Mockups
 <img src="" height=200>
