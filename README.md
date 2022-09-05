@@ -62,6 +62,7 @@
 - [ ] System theming.
 - [ ] Radio online
 - [ ] User can alert other users about events.
+- [ ] Include an ecommerce.
 
 ***Only for admin, superuser, staff.****
 - [ ] Offline editing for news and blog posts.
@@ -84,15 +85,25 @@
 
 ### 3. Navigation
 
-**Tab Navigation** (Tab to Screen)
+**Navigation Bottom**
 
-* Music selection
-* Profile
+* News
+* Favorite
 * Settings
 
-Optional:
-* Music/Encounter Queue
-* Discover (Top Choices)
+**Navigation Drawer**
+
+* Home
+* Dashboard (when admin loggedin)
+* Request donation blood
+* Alert
+* Blog
+
+
+***optional***
+
+* Radio online
+* Ecommerce
 
 **Flow Navigation** (Screen to Screen)
 * Forced Log-in -> Account creation if no log in is available
@@ -101,10 +112,10 @@ Optional:
 * Settings -> Toggle settings
 
 ## Wireframes
-<img src="https://i.imgur.com/9CrjH1K.jpg" width=800><br>
+<img src=" width=800><br>
 
 ### [BONUS] Digital Wireframes & Mockups
-<img src="https://i.imgur.com/lYHn37F.jpg" height=200>
+<img src="" height=200>
 
 ### [BONUS] Interactive Prototype
-<img src="https://i.imgur.com/AiKfE5g.gif" width=200>
+<img src="" width=200>
