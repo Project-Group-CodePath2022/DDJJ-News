@@ -108,7 +108,7 @@
 **Flow Navigation** (Screen to Screen)
 * Forced Log-in -> Account creation if no log in is available
 * Music Selection (Or Queue if Optional) -> Jumps to Chat
-* Profile -> Text field to be modified. 
+* Profile -> Text field to be modified 
 * Settings -> Toggle settings
 
 ## Wireframes
