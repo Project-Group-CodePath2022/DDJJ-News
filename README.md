@@ -118,7 +118,7 @@
 <img src="" width=800><br>
 
 ### [BONUS] Digital Wireframes & Mockups
-<img src="DDJJ News.png" height=400>
+<img src="wire.png" height=400>
 
 ### [BONUS] Interactive Prototype
 <img src="" width=200>
