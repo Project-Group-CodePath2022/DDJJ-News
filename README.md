@@ -115,7 +115,7 @@
 * Alert
 
 ## Wireframes
-<img src="" width=800><br>
+<img src="wireframe.jpg" width=800><br>
 
 ### [BONUS] Digital Wireframes & Mockups
 <img src="wire.png" height=400>
