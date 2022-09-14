@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.group.ddjjnews.R;
-import com.group.ddjjnews.adapters.ViewPagerSavedAdapter;
+import com.group.ddjjnews.adapters.ViewPagerAdapter;
 import com.group.ddjjnews.databinding.FragmentSavedBinding;
 
 public class SavedFragment extends Fragment {
@@ -45,7 +45,7 @@ public class SavedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ViewPagerSavedAdapter viewPagerAdapter = new ViewPagerSavedAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
         viewPagerAdapter.add(NestedSavedFragment.newInstance(NestedSavedFragment.TYPE_NEWS), "News");
         viewPagerAdapter.add(NestedSavedFragment.newInstance(NestedSavedFragment.TYPE_BLOG), "Blog");
