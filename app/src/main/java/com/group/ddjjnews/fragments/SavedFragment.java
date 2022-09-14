@@ -56,7 +56,7 @@ public class SavedFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.main_toolbar_menu, menu);
-        menu.findItem(R.id.main_share).setVisible(false); // Hide search icon
+        menu.findItem(R.id.main_search).setVisible(false); // Hide search icon
         super.onCreateOptionsMenu(menu, inflater);
     }
 }
