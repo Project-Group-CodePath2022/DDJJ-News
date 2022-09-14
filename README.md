@@ -166,3 +166,79 @@
    - Profile Screen
       - (Read/GET) Query logged in user object
       - (Update/PUT) Update user profile image
+      
+      
+## Schema 
+### Models
+#### User
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the news post (default field) |
+   | email         | String   | unique email for each user |
+   | password      | String   | minimun 8 chars |
+   | profile       | File     | image profile |
+   | active        | Boolean  | active or blocked |
+   | isStaff       | Boolean  | if true admin, can manage news, blog posts |
+   | isSuper       | Boolean  | if true superadmin, can manage all models even staff user |
+   | createdAt     | DateTime | date when user is created (default field) |
+   | updatedAt     | DateTime | date when user is last updated (default field) |
+### Networking
+#### List of network requests by screen
+     
+
+## Schema 
+### Models
+#### Comment
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the news post (default field) |
+   | text          | String   | the comment |
+   | active        | Boolean  | active or blocked |
+   | author        | Pointer to User | user making the comment |
+   | post          | Pointer to News | which post |
+   | createdAt     | DateTime | date when comment is created (default field) |
+   | updatedAt     | DateTime | date when comment is last updated (default field) |
+### Networking
+#### List of network requests by screen
+
+
+
+## Schema 
+### Models
+#### Request
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the news post (default field) |
+   | user         | Pointer to User   | user making the request |
+   | description      | String   | mini description 120 chars max |
+   | hospital       | String     | where to give |
+   | active        | Boolean  | active or blocked |
+   | nameFor       | String  | name of the person |
+   | createdAt     | DateTime | date when request is created (default field) |
+   | expiredAt     | DateTime | date when request must be destroyed |
+### Networking
+#### List of network requests by screen   
+   
+   
+   
+## Schema 
+### Models
+#### Alert
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the news post (default field) |
+   | description         | String   | description |
+   | image         | File     | an image |
+   | location      | Geo   | localization of the device |
+   | user       | Pointer to user     | image profile |
+   | active        | Boolean  | active or blocked |
+   | createdAt     | DateTime | date when alert is created (default field) |
+   | expiredAt     | DateTime | date when alert must be destroyed |
+
+### Networking
+#### List of network requests by screen
+
