@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/drawer_home" android:title="Home"/>
+
+    <item android:id="@+id/drawer_login" android:title="Login"/>
+
+    <item android:id="@+id/drawer_dashboard" android:title="Dashboard"/>
+
+    <item android:id="@+id/drawer_settings" android:title="Settings"/>
+
+    <item android:id="@+id/drawer_request" android:title="Donation blood"/>
+
+    <item android:id="@+id/drawer_alert" android:title="Alert"/>
+
+    <item android:id="@+id/drawer_about" android:title="About us"/>
+</menu>

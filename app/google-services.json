@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "423628107738",
+    "project_id": "codepath-65cd3",
+    "storage_bucket": "codepath-65cd3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423628107738:android:11e5cebf49a2ee01ecdae3",
+        "android_client_info": {
+          "package_name": "com.group.ddjjnews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423628107738-j27nnqgk8fht1mlpfbngr2dbb55urjds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkEic4GjzouiZO0w7TPrEjXWPR6gUIl70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423628107738-j27nnqgk8fht1mlpfbngr2dbb55urjds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
