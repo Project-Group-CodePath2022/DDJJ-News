@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">DDJJ News</string>
+    <string name="app_dash_name">Dashboard</string>
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+
+    <!-- Paste BOTH strings as required -->
+    <string name="back4app_app_id" tools:ignore="Typos">g5fzhBeMP4sFCISPv4Dl8wBbZN066oEy1XnpQbL3</string>
+    <string name="back4app_client_key">6yOW0KeEZcHrs5Pc6rtQs7XELT0LNVxCiuzjd5bn</string>
+    <string name="firebase_sender_id">423628107738</string>
+
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
