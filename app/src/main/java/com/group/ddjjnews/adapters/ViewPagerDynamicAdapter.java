@@ -1,34 +1,47 @@
 package com.group.ddjjnews.adapters;
 
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.SparseArray;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.group.ddjjnews.fragments.NestedNewsFragment;
 import com.group.ddjjnews.fragments.NestedSavedFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ViewPagerDynamicAdapter  extends FragmentStatePagerAdapter {
-    private int mNumOfTabs;
+    private final List<Fragment> fragments = new ArrayList();
 
-    public ViewPagerDynamicAdapter(FragmentManager fm, int NumOfTabs) {
+    public ViewPagerDynamicAdapter(FragmentManager fm) {
             super(fm);
-            this.mNumOfTabs = NumOfTabs;
-        }
+    }
 
-        // get the current item with position number
-        @Override
-        public Fragment getItem(int position) {
-//            Bundle b = new Bundle();
-//            b.putInt("position", position);
-            Fragment frag = NestedSavedFragment.newInstance("news " + position);
-//            frag.setArguments(b);
-            return frag;
-        }
+    @NonNull
+    @Override
+    public Fragment getItem(int position) {
+        return fragments.get(position);
+    }
 
-        // get total number of tabs
-        @Override
-        public int getCount() {
-            return mNumOfTabs;
-        }
+    public void add(Fragment fragment)
+    {
+        fragments.add(fragment);
+    }
+
+    @Override
+    public int getCount() {
+        return fragments.size();
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+
+    }
 }

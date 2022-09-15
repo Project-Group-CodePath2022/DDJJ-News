@@ -10,8 +10,12 @@ import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.group.ddjjnews.databinding.ActivityMainBinding;
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.mainFrameLayout, newsFragment).commit();
 
         binding.mainBottomNavigation.setOnItemSelectedListener(item -> {
+            Toast.makeText(this, "" + item.getTitle(), Toast.LENGTH_SHORT).show();
             switch (item.getItemId()) {
                 case R.id.bottom_news:
                     fragmentManager.beginTransaction().hide(currentFragment).show(newsFragment).commit();
@@ -82,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
 
         // By default display news
         binding.mainBottomNavigation.setSelectedItemId(R.id.bottom_news);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
