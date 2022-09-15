@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +19,8 @@ import com.group.ddjjnews.MainActivity;
 import com.group.ddjjnews.adapters.NewsAdapter;
 import com.group.ddjjnews.databinding.FragmentNestedNewsBinding;
 import com.group.ddjjnews.models.News;
+import com.parse.FunctionCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -37,6 +38,10 @@ public class NestedNewsFragment extends Fragment {
     GridLayoutManager layoutManager;
 
     private String mParam1;
+
+    public interface CallOk {
+        boolean done(boolean ok);
+    }
 
     public NestedNewsFragment() {}
 
@@ -81,23 +86,40 @@ public class NestedNewsFragment extends Fragment {
                 return 1;
             }
         });
-        ((RecyclerView)binding.rcNews).setLayoutManager(layoutManager);
-        ((RecyclerView)binding.rcNews).setAdapter(adapter);
+        binding.rcNews.setLayoutManager(layoutManager);
+        binding.rcNews.setAdapter(adapter);
 
-        adapter.setListener((NewsAdapter.NewsAdapterListener) item -> ((MainActivity)getContext()).gotoDetail("news", item));
-        getNewsPosts();
+        adapter.setListener(item -> ((MainActivity)getContext()).gotoDetail("news", item));
+        getNewsPosts(null, (objects, e) -> {
+            if (e != null) return;
+            newsPosts.clear();
+            newsPosts.addAll((Collection<? extends ParseObject>) objects);
+            adapter.notifyDataSetChanged();
+        });
     }
 
-    private void getNewsPosts() {
-        // TODO: get 21 latest posts
-        HashMap<String, String> params = new HashMap<>();
-        News.getNews(params, (objects, e) -> {
+
+    public boolean searchByTitle(String query ) {
+        final boolean[] res = {false};
+        getNewsPosts(query, (objects, e) -> {
             if (e == null) {
+                newsPosts.clear();
                 newsPosts.addAll((Collection<? extends ParseObject>) objects);
                 adapter.notifyDataSetChanged();
+                res[0] = true;
             } else {
-                return;
+                res[0] = false;
             }
         });
+        return res[0];
+    }
+
+    private void getNewsPosts(String query, FunctionCallback<Object> callback) {
+        HashMap<String, Object> params = new HashMap<>();
+        if (mParam1 != null)
+            params.put(ARG_PARAM1, mParam1);
+        if (query != null)
+            params.put("title", query);
+        News.getNews(params, callback);
     }
 }

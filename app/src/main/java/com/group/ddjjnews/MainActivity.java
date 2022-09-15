@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -19,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.group.ddjjnews.databinding.ActivityMainBinding;
+import com.group.ddjjnews.fragments.LoginFragment;
 import com.group.ddjjnews.fragments.NewsFragment;
 import com.group.ddjjnews.fragments.SavedFragment;
 import com.parse.ParseObject;
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         binding.mainNavigation.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.drawer_dashboard) {
                 gotoDashboard();
+            } else if (item.getItemId() == R.id.drawer_login ) {
+                showLoginDialog();
             }
             binding.mainDrawer.closeDrawer(GravityCompat.START);
             return true;
@@ -117,5 +121,13 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("type", type);
         intent.putExtra("item", item);
         startActivity(intent);
+    }
+
+    private void showLoginDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        LoginFragment loginFragment = LoginFragment.newInstance();
+        loginFragment.setCancelable(true);
+        loginFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+        loginFragment.show(fm, "authentication_fragment");
     }
 }

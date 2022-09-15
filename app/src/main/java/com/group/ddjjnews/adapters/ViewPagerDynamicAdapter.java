@@ -39,9 +39,10 @@ public class ViewPagerDynamicAdapter  extends FragmentStatePagerAdapter {
     public int getCount() {
         return fragments.size();
     }
+    public Fragment getCurrent(int position) {return fragments.get(position);}
 
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-
-    }
+//    @Override
+//    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+//
+//    }
 }

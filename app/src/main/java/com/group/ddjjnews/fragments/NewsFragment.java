@@ -13,12 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.group.ddjjnews.R;
 import com.group.ddjjnews.adapters.ViewPagerDynamicAdapter;
 import com.group.ddjjnews.databinding.FragmentNewsBinding;
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
+import com.parse.ParseObject;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class NewsFragment extends Fragment {
     FragmentNewsBinding binding;
@@ -51,7 +56,7 @@ public class NewsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.newsPager.setOnTouchListener((view1, motionEvent) -> true); // stop scrolling viewPager
         binding.newsPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.newsTab));
-        binding.newsPager.setOffscreenPageLimit(4);
+//        binding.newsPager.setOffscreenPageLimit(0);
         binding.newsTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -67,14 +72,27 @@ public class NewsFragment extends Fragment {
         });
 
         ViewPagerDynamicAdapter adapter = new ViewPagerDynamicAdapter(getChildFragmentManager());
-
-        for (int i = 0; i < 7; i++) {
-            binding.newsTab.addTab(binding.newsTab.newTab().setText("MyPage: " + i));
-            adapter.add(NestedNewsFragment.newInstance("" + i));
-        }
-
+        binding.newsTab.addTab(binding.newsTab.newTab().setText("All"));
+        adapter.add(NestedNewsFragment.newInstance(null));
         binding.newsPager.setAdapter(adapter);
-        binding.newsPager.setCurrentItem(0);
+
+        getCategories(12, (objects, e) -> {
+            if (e == null) {
+                for (int i = 0; i < objects.size(); i++) {
+                    ParseObject category = objects.get(i);
+                    binding.newsTab.addTab(binding.newsTab.newTab().setText(category.getString("name")));
+                    adapter.add(NestedNewsFragment.newInstance(category.getString("name")));
+                }
+                // TODO: save in pref
+            } else {
+                // TODO: check pref to see
+            }
+            adapter.notifyDataSetChanged();
+            binding.newsPager.setCurrentItem(0);
+        });
+
+
+
     }
 
     @Override
@@ -86,8 +104,10 @@ public class NewsFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
-                Toast.makeText(getContext(), "From news :" + query, Toast.LENGTH_SHORT).show();
-                return true;
+                // TODO: get query and search
+                NestedNewsFragment f = (NestedNewsFragment) ((ViewPagerDynamicAdapter)binding.newsPager.getAdapter()).getCurrent(binding.newsPager.getCurrentItem());
+                return f.searchByTitle(query);
+
             }
 
             @Override
@@ -96,4 +116,12 @@ public class NewsFragment extends Fragment {
             }
         });
     }
+
+    // Return categories News
+    private void getCategories(int limit, FunctionCallback<List<ParseObject>> callback) {
+        HashMap<String, Integer> params = new HashMap<String, Integer>();
+        params.put("limit", limit);
+        ParseCloud.callFunctionInBackground("list-category", params, callback);
+    }
+
 }

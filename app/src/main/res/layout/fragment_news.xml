@@ -9,15 +9,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/newsTab"
-            app:tabMode="auto"
-            app:tabGravity="fill"/>
+            app:tabMode="scrollable"
+            app:tabGravity="start"/>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/newsPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/newsTab"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </RelativeLayout>
 </layout>

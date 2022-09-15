@@ -21,13 +21,11 @@
                 android:id="@+id/mainAppBar">
 
                 <androidx.appcompat.widget.Toolbar
-                    android:background="@color/white"
-                    app:titleTextColor="@color/black"
                     android:id="@+id/mainToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight">
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.AppBarLayout>
@@ -41,7 +39,6 @@
 
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:background="@color/white"
                 app:itemTextColor="@color/black"
                 android:id="@+id/mainBottomNavigation"
                 android:layout_width="match_parent"
