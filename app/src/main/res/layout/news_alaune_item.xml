@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
-        android:background="#eee"
         android:layout_width="match_parent"
         android:layout_height="208dp">
+        <ImageView
+            android:id="@+id/imgImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
+            android:contentDescription="@string/desc_image"/>
+
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            style="@style/MyTitle"/>
 
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            style="@style/MySubTitle"
             android:layout_below="@id/tvTitle"/>
+
+        <TextView
+            android:id="@+id/tcCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/imgImage"
+            style="@style/MySubTitle" />
     </RelativeLayout>
 </layout>

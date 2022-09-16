@@ -1,21 +1,19 @@
-package com.group.ddjjnews;
+package com.group.ddjjnews.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class Utils {
-    public static String readPref(Context ctx, String key, String def) {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(ctx);
-        return pref.getString(key, def);
+public class Prefs {
+    public static SharedPreferences read(Context ctx) {
+        return PreferenceManager.getDefaultSharedPreferences(ctx);
     }
 
-    public static void savePref(Context ctx, String key, String value) {
+    public static SharedPreferences.Editor save(Context ctx) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(ctx);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(key, value);
-        editor.commit();
+        return pref.edit();
     }
+
     public static void clear(Context ctx) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(ctx);
         SharedPreferences.Editor editor = pref.edit();

@@ -2,7 +2,7 @@ package com.group.ddjjnews;
 
 import android.app.Application;
 
-import com.group.ddjjnews.models.MyParseUser;
+import com.group.ddjjnews.models.User;
 import com.group.ddjjnews.models.News;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
@@ -15,7 +15,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ParseObject.registerSubclass(MyParseUser.class);
+        ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(News.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)

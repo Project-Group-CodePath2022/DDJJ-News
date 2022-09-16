@@ -18,4 +18,6 @@
     <string name="login_fragment_btn_login">Log IN</string>
     <string name="login_fragment_btn_register">Join US</string>
     <string name="login_fragment_text_oauth"> - Or - </string>
+
+    <string name="desc_image">My image description</string>
 </resources>
