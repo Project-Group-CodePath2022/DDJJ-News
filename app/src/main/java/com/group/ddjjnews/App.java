@@ -2,6 +2,8 @@ package com.group.ddjjnews;
 
 import android.app.Application;
 
+import com.group.ddjjnews.models.Blood;
+import com.group.ddjjnews.models.Category;
 import com.group.ddjjnews.models.User;
 import com.group.ddjjnews.models.News;
 import com.parse.Parse;
@@ -17,6 +19,8 @@ public class App extends Application {
         super.onCreate();
         ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(News.class);
+        ParseObject.registerSubclass(Category.class);
+        ParseObject.registerSubclass(Blood.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(getString(R.string.back4app_app_id))
@@ -24,7 +28,6 @@ public class App extends Application {
                 .server(getString(R.string.back4app_server_url))
                 .build()
         );
-
         ArrayList<String> channels = new ArrayList<>();
         channels.add("req_blood_channel"); // subscribe user to req_blood_channel
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
