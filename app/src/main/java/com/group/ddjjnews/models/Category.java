@@ -23,6 +23,8 @@ public class Category extends ParseObject {
 
     public Category() {}
 
+    public String getKeyName() {return getString(KEY_NAME);}
+
     public static void create(HashMap<String, Object> params, Callback callback) {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_CREATE, params, (object, e) -> callback.done((ParseObject) object, e));
     }

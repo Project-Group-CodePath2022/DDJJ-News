@@ -14,7 +14,8 @@ public class User extends ParseUser {
 
     private static final String CUSTOM_ENDPOINT_CREATE_USER = "create-user";
     private static final String CUSTOM_ENDPOINT_LIST_USER = "list-user";
-
+    private static final String CUSTOM_ENDPOINT_LIST_ADMIN = "list-user";
+    private static final String KEY_ACTIVE = "active";
 
 
     public interface Callback {
@@ -34,6 +35,8 @@ public class User extends ParseUser {
     public String getRoleType() {
         return "standard";
     }
+    public boolean getKeyActive() { return getBoolean(KEY_ACTIVE); }
+
 
     public static void getAll(HashMap<String, Object> params, Callback callback) {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_LIST_USER, params, (objects, e) -> {
@@ -64,5 +67,8 @@ public class User extends ParseUser {
                 callback.done(null, e);
             }
         });
+    }
+    public static void getAllUser(HashMap<String, Object> params, Callback callback) {
+        ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_LIST_ADMIN, params, (objects, e) -> callback.done((Collection<? extends User>) objects, e));
     }
 }

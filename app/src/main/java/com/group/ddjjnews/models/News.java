@@ -3,8 +3,10 @@ package com.group.ddjjnews.models;
 import com.parse.FunctionCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseCloud;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 @ParseClassName("News")
@@ -27,17 +29,13 @@ public class News extends ParseObject {
 
     public News() {}
 
-    public static News from(ParseObject object) {
-        News n = new News();
-        n.object = object;
-        return n;
-    }
+    public String getKeyTitle() { return getString(KEY_TITLE); }
+    public boolean getKeyActive() { return getBoolean(KEY_ACTIVE); }
 
-    public String getKeyTitle() { return this.object.getString(KEY_TITLE); }
-    public String getKeyObjectId() {return this.object.getString(KEY_OBJECT_ID); }
-    public String getKeyDescription() { return this.object.getString(KEY_DESCRIPTION); }
-    public String getKeyContent() { return this.object.getString(KEY_CONTENT); }
-    public boolean isAlaune() { return this.object.getBoolean(KEY_ALAUNE); }
+    public String getKeyDescription() { return getString(KEY_DESCRIPTION); }
+    public String getKeyContent() { return getString(KEY_CONTENT); }
+    public boolean isAlaune() { return getBoolean(KEY_ALAUNE); }
+    public ParseFile getKeyImage(){ return getParseFile(KEY_IMAGE); }
 
     public static void getNews(HashMap params, FunctionCallback<Object> callback) {
         ParseCloud.callFunctionInBackground("list-news", params, callback);
@@ -48,4 +46,5 @@ public class News extends ParseObject {
         params.put("newsId", newsId);
         ParseCloud.callFunctionInBackground("get-news", params, callback);
     }
+
 }
