@@ -86,7 +86,7 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
 
     private void getAllNews() {
         sRefresh.setRefreshing(true);
-        News.getNews(new HashMap(), (objects, e) -> {
+        News.getNewsAdmin(new HashMap(), (objects, e) -> {
             if (e == null) {
                 news.clear();
                 news.addAll((Collection<? extends ParseObject>) objects);

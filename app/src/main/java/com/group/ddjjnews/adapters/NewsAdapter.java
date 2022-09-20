@@ -10,8 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.group.ddjjnews.R;
 
+import com.group.ddjjnews.Utils.TimeFormatter;
 import com.group.ddjjnews.databinding.NewsAlauneItemBinding;
 import com.group.ddjjnews.databinding.NewsItemBinding;
 import com.group.ddjjnews.models.News;
@@ -43,8 +47,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (News.from(news.get(position)).isAlaune()) {
-            return ALAUNE_TYPE;
+        if (((News)news.get(position)).isAlaune()) {
+            if (position == 0 || (position % 2) != 0)
+                return ALAUNE_TYPE;
         }
         return DEFAULT_TYPE;
     }
@@ -61,9 +66,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof NewsHolder)
-            ((NewsHolder)holder).bind(News.from(news.get(position)));
+            ((NewsHolder)holder).bind((News) news.get(position));
         else
-            ((NewsAlauneHolder)holder).bind(News.from(news.get(position)));
+            ((NewsAlauneHolder)holder).bind((News) news.get(position));
     }
 
     @Override
@@ -79,8 +84,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         public void bind(News item) {
+            if (item.getKeyImage() != null)
+                Glide.with(context)
+                        .load(item.getKeyImage().getUrl())
+                        .transform(new RoundedCorners(20))
+                        .into(itemBinding.imgImage);
             itemBinding.title.setText(item.getKeyTitle());
-            itemBinding.createdAt.setText(item.getKeyDescription());
+            itemBinding.createdAt.setText("Date: " + TimeFormatter.getTimeDifference(item.getCreatedAt().toString()));
             // Set listener
             itemBinding.title.setOnClickListener(view -> listener.itemClicked(item));
 
@@ -96,8 +106,14 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @SuppressLint("SetTextI18n")
         public void bind(News item) {
-            itemBinding.tvTitle.setText("Alaune :: " + item.getKeyTitle());
-            itemBinding.tvDescription.setText(item.getKeyDescription());
+            if (item.getKeyImage() != null)
+                Glide.with(context)
+                        .load(item.getKeyImage().getUrl())
+                        .transform(new RoundedCorners(22))
+                        .into(itemBinding.imgImage);
+            itemBinding.tvTitle.setText(item.getKeyTitle());
+            itemBinding.tvCreatedAt.setText("Date: " + TimeFormatter.getTimeDifference(item.getCreatedAt().toString()));
+            // itemBinding.tvCategory.setText(item.getKeyCategory().getString("name"));
             // Set listener
             itemBinding.tvTitle.setOnClickListener(view -> listener.itemClicked(item));
         }

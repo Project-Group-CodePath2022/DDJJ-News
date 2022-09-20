@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.LoginFragment" >
+    xmlns:tools="http://schemas.android.com/tools" >
     <ScrollView
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
-            android:padding="12dp"
+            android:layout_marginVertical="12dp"
+            android:padding="7dp"
+            android:layout_marginTop="32dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tv1"
                 android:layout_marginBottom="12dp"
-                android:text="Make a request"
-                android:textSize="20sp"
+                android:text="Add a user"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
@@ -21,47 +23,40 @@
 
             <EditText
                 android:layout_below="@id/tv1"
-                android:id="@+id/edGroup"
+                android:id="@+id/edEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:layout_marginTop="12dp"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/dark_black"
-                android:hint="Group blood"
-                android:autofillHints="" />
-
-            <EditText
-                android:id="@+id/edForName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/edGroup"
                 android:inputType="text"
                 android:layout_marginTop="7dp"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/dark_black"
-                android:hint="Name of the person"
-                android:autofillHints="" />
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"
+                android:hint="Email"/>
 
             <EditText
-                android:id="@+id/edDesc"
+                android:id="@+id/edPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/edForName"
-                android:inputType="text"
+                android:layout_below="@id/edEmail"
+                android:inputType="textPassword"
                 android:layout_marginTop="7dp"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/dark_black"
-                android:hint="All little description"
-                android:autofillHints="" />
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"
+                android:hint="Password"/>
+
+            <Spinner
+                android:id="@+id/role_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edPassword" />
 
             <Button
                 android:id="@+id/btnSendRequestBlood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:layout_below="@id/edDesc"
-                android:text="Send"/>
+
+                android:layout_below="@id/role_spinner"
+                android:text="Create"/>
         </RelativeLayout>
     </ScrollView>
 </layout>

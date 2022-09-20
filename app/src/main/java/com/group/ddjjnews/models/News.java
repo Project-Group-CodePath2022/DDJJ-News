@@ -32,13 +32,17 @@ public class News extends ParseObject {
     public String getKeyTitle() { return getString(KEY_TITLE); }
     public boolean getKeyActive() { return getBoolean(KEY_ACTIVE); }
 
-    public String getKeyDescription() { return getString(KEY_DESCRIPTION); }
+    public ParseObject getKeyCategory() { return getParseObject(KEY_CATEGORY); }
     public String getKeyContent() { return getString(KEY_CONTENT); }
     public boolean isAlaune() { return getBoolean(KEY_ALAUNE); }
     public ParseFile getKeyImage(){ return getParseFile(KEY_IMAGE); }
 
     public static void getNews(HashMap params, FunctionCallback<Object> callback) {
         ParseCloud.callFunctionInBackground("list-news", params, callback);
+    }
+
+    public static void getNewsAdmin(HashMap params, FunctionCallback<Object> callback) {
+        ParseCloud.callFunctionInBackground("list-news-admin", params, callback);
     }
 
     public static void getDetailNews(String newsId, FunctionCallback<Object> callback) {

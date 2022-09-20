@@ -8,7 +8,6 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/detailAppBar">
-
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/detailToolbar"
                 android:background="@color/white"

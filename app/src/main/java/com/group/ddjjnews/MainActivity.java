@@ -11,35 +11,33 @@ import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
+
 
 import com.group.ddjjnews.databinding.ActivityMainBinding;
 import com.group.ddjjnews.fragments.LoginFragment;
 import com.group.ddjjnews.fragments.NewsFragment;
 import com.group.ddjjnews.fragments.SavedFragment;
+import com.group.ddjjnews.models.User;
 import com.parse.ParseObject;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    ActivityMainBinding binding;
+    public ActivityMainBinding binding;
     ActionBarDrawerToggle drawerToggle;
-
     Fragment currentFragment;
     Fragment newsFragment;
     Fragment savedFragment;
-
+    User user;
 
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        user = (User) User.getCurrentUser();
         binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
 
         setSupportActionBar(binding.mainToolbar); // Set toolbar instead actionbar
@@ -50,15 +48,24 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.syncState();
 
         binding.mainNavigation.setNavigationItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.drawer_dashboard) {
-                gotoDashboard();
-            } else if (item.getItemId() == R.id.drawer_login ) {
-                showLoginDialog();
+            switch (item.getItemId()) {
+                case R.id.drawer_dashboard:
+                    gotoDashboard();
+                    break;
+                case R.id.drawer_login:
+                    showLoginDialog();
+                    break;
+                case R.id.drawer_request:
+                    gotoRequestBlood();
+                    break;
+                default:
+                    break;
             }
             binding.mainDrawer.closeDrawer(GravityCompat.START);
             return true;
         });
 
+        hideShowDrawerItem();
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         // Feed news
@@ -67,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
         savedFragment = SavedFragment.newInstance();
 
         currentFragment = newsFragment;
+
         fragmentManager.beginTransaction().add(R.id.mainFrameLayout, savedFragment).hide(savedFragment).commit();
         fragmentManager.beginTransaction().add(R.id.mainFrameLayout, newsFragment).commit();
 
         binding.mainBottomNavigation.setOnItemSelectedListener(item -> {
-            Toast.makeText(this, "" + item.getTitle(), Toast.LENGTH_SHORT).show();
             switch (item.getItemId()) {
                 case R.id.bottom_news:
                     fragmentManager.beginTransaction().hide(currentFragment).show(newsFragment).commit();
@@ -104,16 +111,42 @@ public class MainActivity extends AppCompatActivity {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         } else if (itemId == R.id.main_logout) {
-            Toast.makeText(this, "From Main", Toast.LENGTH_SHORT).show();
+            User.logOut();
+            restartActivity();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    public void restartActivity(){
+        finish();
+        startActivity(getIntent());
+    }
+
+    private void hideShowDrawerItem() {
+        Menu m = binding.mainNavigation.getMenu();
+
+        if (user != null) {
+            m.findItem(R.id.drawer_login).setVisible(false);
+            if (user.isAdmin()) {
+                m.findItem(R.id.drawer_dashboard).setVisible(true);
+            } else {
+                m.findItem(R.id.drawer_dashboard).setVisible(false);
+            }
+        } else {
+            m.findItem(R.id.drawer_dashboard).setVisible(false);
+        }
+    }
+
     public void gotoDashboard() {
         Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
         startActivity(intent);
-        finish();
+
+    }
+
+    public void gotoRequestBlood() {
+        Intent intent = new Intent(MainActivity.this, BloodActivity.class);
+        startActivity(intent);
     }
 
     public void gotoDetail(String type, ParseObject item) {

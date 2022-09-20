@@ -5,22 +5,14 @@
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 
-    <style name="BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+    <style name="TextInactive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/grey</item>
     </style>
 
-    <style name="MyTitle">
-        <item name="android:textSize">15sp</item>
-    </style>
+    <style name="MyBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
+        <item name="android:background">@color/white</item>
+        <item name="itemTextColor">?attr/colorPrimary</item>
+        <item name="itemTextAppearanceInactive">@style/TextInactive</item>
 
-    <style name="MySubTitle">
-        <item name="android:textSize">13sp</item>
-    </style>
-
-    <style name="MyLargeImage">
-        <item name="android:textSize">108dp</item>
-    </style>
-
-    <style name="MyImage">
-        <item name="android:textSize">108dp</item>
     </style>
 </resources>

@@ -1,18 +1,10 @@
 package com.group.ddjjnews.adapters;
-
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.SparseArray;
-import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.group.ddjjnews.fragments.NestedNewsFragment;
-import com.group.ddjjnews.fragments.NestedSavedFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +27,10 @@ public class ViewPagerDynamicAdapter  extends FragmentStatePagerAdapter {
         fragments.add(fragment);
     }
 
+    public void clear() {
+        fragments.clear();
+    }
+
     @Override
     public int getCount() {
         return fragments.size();
@@ -42,7 +38,5 @@ public class ViewPagerDynamicAdapter  extends FragmentStatePagerAdapter {
     public Fragment getCurrent(int position) {return fragments.get(position);}
 
 //    @Override
-//    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-//
-//    }
+//    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {}
 }

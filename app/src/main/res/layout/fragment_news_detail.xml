@@ -15,8 +15,9 @@
                 <ImageView
                     android:id="@+id/detailNewsImage"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:scaleType="centerCrop"/>
+                    android:layout_height="147dp"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/desc_image" />
                 <LinearLayout
                     android:id="@+id/l"
                     android:padding="7dp"
@@ -28,30 +29,31 @@
                         android:layout_marginTop="7dp"
                         android:id="@+id/DetailNewsTitle"
                         android:textColor="@color/black"
-
+                        android:textSize="16sp"
+                        android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <TextView
                         android:textColor="@color/black"
                         android:layout_marginTop="7dp"
+                        android:textSize="14sp"
                         android:id="@+id/DetailNewsCreatedAt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <TextView
-                        android:layout_below="@id/image"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="12dp"
                         android:id="@+id/DetailsNewsNumComments"
+                        android:textSize="14sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:layout_below="@id/image"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="16dp"
+                        android:textSize="15sp"
                         android:id="@+id/DetailNewsContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
-
             </RelativeLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

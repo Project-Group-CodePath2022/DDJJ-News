@@ -7,9 +7,8 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+
 @ParseClassName("Blood")
 public class Blood extends ParseObject {
     public static final String CUSTOM_ENDPOINT_CREATE = "create-blood";
@@ -41,10 +40,6 @@ public class Blood extends ParseObject {
         return getString(KEY_DESCRIPTION);
     }
 
-//    public Date getKeyCreatedAT() {
-//        return getDate(KEY_CREATED_AT);
-//    }
-
 
     public static void create(HashMap<String, Object> params, Callback callback) {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_CREATE, params, (object, e) -> callback.done((Blood) object, e));
@@ -53,12 +48,7 @@ public class Blood extends ParseObject {
     public static void getAll(HashMap<String, Object> params, Callback callback) {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_LIST,
                 params,
-                new FunctionCallback<Object>() {
-                    @Override
-                    public void done(Object object, ParseException e) {
-                        callback.done((Collection<? extends Blood>) object, e);
-                    }
-                });
+                (object, e) -> callback.done((Collection<? extends Blood>) object, e));
     }
 
     public static void getOne(String bloodId, Callback callback) {

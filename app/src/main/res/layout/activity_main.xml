@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" >
-
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/mainDrawer"
         android:layout_width="match_parent"
@@ -13,41 +12,29 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:fitsSystemWindows="true"
-                android:layout_height="wrap_content"
+            <androidx.appcompat.widget.Toolbar
+                android:background="@color/white"
+                android:id="@+id/mainToolbar"
                 android:layout_width="match_parent"
-                android:id="@+id/mainAppBar">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:background="@color/white"
-                    android:id="@+id/mainToolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="?attr/actionBarSize"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight">
-                </androidx.appcompat.widget.Toolbar>
-
-            </com.google.android.material.appbar.AppBarLayout>
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight">
+            </androidx.appcompat.widget.Toolbar>
 
             <FrameLayout
                 android:id="@+id/mainFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/mainAppBar"
+                android:layout_below="@id/mainToolbar"
                 android:layout_above="@id/mainBottomNavigation"/>
 
-
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                app:itemTextColor="@color/black"
-                android:theme="@style/Widget.Material3.BottomNavigationView.ActiveIndicator"
-                android:background="@color/white"
                 android:id="@+id/mainBottomNavigation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                app:menu="@menu/main_bottom_menu"/>
+                style="@style/MyBottomNavigation"
+                app:menu="@menu/main_bottom_menu" />
         </RelativeLayout>
 
         <com.google.android.material.navigation.NavigationView

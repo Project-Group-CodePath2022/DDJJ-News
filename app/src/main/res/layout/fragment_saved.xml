@@ -4,18 +4,26 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.google.android.material.tabs.TabLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.appbar.AppBarLayout
+            android:elevation="0dp"
+            android:fitsSystemWindows="true"
             android:layout_height="wrap_content"
-            android:id="@+id/tab"
-            app:tabMode="fixed"
-            app:tabGravity="fill"/>
+            android:layout_width="match_parent"
+            android:id="@+id/mainSaveAppBar">
+
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tab"
+                app:tabMode="fixed"
+                app:tabGravity="fill"/>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tab"
+            android:layout_below="@id/mainSaveAppBar"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </RelativeLayout>
 </layout>

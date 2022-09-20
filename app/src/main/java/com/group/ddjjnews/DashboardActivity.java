@@ -3,8 +3,6 @@ package com.group.ddjjnews;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,9 +13,6 @@ import com.group.ddjjnews.databinding.ActivityDashboardBinding;
 import com.group.ddjjnews.fragments.admin.NewsListAdminFragment;
 import com.group.ddjjnews.fragments.admin.UserListAdminFragment;
 
-import java.util.ArrayList;
-
-import java.util.List;
 import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -45,7 +40,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         String[] myModels = {"News", "Users", "Blogs", "Requests", "Alerts", "Notifications"};
-        List<Fragment> myRelatedFragments = new ArrayList<>();
+        // List<Fragment> myRelatedFragments = new ArrayList<>();
         adapter.add(NewsListAdminFragment.newInstance());
         adapter.add(UserListAdminFragment.newInstance());
 
@@ -54,7 +49,6 @@ public class DashboardActivity extends AppCompatActivity {
              binding.dashTab.addTab(binding.dashTab.newTab().setText(myModels[i]));
             // adapter.add(NestedNewsFragment.newInstance(null));
         }
-
         binding.dashPager.setAdapter(adapter); // Set adapter
     }
 

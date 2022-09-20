@@ -53,7 +53,13 @@ public class User extends ParseUser {
         HashMap<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);
-        ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_SIGN_UP, params, (object, e) -> callback.done((User) object, e));
+        ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_SIGN_UP, params, (user, e) -> {
+            if (e == null) {
+                becomeInBackground(((ParseUser) user).getSessionToken(), (user1, e1) -> callback.done((User) user1, e1));
+            } else {
+                callback.done(null, e);
+            }
+        });
     }
 
     public static void customLogInInBackground(String email, String password, AuthCallback callback) {

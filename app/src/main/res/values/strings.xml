@@ -23,4 +23,5 @@
     <string name="desc_image">My image description</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hot_fire">Hot fire</string>
 </resources>
