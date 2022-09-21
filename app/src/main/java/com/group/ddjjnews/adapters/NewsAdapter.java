@@ -47,9 +47,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (((News)news.get(position)).isAlaune()) {
-            if (position == 0 || (position % 2) != 0)
-                return ALAUNE_TYPE;
+        if (((News)news.get(position)).isAlaune() && (position % 5) == 0) {
+            return ALAUNE_TYPE;
         }
         return DEFAULT_TYPE;
     }

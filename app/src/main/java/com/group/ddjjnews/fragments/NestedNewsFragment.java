@@ -81,7 +81,6 @@ public class NestedNewsFragment extends Fragment {
         EndlessRecyclerViewScrollListener endless = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Toast.makeText(getContext(), ""+page, Toast.LENGTH_SHORT).show();
                 HashMap<String, Object> params = new HashMap<>();
                 if (mParam1 != null)
                     params.put(ARG_PARAM1, mParam1);
@@ -133,7 +132,8 @@ public class NestedNewsFragment extends Fragment {
     }
 
     public void searchByTitle(String query, CallOk callOk ) {
-        binding.swipeContainer.setRefreshing(true);
+        if (binding != null)
+            binding.swipeContainer.setRefreshing(true);
         getNewsPosts(query, (objects, e) -> {
             if (e == null) {
                 newsPosts.clear();
@@ -143,7 +143,8 @@ public class NestedNewsFragment extends Fragment {
             } else {
                callOk.done(false);
             }
-            binding.swipeContainer.setRefreshing(false);
+            if (binding != null)
+                binding.swipeContainer.setRefreshing(false);
         });
     }
 

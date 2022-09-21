@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.group.ddjjnews.R;
@@ -26,6 +27,8 @@ import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseObject;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -58,14 +61,12 @@ public class NewsFragment extends Fragment {
         return binding.getRoot();
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // binding.newsPager.setOnTouchListener((view1, motionEvent) -> true); // stop scrolling viewPager
         binding.newsPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.newsTab));
-         binding.newsPager.setOffscreenPageLimit(4);
+        binding.newsPager.setOffscreenPageLimit(4);
 
         binding.newsTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -80,10 +81,9 @@ public class NewsFragment extends Fragment {
         });
 
         getCategoriesForNewsInPrefs();
-        setTabsCategories();
+//        setTabsCategories();
 
     }
-
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.main_toolbar_menu, menu);
@@ -98,11 +98,12 @@ public class NewsFragment extends Fragment {
                 searchView.clearFocus();
                 // Search in the current category news posts
                 NestedNewsFragment f = (NestedNewsFragment) ((ViewPagerDynamicAdapter)binding.newsPager.getAdapter()).getCurrent(binding.newsPager.getCurrentItem());
-                f.searchByTitle(query, ok -> {
-                    if (ok) {
-                        searchView.setQuery("", false);
-                    }
-                });
+                if (f != null)
+                    f.searchByTitle(query, ok -> {
+                        if (ok) {
+                            searchView.setQuery("", false);
+                        }
+                    });
                 return true;
             }
 
@@ -118,7 +119,11 @@ public class NewsFragment extends Fragment {
         binding.newsTab.addTab(binding.newsTab.newTab().setText("All"));
         adapter.add(NestedNewsFragment.newInstance(null));
         // Retrieve last Categories
-        Set<String> sc = Prefs.read(getContext()).getStringSet("stc", new HashSet<>());
+        // Set<String> sc = Prefs.read(getContext()).getStringSet("stc", new HashSet<>());
+        Set<String> sc = new HashSet<>();
+        sc.add("culture");
+        sc.add("sport");
+        sc.add("inter");
         for (String category: sc) {
             binding.newsTab.addTab(binding.newsTab.newTab().setText(category));
             adapter.add(NestedNewsFragment.newInstance(category));
@@ -126,30 +131,30 @@ public class NewsFragment extends Fragment {
         adapter.notifyDataSetChanged();
         binding.newsPager.setAdapter(adapter);
     }
-
-    // Return categories News
-    private void setTabsCategories() {
-        HashMap<String, Integer> params = new HashMap<>();
-        params.put("limit", 12);
-        ParseCloud.callFunctionInBackground("list-category", params, (FunctionCallback<List<ParseObject>>) (objects, e) -> {
-            if (e == null) {
-                adapter.clear();
-                binding.newsTab.removeAllTabs();
-                // Default Tab (All)
-                binding.newsTab.addTab(binding.newsTab.newTab().setText("All"));
-                adapter.add(NestedNewsFragment.newInstance(null));
-                HashSet<String> setCategory = new HashSet<>();
-                for (int i = 0; i < objects.size(); i++) {
-                    Category category = (Category) objects.get(i);
-                    binding.newsTab.addTab(binding.newsTab.newTab().setText(category.getString("name")), i+1);
-                    adapter.add(NestedNewsFragment.newInstance(category.getString("name")));
-                    setCategory.add(category.getString("name"));
-                }
-                // Save in pref
-                Prefs.save(getContext()).putStringSet("stc", setCategory).commit();
-            }
-            adapter.notifyDataSetChanged();
-            binding.newsPager.setCurrentItem(0);
-        });
-    }
+//
+//    // Return categories News
+//    private void setTabsCategories() {
+//        HashMap<String, Integer> params = new HashMap<>();
+//        params.put("limit", 12);
+//        ParseCloud.callFunctionInBackground("list-category", params, (FunctionCallback<List<ParseObject>>) (objects, e) -> {
+//            if (e == null) {
+//                adapter.clear();
+//                binding.newsTab.removeAllTabs();
+//                // Default Tab (All)
+//                binding.newsTab.addTab(binding.newsTab.newTab().setText("All"));
+//                adapter.add(NestedNewsFragment.newInstance(null));
+//                HashSet<String> setCategory = new HashSet<>();
+//                for (int i = 0; i < objects.size(); i++) {
+//                    Category category = (Category) objects.get(i);
+//                    binding.newsTab.addTab(binding.newsTab.newTab().setText(category.getString("name")));
+//                    adapter.add(NestedNewsFragment.newInstance(category.getString("name")));
+//                    setCategory.add(category.getString("name"));
+//                }
+//                // Save in pref
+//                Prefs.save(getContext()).putStringSet("stc", setCategory).commit();
+//            }
+//            adapter.notifyDataSetChanged();
+//            binding.newsPager.setCurrentItem(0);
+//        });
+//    }
 }

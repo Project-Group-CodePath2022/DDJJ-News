@@ -13,6 +13,5 @@
         <item name="android:background">@color/white</item>
         <item name="itemTextColor">?attr/colorPrimary</item>
         <item name="itemTextAppearanceInactive">@style/TextInactive</item>
-
     </style>
 </resources>
