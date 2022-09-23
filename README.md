@@ -23,9 +23,9 @@
 
 * Launch the app, shows the latest 21 news post including image, category, title, relative date format. 
 * Clicking on a post should take to a detail page.
- * Displaying (image, title, date created, date updated, text, number of views, number of  comments, author name, category).
+ * [X] Displaying (image, title, date created, date updated, text, number of views, number of  comments, author name, category).
 * On scrolling more posts must be added (Infinite scrolling).
-* User can pull to refresh the last 21 posts.
+* [X] User can pull to refresh the last 21 posts.
 * User can comment a post on detail page (Realtime).
 * User can save post to see later.
   * User can delete saved post.
@@ -42,7 +42,7 @@
 ***Only for admin, superuser, staff.****
 
 * Management news and blog posts.
-  * Create, read (Markdown for content).
+  * [X] Create, read (Markdown for content).
   * Delete and update.
 * Only superuser can add staff users.
   * Only superuser can crud whatever news, blog posts.
@@ -124,8 +124,15 @@
 <img src="" width=200>
 
 ### VIDEO PROGRESS
-SPRINT1
-<img src="video_progress1.gif" width=400><br>
+
+SPRINT1_USERS
+<img src="video_user_progress1.gif" width=400><br>
+
+SPRINT1_ADMIN
+<img src="video_admin_progress1.gif" width=400><br>
+
+
+
 
 
 
