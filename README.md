@@ -29,14 +29,14 @@
 * User can comment a post on detail page (Realtime).
 * User can save post to see later.
   * User can delete saved post.
-  * All saved post must be listed within an another page. 
-[X] User can log in, log out, sign up to have more functionalities like read blog, request for donation blood.
+  * All saved post must be listed within an another page.
+  * [X] User can log in, log out, sign up to have more functionalities like read blog, request for donation blood.
 * User can filter.
   * By categories.
   * By date.
 * User can search for posts by title.
 * User can read blog posts.
-[X] User can request donation blood.
+* [X] User can request donation blood.
 * When user launch without connection internet saved posts should display in the first page also (Feed).
 
 ***Only for admin, superuser, staff.****
