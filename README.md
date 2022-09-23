@@ -123,6 +123,9 @@
 ### [BONUS] Interactive Prototype
 <img src="" width=200>
 
+### VIDEO PROGRESS
+
+
 
 ## Schema 
 ### Models
