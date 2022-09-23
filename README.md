@@ -124,6 +124,8 @@
 <img src="" width=200>
 
 ### VIDEO PROGRESS
+SPRINT1
+<img src="video_progress1.gif" width=400><br>
 
 
 
