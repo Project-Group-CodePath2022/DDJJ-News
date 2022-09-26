@@ -4,6 +4,14 @@
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="activity_blood_name">Donation blood</string>
 
+    // for facebook login
+
+    <string name="facebook_app_id">3986028374955590</string>
+    <string name="fb_login_protocol_scheme">fb3986028374955590</string>
+    <string name="facebook_client_token">eaa965dc0fe6f610c32e986748db16fc</string>
+
+
+
     <!-- Paste BOTH strings as required -->
     <string name="back4app_app_id" tools:ignore="Typos">g5fzhBeMP4sFCISPv4Dl8wBbZN066oEy1XnpQbL3</string>
     <string name="back4app_client_key">6yOW0KeEZcHrs5Pc6rtQs7XELT0LNVxCiuzjd5bn</string>

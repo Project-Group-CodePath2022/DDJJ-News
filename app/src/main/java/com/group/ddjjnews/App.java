@@ -4,12 +4,12 @@ import android.app.Application;
 
 import com.group.ddjjnews.models.Blood;
 import com.group.ddjjnews.models.Category;
-import com.group.ddjjnews.models.User;
 import com.group.ddjjnews.models.News;
+import com.group.ddjjnews.models.User;
 import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
-
 
 import java.util.ArrayList;
 
@@ -28,6 +28,8 @@ public class App extends Application {
                 .server(getString(R.string.back4app_server_url))
                 .build()
         );
+        ParseFacebookUtils.initialize(this);
+
         ArrayList<String> channels = new ArrayList<>();
         channels.add("req_blood_channel"); // subscribe user to req_blood_channel
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
