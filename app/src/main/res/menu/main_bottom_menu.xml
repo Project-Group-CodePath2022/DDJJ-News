@@ -4,22 +4,21 @@
     <item
         android:id="@+id/bottom_news"
             android:title="News"
+        android:icon="@drawable/ic_baseline_home_24"
                 app:showAsAction="ifRoom"
                     android:enabled="true" />
 
     <item
         android:id="@+id/bottom_category"
             android:title="Category"
+        android:icon="@drawable/ic_baseline_category_24"
                 app:showAsAction="ifRoom"
                     android:enabled="true" />
-    <item
-        android:id="@+id/bottom_blog"
-            android:title="Blog"
-                app:showAsAction="ifRoom"
-                    android:enabled="true"/>
+
     <item
         android:id="@+id/bottom_saved"
         android:title="Saved"
+        android:icon="@drawable/ic_baseline_bookmark_border_24"
         app:showAsAction="ifRoom"
         android:enabled="true"/>
 

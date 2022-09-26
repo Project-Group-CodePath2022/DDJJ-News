@@ -7,7 +7,7 @@
         <ImageView
             android:id="@+id/imgImage"
             android:layout_width="match_parent"
-            android:layout_height="99dp"
+            android:layout_height="96dp"
             android:scaleType="centerCrop"
             android:contentDescription="@string/desc_image" />
 
@@ -28,6 +28,5 @@
             android:layout_marginTop="7dp"
             android:textSize="14sp"
             android:layout_below="@id/title" />
-
     </RelativeLayout>
 </layout>

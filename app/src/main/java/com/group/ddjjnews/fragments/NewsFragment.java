@@ -90,28 +90,7 @@ public class NewsFragment extends Fragment {
         if (User.getCurrentUser() == null) { // no logged in user do not display logout item menu
             menu.findItem(R.id.main_logout).setVisible(false);
         }
-        MenuItem searchItem = menu.findItem(R.id.main_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchView.clearFocus();
-                // Search in the current category news posts
-                NestedNewsFragment f = (NestedNewsFragment) ((ViewPagerDynamicAdapter)binding.newsPager.getAdapter()).getCurrent(binding.newsPager.getCurrentItem());
-                if (f != null)
-                    f.searchByTitle(query, ok -> {
-                        if (ok) {
-                            searchView.setQuery("", false);
-                        }
-                    });
-                return true;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
     }
 
     private void getCategoriesForNewsInPrefs() {

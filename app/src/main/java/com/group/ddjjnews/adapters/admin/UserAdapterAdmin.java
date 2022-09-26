@@ -6,13 +6,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.group.ddjjnews.R;
-import com.group.ddjjnews.databinding.NewsItemAdminBinding;
 import com.group.ddjjnews.databinding.UserItemAdminBinding;
-import com.group.ddjjnews.models.News;
 import com.group.ddjjnews.models.User;
 import com.parse.ParseObject;
 
@@ -21,6 +16,15 @@ import java.util.List;
 public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.UserHolder> {
     Context context;
     List<ParseObject> users;
+    private Listener listener;
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public interface Listener {
+        void onOptionsClicked(User item, int pos);
+    }
 
     public UserAdapterAdmin(Context ctx, List<ParseObject> users) {
         this.context = ctx;
@@ -64,6 +68,7 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
             else
                 binding.active.setImageResource(R.drawable.ic_baseline_check_circle);
             binding.createdAt.setText(item.getCreatedAt().toString());
+            binding.options.setOnClickListener(view -> listener.onOptionsClicked(item, getAdapterPosition()));
             binding.email.setText(item.getUsername());
         }
     }

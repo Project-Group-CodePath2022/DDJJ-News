@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public abstract class RefreshFloatingBaseFragment extends RefreshBaseFragment {
+public class RefreshFloatingBaseFragment extends RefreshBaseFragment {
     protected FloatingActionButton floatingAction;
 
     public RefreshFloatingBaseFragment() {}
@@ -17,5 +17,5 @@ public abstract class RefreshFloatingBaseFragment extends RefreshBaseFragment {
         super.onViewCreated(view, savedInstanceState);
         floatingAction.setOnClickListener(this::handleFloatingAB);
     }
-    protected abstract void handleFloatingAB(View view);
+    protected void handleFloatingAB(View view){}
 }

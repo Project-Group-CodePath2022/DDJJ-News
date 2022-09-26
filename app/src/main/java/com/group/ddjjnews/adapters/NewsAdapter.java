@@ -19,6 +19,7 @@ import com.group.ddjjnews.Utils.TimeFormatter;
 import com.group.ddjjnews.databinding.NewsAlauneItemBinding;
 import com.group.ddjjnews.databinding.NewsItemBinding;
 import com.group.ddjjnews.models.News;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (((News)news.get(position)).isAlaune() && (position % 5) == 0) {
+        if (((News)news.get(position)).isAlaune() && (position == 0 || ((position + 1) % 3) == 0)) {
             return ALAUNE_TYPE;
         }
         return DEFAULT_TYPE;
@@ -91,7 +92,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemBinding.title.setText(item.getKeyTitle());
             itemBinding.createdAt.setText("Date: " + TimeFormatter.getTimeDifference(item.getCreatedAt().toString()));
             // Set listener
-            itemBinding.title.setOnClickListener(view -> listener.itemClicked(item));
+            itemBinding.getRoot().setOnClickListener(view -> listener.itemClicked(item));
 
         }
     }
@@ -108,13 +109,17 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (item.getKeyImage() != null)
                 Glide.with(context)
                         .load(item.getKeyImage().getUrl())
-                        .transform(new RoundedCorners(22))
+                        .transform(new RoundedCorners(16))
                         .into(itemBinding.imgImage);
             itemBinding.tvTitle.setText(item.getKeyTitle());
             itemBinding.tvCreatedAt.setText("Date: " + TimeFormatter.getTimeDifference(item.getCreatedAt().toString()));
-            // itemBinding.tvCategory.setText(item.getKeyCategory().getString("name"));
+            try {
+                itemBinding.tvCategory.setText(item.getKeyCategory().fetchIfNeeded().getString("name"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             // Set listener
-            itemBinding.tvTitle.setOnClickListener(view -> listener.itemClicked(item));
+            itemBinding.getRoot().setOnClickListener(view -> listener.itemClicked(item));
         }
     }
 }

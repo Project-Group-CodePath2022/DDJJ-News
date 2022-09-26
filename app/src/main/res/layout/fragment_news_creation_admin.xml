@@ -7,6 +7,7 @@
             android:padding="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/tv1"
                 android:layout_marginBottom="12dp"
@@ -15,14 +16,22 @@
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/takeImg"
+                android:layout_below="@id/tv1"
+                android:layout_marginTop="12dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
 
             <EditText
                 android:layout_below="@id/tv1"
+                android:layout_toRightOf="@id/takeImg"
+                android:layout_alignBaseline="@id/takeImg"
+                android:layout_marginLeft="7dp"
                 android:id="@+id/edTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:layout_marginTop="12dp"
                 android:textColorHint="@color/grey"
                 android:textColor="@color/dark_black"
                 android:hint="Title"/>
@@ -31,8 +40,8 @@
                 android:id="@+id/edDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/edTitle"
-                android:inputType="textPassword"
+                android:layout_below="@id/takeImg"
+                android:inputType="text"
                 android:layout_marginTop="7dp"
                 android:textColorHint="@color/grey"
                 android:textColor="@color/dark_black"
@@ -41,20 +50,51 @@
             <EditText
                 android:id="@+id/edContent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="144dp"
                 android:layout_below="@id/edDesc"
-                android:inputType="textPassword"
+                android:inputType="textMultiLine"
+                android:gravity="start"
+                android:padding="7dp"
                 android:layout_marginTop="7dp"
                 android:textColorHint="@color/grey"
                 android:textColor="@color/dark_black"
                 android:hint="Content (Markdown)"/>
+
+
+            <Spinner
+                android:layout_below="@id/edContent"
+                android:id="@+id/categorySpinner"
+                android:layout_marginTop="7dp"
+                android:spinnerMode="dropdown"
+                android:popupBackground="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="44dp" />
+
+            <TextView
+                android:id="@+id/tvDone"
+                android:layout_marginTop="7dp"
+                android:layout_below="@id/categorySpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Done: " />
+
+            <CheckBox
+                android:layout_below="@+id/categorySpinner"
+                android:layout_toRightOf="@id/tvDone"
+                android:layout_alignBaseline="@id/tvDone"
+                android:id="@+id/chDOne"
+                android:value="false"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <Button
                 android:id="@+id/btnCreateNews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:layout_below="@id/edContent"
+                android:layout_below="@id/tvDone"
                 android:text="Create"/>
         </RelativeLayout>
     </ScrollView>

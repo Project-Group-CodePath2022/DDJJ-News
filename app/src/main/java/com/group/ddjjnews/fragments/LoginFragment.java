@@ -1,12 +1,15 @@
 package com.group.ddjjnews.fragments;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +20,14 @@ import com.group.ddjjnews.MainActivity;
 import com.group.ddjjnews.Utils.IndeterminateDialog;
 import com.group.ddjjnews.databinding.FragmentLoginBinding;
 import com.group.ddjjnews.models.User;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.parse.facebook.ParseFacebookUtils;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 
 
@@ -84,9 +94,18 @@ public class LoginFragment extends DialogFragment {
             });
         });
 
+        binding.oauthFacebook.setOnClickListener(view1 -> loginVIAFacebook());
+
         binding.edEmail.requestFocus();
         Objects.requireNonNull(getDialog()).getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getContext(), "Fron onActivityResult FragmentLogin", Toast.LENGTH_SHORT).show();
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -108,4 +127,23 @@ public class LoginFragment extends DialogFragment {
         }
         return true;
     }
+    public void loginVIAFacebook() {
+        Collection<String> permissions = Arrays.asList("public_profile", "email");
+        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException err) {
+
+                if (user == null) {
+                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                } else if (user.isNew()) {
+                    Log.d("MyApp", "User signed up and logged in through Facebook!");
+
+                } else {
+                    Log.d("MyApp", "User logged in through Facebook!");
+                }
+            }
+        });
+
+    }
+
 }

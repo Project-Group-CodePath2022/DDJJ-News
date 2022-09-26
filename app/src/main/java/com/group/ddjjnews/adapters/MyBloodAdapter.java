@@ -20,6 +20,15 @@ import java.util.List;
 public class MyBloodAdapter extends RecyclerView.Adapter<MyBloodAdapter.BloodHolder> {
     Context context;
     List<ParseObject> requests;
+    private BloodListener listener;
+
+    public void setListener(BloodListener listener) {
+        this.listener = listener;
+    }
+
+    public interface BloodListener {
+        void onOptionsItemClicked(Blood item, int pos);
+    }
 
     public MyBloodAdapter(Context ctx, List list) {
         this.context = ctx;
@@ -52,13 +61,8 @@ public class MyBloodAdapter extends RecyclerView.Adapter<MyBloodAdapter.BloodHol
         public void bind(Blood item) {
             binding.bloodTvForName.setText(item.getText());
             binding.bloodTvDesc.setText(item.getKeyDescription());
-            binding.bloodTvCreatedAt.setText(item.getCreatedAt().toString());
-            binding.options.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(context, "Options menu", Toast.LENGTH_SHORT).show();
-                }
-            });
+            binding.bloodTvCreatedAt.setText("Date: " + item.getCreatedAt().toString());
+            binding.options.setOnClickListener(view -> listener.onOptionsItemClicked(item, getAdapterPosition()));
         }
     }
 }

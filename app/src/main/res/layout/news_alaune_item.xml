@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="147dp">
+        android:layout_height="136dp">
         <ImageView
             android:id="@+id/imgImage"
             android:layout_width="match_parent"

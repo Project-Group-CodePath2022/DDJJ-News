@@ -9,6 +9,13 @@
     <string name="back4app_client_key">6yOW0KeEZcHrs5Pc6rtQs7XELT0LNVxCiuzjd5bn</string>
     <string name="firebase_sender_id">423628107738</string>
 
+
+    <string name="facebook_app_id">1130396354519445</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">074dcad36f4794d4c6db8efd5759800b</string>
+
+
+
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
 
@@ -24,4 +31,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hot_fire">Hot fire</string>
+    <string name="or_using">Or using</string>
 </resources>

@@ -56,4 +56,10 @@ public class Blood extends ParseObject {
         params.put("bloodId", bloodId);
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_GET, params, (object, e) -> callback.done((Collection<? extends Blood>)object, e));
     }
+
+    public static void deleteBlood(String id, Callback callback) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("bloodId", id);
+        ParseCloud.callFunctionInBackground("delete-blood", params, (object, e) -> callback.done((Blood) object, e));
+    }
 }

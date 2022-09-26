@@ -45,6 +45,10 @@ public class News extends ParseObject {
         ParseCloud.callFunctionInBackground("list-news-admin", params, callback);
     }
 
+    public static void createNewsAdmin(HashMap params, FunctionCallback<Object> callback) {
+        ParseCloud.callFunctionInBackground("create-news", params, callback);
+    }
+
     public static void getDetailNews(String newsId, FunctionCallback<Object> callback) {
         HashMap<String, String> params = new HashMap();
         params.put("newsId", newsId);

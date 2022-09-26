@@ -46,10 +46,10 @@ public class SavedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager());
 
         viewPagerAdapter.add(NestedSavedFragment.newInstance(NestedSavedFragment.TYPE_NEWS), "News");
-        viewPagerAdapter.add(NestedSavedFragment.newInstance(NestedSavedFragment.TYPE_BLOG), "Blog");
+         viewPagerAdapter.add(NestedSavedFragment.newInstance(NestedSavedFragment.TYPE_BLOG), "Blog");
         binding.pager.setAdapter(viewPagerAdapter); // Set adapter
         binding.tab.setupWithViewPager(binding.pager);
     }

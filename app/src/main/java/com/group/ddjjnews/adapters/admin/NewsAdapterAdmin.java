@@ -20,7 +20,15 @@ import java.util.List;
 public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.NewsHolder> {
     Context context;
     List<ParseObject> news;
+    private Listener listener;
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public interface Listener {
+        void onOptionsClicked(News item, int pos);
+    }
     public NewsAdapterAdmin(Context ctx, List<ParseObject> news) {
         this.context = ctx;
         this.news = news;
@@ -30,7 +38,6 @@ public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.News
     @Override
     public NewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new NewsHolder(NewsItemAdminBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
     }
 
     @Override
@@ -63,6 +70,8 @@ public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.News
             else
                 binding.active.setImageResource(R.drawable.ic_baseline_check_circle);
             binding.createdAt.setText(item.getCreatedAt().toString());
+
+            binding.options.setOnClickListener(view -> listener.onOptionsClicked(item, getAdapterPosition()));
 
             binding.title.setText(item.getKeyTitle());
         }

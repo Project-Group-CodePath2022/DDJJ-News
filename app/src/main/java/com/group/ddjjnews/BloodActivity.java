@@ -136,9 +136,7 @@ public class BloodActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void done(Collection objects, Exception e) {
-
-                    }
+                    public void done(Collection objects, Exception e) {}
                 });
                 dismiss();
             });

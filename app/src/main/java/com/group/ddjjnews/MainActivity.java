@@ -1,6 +1,7 @@
 package com.group.ddjjnews;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -10,8 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,9 +24,25 @@ import com.group.ddjjnews.fragments.LoginFragment;
 import com.group.ddjjnews.fragments.NewsFragment;
 import com.group.ddjjnews.fragments.SavedFragment;
 import com.group.ddjjnews.models.User;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.facebook.login.LoginManager;
+import com.parse.ParseUser;
+import com.parse.facebook.ParseFacebookUtils;
 
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding binding;
@@ -58,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.drawer_request:
                     gotoRequestBlood();
                     break;
+                case R.id.drawer_alert:
+                    gotoAlert();
+                    break;
                 default:
                     break;
             }
@@ -82,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.bottom_news:
                     fragmentManager.beginTransaction().hide(currentFragment).show(newsFragment).commit();
-                    getSupportActionBar().setTitle("News");
+                    getSupportActionBar().setTitle("My news");
                     currentFragment = newsFragment;
                     break;
                 case R.id.bottom_saved:
@@ -100,6 +122,13 @@ public class MainActivity extends AppCompatActivity {
         binding.mainBottomNavigation.setSelectedItemId(R.id.bottom_news);
     }
 
+   @Override
+   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+       super.onActivityResult(requestCode, resultCode, data);
+   }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
@@ -114,10 +143,12 @@ public class MainActivity extends AppCompatActivity {
             User.logOut();
             restartActivity();
             return true;
+        } else if (itemId == R.id.main_search) {
+            gotoSearch();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
     public void restartActivity(){
         finish();
         startActivity(getIntent());
@@ -153,6 +184,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
         intent.putExtra("type", type);
         intent.putExtra("item", item);
+        startActivity(intent);
+    }
+
+    public void gotoSearch() {
+        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    public void gotoAlert() {
+        Intent intent = new Intent(MainActivity.this, AlertActivity.class);
         startActivity(intent);
     }
 

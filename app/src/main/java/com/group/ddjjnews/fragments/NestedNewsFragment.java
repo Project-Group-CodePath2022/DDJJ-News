@@ -43,10 +43,6 @@ public class NestedNewsFragment extends Fragment {
 
     private String mParam1;
 
-    public interface CallOk {
-        void done(boolean ok);
-    }
-
     public NestedNewsFragment() {}
 
     public static NestedNewsFragment newInstance(String param1) {
@@ -128,23 +124,6 @@ public class NestedNewsFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
             binding.swipeContainer.setRefreshing(false);
-        });
-    }
-
-    public void searchByTitle(String query, CallOk callOk ) {
-        if (binding != null)
-            binding.swipeContainer.setRefreshing(true);
-        getNewsPosts(query, (objects, e) -> {
-            if (e == null) {
-                newsPosts.clear();
-                newsPosts.addAll((Collection<? extends ParseObject>) objects);
-                adapter.notifyDataSetChanged();
-                callOk.done(true);
-            } else {
-               callOk.done(false);
-            }
-            if (binding != null)
-                binding.swipeContainer.setRefreshing(false);
         });
     }
 
