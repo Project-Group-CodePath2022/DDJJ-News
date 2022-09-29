@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -33,7 +34,7 @@ public class NewsDetailFragment extends Fragment {
     FragmentNewsDetailBinding binding;
 
     private News mParam1;
-
+    CommentsFragment fr;
     public NewsDetailFragment() {}
 
     public static NewsDetailFragment newInstance(News object) {
@@ -64,6 +65,11 @@ public class NewsDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.sRefresh.setOnRefreshListener(this::refresh);
+        if (fr == null)
+            fr = CommentsFragment.newInstance(mParam1.getObjectId());
+        fr.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+        fr.setCancelable(true);
+
         display();
     }
 
@@ -85,8 +91,8 @@ public class NewsDetailFragment extends Fragment {
             });
             return true;
         } else if (itemId == R.id.detail_comments) {
-            // TODO, create fragment containing all comments for this news and write a new one
-
+            // Show fragment containing all comments for this news and write a new one
+            fr.show(getChildFragmentManager(), "c_m_f");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -114,12 +120,13 @@ public class NewsDetailFragment extends Fragment {
                 })).build();
         markwon1.setMarkdown(binding.DetailNewsContent, mParam1.getKeyContent());
     }
-    
+
 
     private void refresh() {
         News.getDetailNews(mParam1.getObjectId(), (object, e) -> {
             if (e == null) {
                 mParam1 = (News) object;
+                Toast.makeText(getContext(), ((News) object).getKeyTitle(), Toast.LENGTH_SHORT).show();
                 display();
             }
             binding.sRefresh.setRefreshing(false);

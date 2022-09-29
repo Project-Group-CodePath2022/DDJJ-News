@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +24,8 @@ import com.group.ddjjnews.fragments.RefreshFloatingBaseFragment;
 import com.group.ddjjnews.models.Category;
 import com.group.ddjjnews.models.News;
 
+import com.parse.FunctionCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -80,10 +84,9 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
     protected void handleFloatingAB(View view) {
         NewsCreationAdminFragment fr = NewsCreationAdminFragment.newInstance();
         fr.setNameCategories(nameCategories);
-        FragmentManager fm = getChildFragmentManager();
         fr.setCancelable(true);
         fr.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
-        fr.show(fm, "new_creation_fragment");
+        fr.show(getChildFragmentManager(), "new_creation_fragment");
     }
 
     @Override
@@ -100,14 +103,23 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
     private void showBSD(News item, int pos) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(R.layout.bsd_news_admin);
+        ((CheckBox)bottomSheetDialog.findViewById(R.id.cbActive)).setChecked(item.getKeyActive());
         bottomSheetDialog.findViewById(R.id.delete).setOnClickListener(view -> {
+            News.deleteNews(item.getObjectId(), (object, e) -> {
+                if (e == null) {
+                    news.remove(pos);
+                    adapter.notifyItemRemoved(pos);
+                    bottomSheetDialog.dismiss();
+                } else {
+                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
         bottomSheetDialog.show();
     }
 
     private void getAllNews() {
         sRefresh.setRefreshing(true);
-
         News.getNewsAdmin(new HashMap<>(), (objects, e) -> {
             if (e == null) {
                 news.clear();

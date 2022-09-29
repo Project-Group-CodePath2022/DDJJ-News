@@ -4,40 +4,36 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.group.ddjjnews.R;
-import com.group.ddjjnews.Utils.Prefs;
 import com.group.ddjjnews.adapters.ViewPagerDynamicAdapter;
 import com.group.ddjjnews.databinding.FragmentNewsBinding;
-import com.group.ddjjnews.models.Category;
+import com.group.ddjjnews.models.News;
 import com.group.ddjjnews.models.User;
-import com.parse.FunctionCallback;
-import com.parse.ParseCloud;
-import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.livequery.ParseLiveQueryClient;
+import com.parse.livequery.SubscriptionHandling;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.HashMap;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class NewsFragment extends Fragment {
     FragmentNewsBinding binding;
     ViewPagerDynamicAdapter adapter;
-
+    ParseLiveQueryClient parseLiveQueryClient = null;
+    ParseQuery<News> parseQuery;
+    String websocketUrl = "wss://ddjjnews.b4a.io";
+    NestedNewsFragment all;
     public NewsFragment() {}
 
     public static NewsFragment newInstance() {
@@ -64,9 +60,9 @@ public class NewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // binding.newsPager.setOnTouchListener((view1, motionEvent) -> true); // stop scrolling viewPager
         binding.newsPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.newsTab));
         binding.newsPager.setOffscreenPageLimit(4);
+        all = NestedNewsFragment.newInstance(null);
 
         binding.newsTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -81,7 +77,29 @@ public class NewsFragment extends Fragment {
         });
 
         getCategoriesForNewsInPrefs();
-//        setTabsCategories();
+
+        try {
+            parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(websocketUrl));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        parseQuery = ParseQuery.getQuery(News.class);
+        parseQuery.include(News.KEY_CATEGORY);
+        parseQuery.whereEqualTo(News.KEY_ACTIVE, true);
+        // Connect to Parse server
+        SubscriptionHandling<News> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
+
+        // Listen for CREATE events on the Message class
+        subscriptionHandling.handleEvent(SubscriptionHandling.Event.LEAVE, (query, object) -> {
+            // RecyclerView updates need to be run on the UI thread
+            getActivity().runOnUiThread(() -> all.removeItem(object));
+        });
+
+        subscriptionHandling.handleEvent(SubscriptionHandling.Event.ENTER, (query, object) -> {
+            // RecyclerView updates need to be run on the UI thread
+            getActivity().runOnUiThread(() -> all.addItem(object));
+        });
 
     }
     @Override
@@ -96,13 +114,14 @@ public class NewsFragment extends Fragment {
     private void getCategoriesForNewsInPrefs() {
         // Default Tab (All)
         binding.newsTab.addTab(binding.newsTab.newTab().setText("All"));
-        adapter.add(NestedNewsFragment.newInstance(null));
-        // Retrieve last Categories
-        // Set<String> sc = Prefs.read(getContext()).getStringSet("stc", new HashSet<>());
+        adapter.add(all);
         Set<String> sc = new HashSet<>();
         sc.add("culture");
-        sc.add("sport");
+        sc.add("sports");
         sc.add("inter");
+        sc.add("politics");
+        sc.add("education");
+
         for (String category: sc) {
             binding.newsTab.addTab(binding.newsTab.newTab().setText(category));
             adapter.add(NestedNewsFragment.newInstance(category));
@@ -110,30 +129,4 @@ public class NewsFragment extends Fragment {
         adapter.notifyDataSetChanged();
         binding.newsPager.setAdapter(adapter);
     }
-//
-//    // Return categories News
-//    private void setTabsCategories() {
-//        HashMap<String, Integer> params = new HashMap<>();
-//        params.put("limit", 12);
-//        ParseCloud.callFunctionInBackground("list-category", params, (FunctionCallback<List<ParseObject>>) (objects, e) -> {
-//            if (e == null) {
-//                adapter.clear();
-//                binding.newsTab.removeAllTabs();
-//                // Default Tab (All)
-//                binding.newsTab.addTab(binding.newsTab.newTab().setText("All"));
-//                adapter.add(NestedNewsFragment.newInstance(null));
-//                HashSet<String> setCategory = new HashSet<>();
-//                for (int i = 0; i < objects.size(); i++) {
-//                    Category category = (Category) objects.get(i);
-//                    binding.newsTab.addTab(binding.newsTab.newTab().setText(category.getString("name")));
-//                    adapter.add(NestedNewsFragment.newInstance(category.getString("name")));
-//                    setCategory.add(category.getString("name"));
-//                }
-//                // Save in pref
-//                Prefs.save(getContext()).putStringSet("stc", setCategory).commit();
-//            }
-//            adapter.notifyDataSetChanged();
-//            binding.newsPager.setCurrentItem(0);
-//        });
-//    }
 }

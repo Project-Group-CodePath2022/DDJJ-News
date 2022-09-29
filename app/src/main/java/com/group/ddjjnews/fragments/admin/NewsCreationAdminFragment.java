@@ -29,8 +29,6 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
-
-
 public class NewsCreationAdminFragment extends DialogFragment {
     FragmentNewsCreationAdminBinding binding;
     private static final int PICK_PHOTO = 1000;
@@ -70,7 +68,6 @@ public class NewsCreationAdminFragment extends DialogFragment {
         binding.btnCreateNews.setOnClickListener(view1 -> {
             if (!fieldsOk()) return ;
             createNew();
-
         });
     }
 

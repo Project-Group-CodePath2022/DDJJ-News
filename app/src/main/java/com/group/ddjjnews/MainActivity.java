@@ -11,10 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -24,25 +22,9 @@ import com.group.ddjjnews.fragments.LoginFragment;
 import com.group.ddjjnews.fragments.NewsFragment;
 import com.group.ddjjnews.fragments.SavedFragment;
 import com.group.ddjjnews.models.User;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Objects;
-
-import androidx.appcompat.app.AppCompatActivity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.Toast;
-
-import com.facebook.login.LoginManager;
-import com.parse.ParseUser;
-import com.parse.facebook.ParseFacebookUtils;
 
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding binding;
@@ -94,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
         newsFragment = NewsFragment.newInstance();
         //  Feed, list saved blog and news post using tabs
         savedFragment = SavedFragment.newInstance();
-
-        currentFragment = newsFragment;
+        currentFragment = newsFragment; // Current fragment
 
         fragmentManager.beginTransaction().add(R.id.mainFrameLayout, savedFragment).hide(savedFragment).commit();
         fragmentManager.beginTransaction().add(R.id.mainFrameLayout, newsFragment).commit();
@@ -117,17 +98,12 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-
         // By default display news
         binding.mainBottomNavigation.setSelectedItemId(R.id.bottom_news);
     }
 
-   @Override
-   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-       super.onActivityResult(requestCode, resultCode, data);
-   }
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { super.onActivityResult(requestCode, resultCode, data); }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,28 +132,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void hideShowDrawerItem() {
         Menu m = binding.mainNavigation.getMenu();
-
         if (user != null) {
             m.findItem(R.id.drawer_login).setVisible(false);
-            if (user.isAdmin()) {
-                m.findItem(R.id.drawer_dashboard).setVisible(true);
-            } else {
-                m.findItem(R.id.drawer_dashboard).setVisible(false);
-            }
+            m.findItem(R.id.drawer_dashboard).setVisible(user.isAdmin());
         } else {
             m.findItem(R.id.drawer_dashboard).setVisible(false);
         }
     }
 
     public void gotoDashboard() {
-        Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
-        startActivity(intent);
-
+        startActivity(new Intent(MainActivity.this, DashboardActivity.class));
     }
 
     public void gotoRequestBlood() {
-        Intent intent = new Intent(MainActivity.this, BloodActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(MainActivity.this, BloodActivity.class));
     }
 
     public void gotoDetail(String type, ParseObject item) {
@@ -188,13 +156,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gotoSearch() {
-        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(MainActivity.this, SearchActivity.class));
     }
 
     public void gotoAlert() {
-        Intent intent = new Intent(MainActivity.this, AlertActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(MainActivity.this, AlertActivity.class));
     }
 
     private void showLoginDialog() {

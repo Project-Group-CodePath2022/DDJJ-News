@@ -127,6 +127,21 @@ public class NestedNewsFragment extends Fragment {
         });
     }
 
+    public void addItem(News n) {
+        newsPosts.add(n);
+        adapter.notifyItemInserted(0);
+    }
+
+    public void removeItem(News n) {
+        for (int i = 0; i < newsPosts.size(); i++) {
+            if (newsPosts.get(i).getObjectId().equals(n.getObjectId())){
+                newsPosts.remove(i);
+                adapter.notifyItemRemoved(i);
+                return;
+            }
+        }
+    }
+
     private void getNewsPosts(String query, FunctionCallback<Object> callback) {
         HashMap<String, Object> params = new HashMap<>();
         if (mParam1 != null)

@@ -22,6 +22,8 @@ public class User extends ParseUser {
     private static final String CUSTOM_ENDPOINT_ROLE = "list-user-role";
     private static final String CUSTOM_ENDPOINT_CHANGE_ROLE = "list-user-role";
     private static final String CUSTOM_ENDPOINT_CREATE_ADMIN = "create-admin";
+    private static final String CUSTOM_ENDPOINT_DETAIL_OAUTH = "sign-up-facebook";
+
 
 
 
@@ -73,6 +75,7 @@ public class User extends ParseUser {
         });
     }
 
+
     public static void customLogInInBackground(String email, String password, AuthCallback callback) {
         HashMap<String, String> params = new HashMap<>();
         params.put("email", email);
@@ -85,10 +88,26 @@ public class User extends ParseUser {
             }
         });
     }
+
+    public static void deleteUser(String userId, FunctionCallback<Object> callback) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("objectId", userId);
+        ParseCloud.callFunctionInBackground("delete-user-admin", params, callback);
+    }
+
+    public static void getDetailOAuth(String userId, String email, AuthCallback callback) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("email", email);
+        params.put("userId", userId);
+
+        ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_DETAIL_OAUTH, params, (user, e) -> {
+            callback.done(null, e);
+        });
+    }
+
     public static void getAllUser(HashMap<String, Object> params, Callback callback) {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_LIST_ADMIN, params, (objects, e) -> callback.done((Collection<? extends User>) objects, e));
     }
-
 
     public static void getUserRoles(FunctionCallback<List<ParseRole>> callback) {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_ROLE, new HashMap<>(), callback);
@@ -99,7 +118,6 @@ public class User extends ParseUser {
         params.put("email", email);
         params.put("password", password);
         params.put("roleName", role);
-
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_CREATE_ADMIN, params, (object, e) -> callback.done((User) object, e));
     }
 }

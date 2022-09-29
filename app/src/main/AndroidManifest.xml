@@ -46,6 +46,7 @@
             android:exported="false" />
         <activity
             android:name=".AlertActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".BloodActivity"

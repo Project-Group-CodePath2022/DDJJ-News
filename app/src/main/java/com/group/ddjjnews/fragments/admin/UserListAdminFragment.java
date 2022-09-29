@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,13 +17,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.group.ddjjnews.R;
-import com.group.ddjjnews.adapters.admin.NewsAdapterAdmin;
+
 import com.group.ddjjnews.adapters.admin.UserAdapterAdmin;
 import com.group.ddjjnews.databinding.FragmentRefreshFloatingBaseBinding;
 import com.group.ddjjnews.fragments.RefreshFloatingBaseFragment;
-import com.group.ddjjnews.models.Blood;
-import com.group.ddjjnews.models.News;
+
 import com.group.ddjjnews.models.User;
+
 import com.parse.ParseObject;
 import com.parse.ParseRole;
 
@@ -71,6 +70,7 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
                 showBSD(item, pos);
             }
         });
+
         setCategory();
         getAllUsers();
     }
@@ -87,7 +87,7 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
 
     @Override
     protected void handleFloatingAB(View view) {
-        UserCreationAdminFragment fr = UserCreationAdminFragment.newInstance();
+        UserCreationAdminFragment fr = UserCreationAdminFragment.newInstance(null);
         fr.setNameROles(nameRoles);
         FragmentManager fm = getChildFragmentManager();
         fr.setCancelable(true);
@@ -127,7 +127,28 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
     private void showBSD(User user, int pos) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(R.layout.bsd_user_admin);
+        CheckBox active = bottomSheetDialog.findViewById(R.id.cbActive);
+        active.setChecked(user.getKeyActive());
+
+        active.setOnCheckedChangeListener((compoundButton, b) -> Toast.makeText(getContext(), ""+b, Toast.LENGTH_SHORT).show());
+        bottomSheetDialog.findViewById(R.id.edit).setOnClickListener(view -> {
+            UserCreationAdminFragment fr = UserCreationAdminFragment.newInstance(user);
+            fr.setNameROles(nameRoles);
+            fr.setCancelable(true);
+            // fr.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+            fr.show(getChildFragmentManager(), "user_edit_fragment");
+        });
+
         bottomSheetDialog.findViewById(R.id.delete).setOnClickListener(view -> {
+            User.deleteUser(user.getObjectId(), (object, e) -> {
+                if (e == null) {
+                    users.remove(pos);
+                    adapter.notifyItemRemoved(pos);
+                    bottomSheetDialog.dismiss();
+                } else {
+                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
         bottomSheetDialog.show();
     }

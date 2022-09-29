@@ -2,8 +2,10 @@ package com.group.ddjjnews;
 
 import android.app.Application;
 
+import com.group.ddjjnews.models.Alert;
 import com.group.ddjjnews.models.Blood;
 import com.group.ddjjnews.models.Category;
+import com.group.ddjjnews.models.Comment;
 import com.group.ddjjnews.models.User;
 import com.group.ddjjnews.models.News;
 import com.parse.Parse;
@@ -22,6 +24,9 @@ public class App extends Application {
         ParseObject.registerSubclass(News.class);
         ParseObject.registerSubclass(Category.class);
         ParseObject.registerSubclass(Blood.class);
+        ParseObject.registerSubclass(Alert.class);
+        ParseObject.registerSubclass(Comment.class);
+
         Parse.enableLocalDatastore(getApplicationContext());
 
         Parse.initialize(new Parse.Configuration.Builder(this)

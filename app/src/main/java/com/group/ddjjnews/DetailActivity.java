@@ -9,13 +9,12 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
 import com.group.ddjjnews.databinding.ActivityDetailBinding;
 import com.group.ddjjnews.fragments.NewsDetailFragment;
 import com.group.ddjjnews.models.News;
+
+import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity {
     ActivityDetailBinding binding;
@@ -26,7 +25,7 @@ public class DetailActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(DetailActivity.this, R.layout.activity_detail);
 
         setSupportActionBar(binding.detailToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         FragmentManager fragmentManager = getSupportFragmentManager();

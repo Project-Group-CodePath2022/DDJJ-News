@@ -73,6 +73,7 @@ public class MyListBloodFragment extends ListBloodFragment {
                             requests.remove(pos);
                             adapter.notifyItemRemoved(pos);
                             Toast.makeText(getContext(), "Successfully deleted !", Toast.LENGTH_SHORT).show();
+                            bottomSheetDialog.dismiss();
                         } else {
                             Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                         }

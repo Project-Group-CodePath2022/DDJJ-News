@@ -49,7 +49,7 @@ public class SavedFragment extends Fragment {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager());
 
         viewPagerAdapter.add(NestedSavedFragment.newInstance(NestedSavedFragment.TYPE_NEWS), "News");
-         viewPagerAdapter.add(NestedSavedFragment.newInstance(NestedSavedFragment.TYPE_BLOG), "Blog");
+        viewPagerAdapter.add(NestedSavedFragment.newInstance(NestedSavedFragment.TYPE_BLOG), "Blog");
         binding.pager.setAdapter(viewPagerAdapter); // Set adapter
         binding.tab.setupWithViewPager(binding.pager);
     }
@@ -61,12 +61,9 @@ public class SavedFragment extends Fragment {
         if (User.getCurrentUser() == null) {
             menu.findItem(R.id.main_logout).setVisible(false);
         }
-
         menu.findItem(R.id.main_search).setVisible(false); // Hide search icon
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) { return super.onOptionsItemSelected(item); }
 }

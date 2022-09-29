@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.NewsHolder> 
 
     public interface SavedListener {
         void onOptionsItemClicked(News item, int pos);
+        void onItemClicked(News item);
     }
 
     public SavedAdapter(Context ctx, List list) {
@@ -62,19 +64,18 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.NewsHolder> 
             super(binding.getRoot());
             this.binding = binding;
         }
+
         public void bind(News item) {
             if (item.getKeyImage() != null)
                 Glide.with(context)
                         .load(item.getKeyImage().getUrl())
-                        .transform(new RoundedCorners(22))
+                        .transform(new RoundedCorners(16))
                         .into(binding.imgImage);
             String detail = "";
-            // detail += ((Category)item.getKeyCategory()).getKeyName();
-            // detail += " - ";
             detail += TimeFormatter.getTimeDifference(item.getCreatedAt().toString());
-            // binding.imgImage.setImageBitmap(BitmapFactory.decodeByteArray(item.getBytes("image")));
             binding.tvTitle.setText(item.getKeyTitle());
             binding.tvDetail.setText(detail);
+            binding.tvTitle.setOnClickListener(view -> listener.onItemClicked(item));
             binding.options.setOnClickListener(view -> listener.onOptionsItemClicked(item, getAdapterPosition()));
         }
     }

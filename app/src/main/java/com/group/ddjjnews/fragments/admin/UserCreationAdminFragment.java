@@ -21,15 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserCreationAdminFragment extends DialogFragment {
+    public static final String KEY_USER = "user";
     FragmentUserCreationAdminBinding binding;
+    User user;
     String role;
     private List<String> nameROles;
 
     public UserCreationAdminFragment() {}
 
-    public static UserCreationAdminFragment newInstance() {
+    public static UserCreationAdminFragment newInstance(User user) {
         UserCreationAdminFragment fragment = new UserCreationAdminFragment();
         Bundle args = new Bundle();
+        args.putParcelable(String.valueOf(user), user);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,7 +40,9 @@ public class UserCreationAdminFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // if (getArguments() != null) {}
+         if (getArguments() != null) {
+             user = getArguments().getParcelable(KEY_USER);
+         }
     }
 
     @Override
@@ -51,6 +56,7 @@ public class UserCreationAdminFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setSpinnerCategory();
+        prefillIfUpdate();
 
         binding.btnCreateUser.setOnClickListener(view1 -> {
             if (!fieldsOk()) return;
@@ -64,7 +70,15 @@ public class UserCreationAdminFragment extends DialogFragment {
         binding = null;
     }
 
+    private void prefillIfUpdate() {
+        if (user != null) {
+            binding.edEmail.setText(user.getUsername());
+            binding.btnCreateUser.setText("Update");
+        }
+    }
+
     private void createNew() {
+        // TODO: create or update
         User.createAdmin(binding.edEmail.getText().toString(), binding.edPassword.getText().toString(), role, (object, e) -> {
             if (e == null) {
                 dismiss();
@@ -90,7 +104,6 @@ public class UserCreationAdminFragment extends DialogFragment {
     private void setSpinnerCategory() {
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, nameROles);
         binding.roleSpinner.setAdapter(adapter);
-
         binding.roleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
