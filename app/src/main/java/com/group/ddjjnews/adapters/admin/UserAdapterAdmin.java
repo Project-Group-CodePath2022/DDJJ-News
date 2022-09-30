@@ -9,8 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group.ddjjnews.R;
 import com.group.ddjjnews.databinding.UserItemAdminBinding;
 import com.group.ddjjnews.models.User;
+import com.parse.ParseDecoder;
 import com.parse.ParseObject;
+import com.parse.ParseRole;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.UserHolder> {
@@ -62,12 +67,15 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
 //                        .load(item.getKeyImage().getUrl())
 //                        .transform(new RoundedCorners(12))
 //                        .into(binding.imgImage);
-
+            if (item.get("role") != null) {
+                binding.role.setText(((ParseRole)ParseObject.fromJSON(new JSONObject((HashMap) item.get("role")), "_Role", ParseDecoder.get())).getName());
+            }
             if (item.getKeyActive())
                 binding.active.setImageResource(R.drawable.ic_baseline_check_circle_green);
             else
                 binding.active.setImageResource(R.drawable.ic_baseline_check_circle);
-            binding.createdAt.setText(item.getCreatedAt().toString());
+            if (item.getCreatedAt() != null)
+                binding.createdAt.setText(item.getCreatedAt().toString());
             binding.options.setOnClickListener(view -> listener.onOptionsClicked(item, getAdapterPosition()));
             binding.email.setText(item.getUsername());
         }

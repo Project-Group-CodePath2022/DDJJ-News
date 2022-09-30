@@ -1,5 +1,6 @@
 package com.group.ddjjnews.fragments.admin;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,13 +17,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.group.ddjjnews.R;
-
 import com.group.ddjjnews.adapters.admin.UserAdapterAdmin;
 import com.group.ddjjnews.databinding.FragmentRefreshFloatingBaseBinding;
 import com.group.ddjjnews.fragments.RefreshFloatingBaseFragment;
-
 import com.group.ddjjnews.models.User;
-
 import com.parse.ParseObject;
 import com.parse.ParseRole;
 
@@ -36,6 +33,8 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
     List<ParseObject> users = new ArrayList<>();
     FragmentRefreshFloatingBaseBinding binding;
     List<String> nameRoles = new ArrayList<>();
+
+
     public static UserListAdminFragment newInstance() {
         UserListAdminFragment f = new UserListAdminFragment();
         Bundle bundle = new Bundle();
@@ -64,13 +63,7 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((UserAdapterAdmin)adapter).setListener(new UserAdapterAdmin.Listener() {
-            @Override
-            public void onOptionsClicked(User item, int pos) {
-                showBSD(item, pos);
-            }
-        });
-
+        ((UserAdapterAdmin)adapter).setListener(this::showBSD);
         setCategory();
         getAllUsers();
     }
@@ -82,16 +75,14 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
     }
 
     @Override
-    protected void loadMore(int page, int totalItemsCount, RecyclerView view) {
-    }
+    protected void loadMore(int page, int totalItemsCount, RecyclerView view) {}
 
     @Override
     protected void handleFloatingAB(View view) {
-        UserCreationAdminFragment fr = UserCreationAdminFragment.newInstance(null);
+        UserCreationAdminFragment fr = UserCreationAdminFragment.newInstance(null, 0);
         fr.setNameROles(nameRoles);
         FragmentManager fm = getChildFragmentManager();
         fr.setCancelable(true);
-        fr.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
         fr.show(fm, "user_creation_fragment");
     }
 
@@ -106,9 +97,14 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
         rcItems.scrollToPosition(0);
     }
 
+    public void updateItem(User item, int pos) {
+        users.set(pos, item);
+        adapter.notifyItemChanged(pos);
+    }
+
     private void getAllUsers() {
         sRefresh.setRefreshing(true);
-        User.getAllUser(new HashMap(), new User.Callback() {
+        User.getAllUser(new HashMap<>(), new User.Callback() {
             @Override
             public void done(User object, Exception e) {}
 
@@ -116,7 +112,9 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
             public void done(Collection objects, Exception e) {
                 if (e == null) {
                     users.clear();
-                    users.addAll(objects);
+                    for (Object o: objects) {
+                        users.add(User.fromHash((HashMap) o));
+                    }
                     adapter.notifyDataSetChanged();
                 }
                 sRefresh.setRefreshing(false);
@@ -132,24 +130,21 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
 
         active.setOnCheckedChangeListener((compoundButton, b) -> Toast.makeText(getContext(), ""+b, Toast.LENGTH_SHORT).show());
         bottomSheetDialog.findViewById(R.id.edit).setOnClickListener(view -> {
-            UserCreationAdminFragment fr = UserCreationAdminFragment.newInstance(user);
+            UserCreationAdminFragment fr = UserCreationAdminFragment.newInstance(user, pos);
             fr.setNameROles(nameRoles);
             fr.setCancelable(true);
-            // fr.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
             fr.show(getChildFragmentManager(), "user_edit_fragment");
         });
 
-        bottomSheetDialog.findViewById(R.id.delete).setOnClickListener(view -> {
-            User.deleteUser(user.getObjectId(), (object, e) -> {
-                if (e == null) {
-                    users.remove(pos);
-                    adapter.notifyItemRemoved(pos);
-                    bottomSheetDialog.dismiss();
-                } else {
-                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        });
+        bottomSheetDialog.findViewById(R.id.delete).setOnClickListener(view -> User.deleteUser(user.getObjectId(), (object, e) -> {
+            if (e == null) {
+                users.remove(pos);
+                adapter.notifyItemRemoved(pos);
+                bottomSheetDialog.dismiss();
+            } else {
+                Toast.makeText(requireActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }));
         bottomSheetDialog.show();
     }
 

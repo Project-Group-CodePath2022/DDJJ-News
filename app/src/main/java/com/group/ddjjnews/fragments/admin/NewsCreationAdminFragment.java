@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.group.ddjjnews.databinding.FragmentNewsCreationAdminBinding;
 import com.group.ddjjnews.models.News;
 
@@ -32,15 +33,19 @@ import java.util.List;
 public class NewsCreationAdminFragment extends DialogFragment {
     FragmentNewsCreationAdminBinding binding;
     private static final int PICK_PHOTO = 1000;
+    public static final String KEY_NEWS = "news";
+    News news;
+    ArrayAdapter<String> adapter;
     String category;
     private List<String> nameCategories = new ArrayList<>();
     byte[] bytesFileImage;
 
     public NewsCreationAdminFragment() {}
 
-    public static NewsCreationAdminFragment newInstance() {
+    public static NewsCreationAdminFragment newInstance(News news) {
         NewsCreationAdminFragment fragment = new NewsCreationAdminFragment();
         Bundle args = new Bundle();
+        args.putParcelable(KEY_NEWS, news);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,7 +53,9 @@ public class NewsCreationAdminFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {}
+        if (getArguments() != null) {
+            this.news = getArguments().getParcelable(KEY_NEWS);
+        }
     }
 
     @Override
@@ -63,12 +70,23 @@ public class NewsCreationAdminFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         setSpinnerCategory();
 
+        prefillIpUpdate();
+
         binding.takeImg.setOnClickListener(view12 -> takeImage(PICK_PHOTO));
 
         binding.btnCreateNews.setOnClickListener(view1 -> {
             if (!fieldsOk()) return ;
             createNew();
         });
+    }
+
+    private void prefillIpUpdate() {
+        if (news != null) {
+            binding.edTitle.setText(news.getKeyTitle());
+            binding.edContent.setText(news.getKeyContent());
+            binding.categorySpinner.setSelection(adapter.getPosition(news.getKeyCategory().getString("name")));
+            Glide.with(getContext()).load(news.getKeyImage().getUrl()).into(binding.takeImg);
+        }
     }
 
     private void createNew() {
@@ -83,7 +101,7 @@ public class NewsCreationAdminFragment extends DialogFragment {
             if (e == null) {
                 this.dismiss();
                 ((NewsListAdminFragment)getParentFragment()).addItem((News) object);
-                Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Successfully saved!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
             }
@@ -92,13 +110,13 @@ public class NewsCreationAdminFragment extends DialogFragment {
 
     private boolean fieldsOk() {
         if (
-                binding.edTitle.getText().toString().trim().isEmpty() ||
-                        binding.edContent.getText().toString().trim().isEmpty() ||
-                        binding.edDesc.getText().toString().trim().isEmpty() ||
-                        category == null ||
-                        binding.takeImg.getDrawable() == null
+            binding.edTitle.getText().toString().trim().isEmpty() ||
+            binding.edContent.getText().toString().trim().isEmpty() ||
+            binding.edDesc.getText().toString().trim().isEmpty() ||
+            category == null ||
+            binding.takeImg.getDrawable() == null
         ) {
-            Toast.makeText(getContext(), "Empty field !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Required fields!", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -113,34 +131,29 @@ public class NewsCreationAdminFragment extends DialogFragment {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
             bytesFileImage = bytes.toByteArray();
-            // Show confirmation
-            // showConfirmationDialog(bytes.toByteArray());
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void takeImage(int request_code) {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        i.setType("image/*");
         startActivityForResult(i, request_code);
     }
 
     private void setSpinnerCategory() {
-        ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, nameCategories);
+        // Setup categories for news
+        adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, nameCategories);
         binding.categorySpinner.setAdapter(adapter);
-
         binding.categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 category = (String) adapterView.getItemAtPosition(i);
-                Toast.makeText(getContext(), category, Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
     }
 
-    public void setNameCategories(List<String> nameCategories) {
-        this.nameCategories = nameCategories;
-    }
+    public void setNameCategories(List<String> nameCategories) { this.nameCategories = nameCategories; }
 }

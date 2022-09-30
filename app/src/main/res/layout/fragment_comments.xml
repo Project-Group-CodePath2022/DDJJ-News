@@ -8,7 +8,7 @@
             android:textSize="22sp"
             android:padding="7dp"
             android:id="@+id/tvC"
-            android:text="write here"
+            android:text="Comments"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -35,17 +35,18 @@
                 android:layout_toLeftOf="@id/btnCommentSend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
+                android:gravity="center_vertical"
+                android:elevation="7dp"
                 android:textColor="@color/black_200"
                 android:textColorHint="@color/grey"
-                android:hint="Your comment: "
+                android:hint="Write here"
                 android:minLines="1"
                 android:maxLines="4"
                 android:inputType="textShortMessage"
                 android:imeOptions="actionSend"
                 android:background="@drawable/editext_custom"
                 android:layout_marginHorizontal="4dp"
-                android:padding="4dp"
+                android:paddingHorizontal="7dp"
                 android:autofillHints="" />
 
             <ImageButton

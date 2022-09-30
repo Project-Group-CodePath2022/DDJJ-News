@@ -82,7 +82,7 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
 
     @Override
     protected void handleFloatingAB(View view) {
-        NewsCreationAdminFragment fr = NewsCreationAdminFragment.newInstance();
+        NewsCreationAdminFragment fr = NewsCreationAdminFragment.newInstance(null);
         fr.setNameCategories(nameCategories);
         fr.setCancelable(true);
         fr.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
@@ -103,6 +103,13 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
     private void showBSD(News item, int pos) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(R.layout.bsd_news_admin);
+        bottomSheetDialog.findViewById(R.id.edit).setOnClickListener(view -> {
+            NewsCreationAdminFragment fr = NewsCreationAdminFragment.newInstance(item);
+            fr.setNameCategories(nameCategories);
+            fr.setCancelable(true);
+            fr.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+            fr.show(getChildFragmentManager(), "nca");
+        });
         ((CheckBox)bottomSheetDialog.findViewById(R.id.cbActive)).setChecked(item.getKeyActive());
         bottomSheetDialog.findViewById(R.id.delete).setOnClickListener(view -> {
             News.deleteNews(item.getObjectId(), (object, e) -> {
