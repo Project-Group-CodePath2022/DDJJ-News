@@ -3,11 +3,15 @@ package com.group.ddjjnews.models;
 import com.parse.FunctionCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseCloud;
+import com.parse.ParseDecoder;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
+import org.json.JSONObject;
+
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 @ParseClassName("News")
 public class News extends ParseObject {
@@ -16,6 +20,9 @@ public class News extends ParseObject {
     public static final String CUSTOM_ENDPOINT_LIST = "news:list";
     public static final String CUSTOM_ENDPOINT_ADMIN_LIST = "news-admin:list";
     public static final String CUSTOM_ENDPOINT_GET = "news:get";
+    public static final String CUSTOM_ENDPOINT_UPDATE = "news:update";
+    public static final String CUSTOM_ENDPOINT_MAKE_ACTIVE = "news:active";
+
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_CONTENT = "content";
@@ -33,6 +40,10 @@ public class News extends ParseObject {
     public boolean isAlaune() { return getBoolean(KEY_ALAUNE); }
     public ParseFile getKeyImage(){ return getParseFile(KEY_IMAGE); }
 
+    public static ParseObject fromHash(HashMap object) {
+        return ParseObject.fromJSON(new JSONObject(object), "News", ParseDecoder.get());
+    }
+
     public static void getNews(HashMap params, FunctionCallback<Object> callback) {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_LIST, params, callback);
     }
@@ -43,12 +54,23 @@ public class News extends ParseObject {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_DELETE, params, callback);
     }
 
-    public static void getNewsAdmin(HashMap params, FunctionCallback<Object> callback) {
+    public static void getNewsAdmin(HashMap params, FunctionCallback<List<Object>> callback) {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_ADMIN_LIST, params, callback);
     }
 
     public static void createNewsAdmin(HashMap params, FunctionCallback<Object> callback) {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_CREATE, params, callback);
+    }
+
+    public static void updateNewsAdmin(HashMap params, FunctionCallback<Object> callback) {
+        ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_UPDATE, params, callback);
+    }
+
+    public static void activeNewsAdmin(String newsId, boolean active, FunctionCallback<Object> callback) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("newsId", newsId);
+        params.put("active", String.valueOf(active));
+        ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_MAKE_ACTIVE, params, callback);
     }
 
     public static void getDetailNews(String newsId, FunctionCallback<Object> callback) {

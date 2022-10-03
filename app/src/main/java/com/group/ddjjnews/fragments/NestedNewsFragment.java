@@ -34,13 +34,13 @@ public class NestedNewsFragment extends Fragment {
     public static final String TAG = "NestedNewsFragment";
     private static final String ARG_PARAM1 = "category";
     private static final int DISPLAY_LIMIT = 21;
+
     FragmentNestedNewsBinding binding;
 
     List<ParseObject> newsPosts = new ArrayList<>();
     NewsAdapter adapter;
     GridLayoutManager layoutManager;
     int page = 0;
-
     private String mParam1;
 
     public NestedNewsFragment() {}
@@ -58,7 +58,6 @@ public class NestedNewsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         adapter = new NewsAdapter(getContext(), newsPosts);
         layoutManager = new GridLayoutManager(getContext(), 2);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
@@ -78,15 +77,12 @@ public class NestedNewsFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 HashMap<String, Object> params = new HashMap<>();
-                if (mParam1 != null)
-                    params.put(ARG_PARAM1, mParam1);
-                params.put("limit", DISPLAY_LIMIT);
-                params.put("skip", (page * DISPLAY_LIMIT));
-                News.getNews(params, (objects, e) -> {
-                    if(e != null) return;
-                    newsPosts.addAll((Collection<? extends ParseObject>) objects);
-                    adapter.notifyDataSetChanged();
-                });
+
+//                News.getNews(params, (objects, e) -> {
+//                    if(e != null) return;
+//                    newsPosts.addAll((Collection<? extends ParseObject>) objects);
+//                    adapter.notifyDataSetChanged();
+//                });
             }
         };
 
@@ -110,15 +106,17 @@ public class NestedNewsFragment extends Fragment {
                 return 1;
             }
         });
-        binding.rcNews.addItemDecoration(new SpaceItemDecoration(21));
+        binding.rcNews.addItemDecoration(new SpaceItemDecoration(23));
         binding.rcNews.setLayoutManager(layoutManager);
         binding.rcNews.setOnScrollListener(endless);
         binding.rcNews.setAdapter(adapter);
 
         adapter.setListener(item -> ((MainActivity)getContext()).gotoDetail("news", item));
         binding.swipeContainer.setRefreshing(true);
+
         getNewsPosts(null, (objects, e) -> {
             if (e == null) {
+                Toast.makeText(getContext(), ""+objects.toString(), Toast.LENGTH_SHORT).show();
                 newsPosts.clear();
                 newsPosts.addAll((Collection<? extends ParseObject>) objects);
                 adapter.notifyDataSetChanged();
@@ -128,7 +126,7 @@ public class NestedNewsFragment extends Fragment {
     }
 
     public void addItem(News n) {
-        newsPosts.add(n);
+        newsPosts.add(0, n);
         adapter.notifyItemInserted(0);
     }
 
@@ -146,9 +144,6 @@ public class NestedNewsFragment extends Fragment {
         HashMap<String, Object> params = new HashMap<>();
         if (mParam1 != null)
             params.put(ARG_PARAM1, mParam1);
-        if (query != null)
-            params.put("title", query);
-        params.put("limit", DISPLAY_LIMIT);
         News.getNews(params, callback);
     }
 }

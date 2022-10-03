@@ -14,12 +14,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public class GenericAdapter<T extends ParseObject, F extends ViewDataBinding> extends RecyclerView.Adapter<GenericAdapter.ViewHolder> {
+public class GenericAdapter<T extends Object, F extends ViewDataBinding> extends RecyclerView.Adapter<GenericAdapter.ViewHolder> {
     Context context;
-    List<? extends ParseObject> items;
+    List<T> items;
     Class<? extends ViewDataBinding> b;
 
-    public GenericAdapter(Context context, List<? extends ParseObject> items, Class<? extends ViewDataBinding> b) {
+    public GenericAdapter(Context context, List<T> items, Class<? extends ViewDataBinding> b) {
         this.context = context;
         this.items = items;
         this.b = b;

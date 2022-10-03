@@ -3,6 +3,7 @@
     <string name="app_dash_name">Dashboard</string>
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="activity_blood_name">Donation blood</string>
+    <string name="activity_settings">Settings</string>
 
     <!-- Paste BOTH strings as required -->
     <string name="back4app_app_id" tools:ignore="Typos">g5fzhBeMP4sFCISPv4Dl8wBbZN066oEy1XnpQbL3</string>
@@ -31,4 +32,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hot_fire">Hot fire</string>
     <string name="or_using">Or using</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Messages Preferences -->
+    <string name="general">Generals</string>
+    <string name="black_mode">Black mode</string>
+    <string name="languages">Change your language</string>
+
+    <!-- Sync Preferences -->
+    <string name="notifications">Notifications</string>
+    <string name="news_title">When new news added</string>
+    <string name="req_blood">When others request for blood donation</string>
 </resources>

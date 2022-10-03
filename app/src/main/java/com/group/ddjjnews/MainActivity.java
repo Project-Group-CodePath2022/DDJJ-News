@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+import com.facebook.login.LoginManager;
 import com.group.ddjjnews.databinding.ActivityMainBinding;
 import com.group.ddjjnews.fragments.LoginFragment;
 import com.group.ddjjnews.fragments.NewsFragment;
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.bottom_news:
                     fragmentManager.beginTransaction().hide(currentFragment).show(newsFragment).commit();
-                    getSupportActionBar().setTitle("My news");
+                    getSupportActionBar().setTitle("Breaking");
                     currentFragment = newsFragment;
                     break;
                 case R.id.bottom_saved:
@@ -116,12 +117,15 @@ public class MainActivity extends AppCompatActivity {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         } else if (itemId == R.id.main_logout) {
+            LoginManager.getInstance().logOut();
             User.logOut();
             restartActivity();
             return true;
         } else if (itemId == R.id.main_search) {
             gotoSearch();
             return true;
+        } else if (itemId == R.id.main_settings) {
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

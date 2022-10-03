@@ -132,6 +132,7 @@ public class UserCreationAdminFragment extends DialogFragment {
     private void setSpinnerCategory() {
         // Setup roles for spinner
         adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, nameROles);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.roleSpinner.setAdapter(adapter);
         binding.roleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

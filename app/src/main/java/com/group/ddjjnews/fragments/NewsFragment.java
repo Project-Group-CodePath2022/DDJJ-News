@@ -5,26 +5,48 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.android.material.tabs.TabLayout;
 import com.group.ddjjnews.R;
+import com.group.ddjjnews.SpaceItemDecoration;
+import com.group.ddjjnews.Utils.TimeFormatter;
+import com.group.ddjjnews.adapters.GenericAdapter;
+import com.group.ddjjnews.adapters.ViewPagerAdapter;
 import com.group.ddjjnews.adapters.ViewPagerDynamicAdapter;
+import com.group.ddjjnews.databinding.DashItemBinding;
 import com.group.ddjjnews.databinding.FragmentNewsBinding;
+import com.group.ddjjnews.databinding.FragmentRefreshBaseBinding;
+import com.group.ddjjnews.databinding.NewsSavedItemBinding;
+import com.group.ddjjnews.models.Category;
 import com.group.ddjjnews.models.News;
 import com.group.ddjjnews.models.User;
+import com.parse.FunctionCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.livequery.ParseLiveQueryClient;
 import com.parse.livequery.SubscriptionHandling;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class NewsFragment extends Fragment {
@@ -47,7 +69,6 @@ public class NewsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        adapter = new ViewPagerDynamicAdapter(getChildFragmentManager());
     }
 
     @Override
@@ -60,23 +81,13 @@ public class NewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.newsPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.newsTab));
-        binding.newsPager.setOffscreenPageLimit(4);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager());
         all = NestedNewsFragment.newInstance(null);
 
-        binding.newsTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                // setCurrentItem as the tab position
-                binding.newsPager.setCurrentItem(tab.getPosition());
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
-        });
-
-        getCategoriesForNewsInPrefs();
+        viewPagerAdapter.add(all, "News");
+        viewPagerAdapter.add(new CategoryListFragment(), "Categs");
+        binding.newsPager.setAdapter(viewPagerAdapter); // Set adapter
+        binding.newsTab.setupWithViewPager(binding.newsPager);
 
         try {
             parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(websocketUrl));
@@ -90,15 +101,16 @@ public class NewsFragment extends Fragment {
         // Connect to Parse server
         SubscriptionHandling<News> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
 
-        // Listen for CREATE events on the Message class
         subscriptionHandling.handleEvent(SubscriptionHandling.Event.LEAVE, (query, object) -> {
-            // RecyclerView updates need to be run on the UI thread
             getActivity().runOnUiThread(() -> all.removeItem(object));
         });
 
         subscriptionHandling.handleEvent(SubscriptionHandling.Event.ENTER, (query, object) -> {
             // RecyclerView updates need to be run on the UI thread
-            getActivity().runOnUiThread(() -> all.addItem(object));
+            getActivity().runOnUiThread(() -> {
+                all.addItem(object);
+                Toast.makeText(getContext(), object.getKeyTitle(), Toast.LENGTH_SHORT).show();
+            });
         });
 
     }
@@ -108,25 +120,60 @@ public class NewsFragment extends Fragment {
         if (User.getCurrentUser() == null) { // no logged in user do not display logout item menu
             menu.findItem(R.id.main_logout).setVisible(false);
         }
-
     }
+    public static class CategoryListFragment extends RefreshBaseFragment {
+        FragmentRefreshBaseBinding binding;
 
-    private void getCategoriesForNewsInPrefs() {
-        // Default Tab (All)
-        binding.newsTab.addTab(binding.newsTab.newTab().setText("All"));
-        adapter.add(all);
-        Set<String> sc = new HashSet<>();
-        sc.add("culture");
-        sc.add("sports");
-        sc.add("inter");
-        sc.add("politics");
-        sc.add("education");
+        List<Category> items = new ArrayList<>();
 
-        for (String category: sc) {
-            binding.newsTab.addTab(binding.newsTab.newTab().setText(category));
-            adapter.add(NestedNewsFragment.newInstance(category));
+        public CategoryListFragment() {}
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            this.binding = FragmentRefreshBaseBinding.inflate(inflater, container, false);
+            this.rcItems = binding.rcView;
+            this.sRefresh = binding.sRefresh;
+            return binding.getRoot();
         }
-        adapter.notifyDataSetChanged();
-        binding.newsPager.setAdapter(adapter);
+
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            this.adapter = new GenericAdapter<Category, DashItemBinding>(getContext(), items, DashItemBinding.class) {
+                @Override
+                public void bindItem(DashItemBinding binding, Category item, int position) {
+                    binding.title.setText(item.getKeyName());
+                }
+            };
+            this.layoutManager = new GridLayoutManager(getContext(), 2);
+        }
+
+        @Override
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+            binding.rcView.addItemDecoration(new SpaceItemDecoration(18));
+            displayCats();
+        }
+
+        @Override
+        protected void handleRefresh(SwipeRefreshLayout swipeCont) {
+            displayCats();
+        }
+
+        private void displayCats() {
+            Category.getAll(new HashMap<>(), (object, e) -> {
+                sRefresh.setRefreshing(true);
+                if (e == null) {
+                    items.clear();
+                    items.addAll((Collection<? extends Category>) object);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.d("news", e.toString(), e);
+                }
+                sRefresh.setRefreshing(false);
+            });
+        }
     }
 }

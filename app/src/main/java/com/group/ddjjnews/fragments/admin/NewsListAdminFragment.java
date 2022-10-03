@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.group.ddjjnews.fragments.RefreshFloatingBaseFragment;
 import com.group.ddjjnews.models.Category;
 import com.group.ddjjnews.models.News;
 
+import com.group.ddjjnews.models.User;
 import com.parse.FunctionCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -82,7 +84,7 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
 
     @Override
     protected void handleFloatingAB(View view) {
-        NewsCreationAdminFragment fr = NewsCreationAdminFragment.newInstance(null);
+        NewsCreationAdminFragment fr = NewsCreationAdminFragment.newInstance(null, 0);
         fr.setNameCategories(nameCategories);
         fr.setCancelable(true);
         fr.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
@@ -94,6 +96,12 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
         getAllNews();
     }
 
+    public void updateItem(News item, int pos) {
+        news.set(pos, item);
+        adapter.notifyItemChanged(pos);
+    }
+
+
     public void addItem(News item) {
         news.add(0, item);
         adapter.notifyItemInserted(0);
@@ -104,13 +112,21 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(R.layout.bsd_news_admin);
         bottomSheetDialog.findViewById(R.id.edit).setOnClickListener(view -> {
-            NewsCreationAdminFragment fr = NewsCreationAdminFragment.newInstance(item);
+            NewsCreationAdminFragment fr = NewsCreationAdminFragment.newInstance(item, pos);
             fr.setNameCategories(nameCategories);
             fr.setCancelable(true);
             fr.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
             fr.show(getChildFragmentManager(), "nca");
         });
-        ((CheckBox)bottomSheetDialog.findViewById(R.id.cbActive)).setChecked(item.getKeyActive());
+        CheckBox checkBox = bottomSheetDialog.findViewById(R.id.cbActive);
+        checkBox.setChecked(item.getKeyActive());
+        checkBox.setOnCheckedChangeListener((compoundButton, b) -> News.activeNewsAdmin(item.getObjectId(), b, (object, e) -> {
+            if (e == null)
+                checkBox.setChecked( ((News)object).getKeyActive());
+            else
+                Toast.makeText(getContext(), ""+e.toString(), Toast.LENGTH_SHORT).show();
+        }));
+
         bottomSheetDialog.findViewById(R.id.delete).setOnClickListener(view -> {
             News.deleteNews(item.getObjectId(), (object, e) -> {
                 if (e == null) {
@@ -127,10 +143,12 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
 
     private void getAllNews() {
         sRefresh.setRefreshing(true);
-        News.getNewsAdmin(new HashMap<>(), (objects, e) -> {
+        News.getNewsAdmin(new HashMap<>(), (object, e) -> {
             if (e == null) {
                 news.clear();
-                news.addAll((Collection<? extends ParseObject>) objects);
+                for (Object o: object){
+                    news.add((ParseObject) o);
+                }
                 adapter.notifyDataSetChanged();
             }
             sRefresh.setRefreshing(false);
@@ -138,21 +156,10 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
     }
 
     private void setCategory() {
-        Category.getAll(new HashMap<>(), new Category.Callback() {
-            @Override
-            public void done(ParseObject object, Exception e) {}
-
-            @Override
-            public void done(Collection objects, Exception e) {
-                if (e == null){
-                    nameCategories.clear();
-                    for (Object r : objects) {
-                        nameCategories.add(((Category)r).getKeyName());
-                    }
-                    Log.d("AAA", nameCategories.toString());
-                } else {
-                    Log.d("AAA", e.toString(), e);
-                }
+        Category.getAll(new HashMap<>(), (object, e) -> {
+            if (e == null){
+                nameCategories.clear();
+                nameCategories.addAll((Collection<? extends String>) object);
             }
         });
     }

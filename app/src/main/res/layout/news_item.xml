@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="143dp">
 
         <ImageView
             android:id="@+id/imgImage"
@@ -22,11 +22,22 @@
             android:layout_below="@+id/imgImage" />
 
         <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:ellipsize="end"
+            android:layout_marginTop="7dp"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
             android:id="@+id/createdAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:textSize="14sp"
-            android:layout_below="@id/title" />
+            android:textSize="13sp"
+            android:layout_toRightOf="@id/tvCategory"
+            android:paddingLeft="4dp"
+            android:layout_alignParentBottom="true" />
+
     </RelativeLayout>
 </layout>

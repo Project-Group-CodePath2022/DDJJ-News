@@ -62,11 +62,6 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
         }
 
         public void bind(User item) {
-//            if (item.getKeyImage() != null)
-//                Glide.with(context)
-//                        .load(item.getKeyImage().getUrl())
-//                        .transform(new RoundedCorners(12))
-//                        .into(binding.imgImage);
             if (item.get("role") != null) {
                 binding.role.setText(((ParseRole)ParseObject.fromJSON(new JSONObject((HashMap) item.get("role")), "_Role", ParseDecoder.get())).getName());
             }

@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -30,10 +31,14 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+
 public class NewsCreationAdminFragment extends DialogFragment {
     FragmentNewsCreationAdminBinding binding;
     private static final int PICK_PHOTO = 1000;
     public static final String KEY_NEWS = "news";
+    public static final String KEY_POSITION = "position";
+    int position;
     News news;
     ArrayAdapter<String> adapter;
     String category;
@@ -42,10 +47,11 @@ public class NewsCreationAdminFragment extends DialogFragment {
 
     public NewsCreationAdminFragment() {}
 
-    public static NewsCreationAdminFragment newInstance(News news) {
+    public static NewsCreationAdminFragment newInstance(News news, int pos) {
         NewsCreationAdminFragment fragment = new NewsCreationAdminFragment();
         Bundle args = new Bundle();
         args.putParcelable(KEY_NEWS, news);
+        args.putInt(KEY_POSITION, pos);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,6 +61,7 @@ public class NewsCreationAdminFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             this.news = getArguments().getParcelable(KEY_NEWS);
+            this.position = getArguments().getInt(KEY_POSITION);
         }
     }
 
@@ -76,8 +83,20 @@ public class NewsCreationAdminFragment extends DialogFragment {
 
         binding.btnCreateNews.setOnClickListener(view1 -> {
             if (!fieldsOk()) return ;
-            createNew();
+            if (news != null)
+                updateNews();
+            else
+                createNew();
         });
+    }
+
+    @Override
+    public void onResume() {
+        WindowManager.LayoutParams params = Objects.requireNonNull(getDialog()).getWindow().getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes(params);
+        super.onResume();
     }
 
     private void prefillIpUpdate() {
@@ -86,7 +105,27 @@ public class NewsCreationAdminFragment extends DialogFragment {
             binding.edContent.setText(news.getKeyContent());
             binding.categorySpinner.setSelection(adapter.getPosition(news.getKeyCategory().getString("name")));
             Glide.with(getContext()).load(news.getKeyImage().getUrl()).into(binding.takeImg);
+            binding.btnCreateNews.setText("Update");
         }
+    }
+
+    private void updateNews() {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("title", binding.edTitle.getText().toString());
+        params.put("description", binding.edDesc.getText().toString());
+        params.put("content", binding.edContent.getText().toString());
+        params.put("file", bytesFileImage);
+        params.put("category", category);
+
+        News.updateNewsAdmin(params, (object, e) -> {
+            if (e == null) {
+                this.dismiss();
+                ((NewsListAdminFragment)getParentFragment()).updateItem((News) object, position);
+                Toast.makeText(getContext(), "Successfully saved!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void createNew() {
@@ -144,6 +183,7 @@ public class NewsCreationAdminFragment extends DialogFragment {
     private void setSpinnerCategory() {
         // Setup categories for news
         adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, nameCategories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.categorySpinner.setAdapter(adapter);
         binding.categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

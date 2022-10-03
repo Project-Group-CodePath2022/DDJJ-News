@@ -125,10 +125,7 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
     private void showBSD(User user, int pos) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(R.layout.bsd_user_admin);
-        CheckBox active = bottomSheetDialog.findViewById(R.id.cbActive);
-        active.setChecked(user.getKeyActive());
 
-        active.setOnCheckedChangeListener((compoundButton, b) -> Toast.makeText(getContext(), ""+b, Toast.LENGTH_SHORT).show());
         bottomSheetDialog.findViewById(R.id.edit).setOnClickListener(view -> {
             UserCreationAdminFragment fr = UserCreationAdminFragment.newInstance(user, pos);
             fr.setNameROles(nameRoles);

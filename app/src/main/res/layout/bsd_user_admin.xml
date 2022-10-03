@@ -3,25 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/llActive"
-        android:padding="7dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:padding="7dp"
-            android:text="Active: "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <CheckBox
-            android:id="@+id/cbActive"
-            android:checked="false"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="7dp" />
-    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/edit"
         android:padding="7dp"

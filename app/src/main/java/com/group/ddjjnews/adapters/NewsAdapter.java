@@ -18,6 +18,7 @@ import com.group.ddjjnews.R;
 import com.group.ddjjnews.Utils.TimeFormatter;
 import com.group.ddjjnews.databinding.NewsAlauneItemBinding;
 import com.group.ddjjnews.databinding.NewsItemBinding;
+import com.group.ddjjnews.models.Category;
 import com.group.ddjjnews.models.News;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -90,7 +91,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .transform(new RoundedCorners(20))
                         .into(itemBinding.imgImage);
             itemBinding.title.setText(item.getKeyTitle());
-            itemBinding.createdAt.setText("Date: " + TimeFormatter.getTimeDifference(item.getCreatedAt().toString()));
+            itemBinding.tvCategory.setText(((Category)item.getKeyCategory()).getKeyName());
+            itemBinding.createdAt.setText(" | " + TimeFormatter.getTimeDifference(item.getCreatedAt().toString()));
             // Set listener
             itemBinding.getRoot().setOnClickListener(view -> listener.itemClicked(item));
 

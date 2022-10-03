@@ -1,6 +1,7 @@
 package com.group.ddjjnews.adapters.admin;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -13,8 +14,14 @@ import com.group.ddjjnews.R;
 
 import com.group.ddjjnews.databinding.NewsItemAdminBinding;
 import com.group.ddjjnews.models.News;
+import com.parse.ParseDecoder;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseRole;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.NewsHolder> {
@@ -59,7 +66,8 @@ public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.News
         }
 
         public void bind(News item) {
-            if (item.getKeyImage() != null)
+
+             if (item.getKeyImage() != null)
                 Glide.with(context)
                         .load(item.getKeyImage().getUrl())
                         .transform(new RoundedCorners(12))
