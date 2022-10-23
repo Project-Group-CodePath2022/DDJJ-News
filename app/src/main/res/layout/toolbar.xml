@@ -1,0 +1,18 @@
+<com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/appBar"
+    android:fitsSystemWindows="true"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:background="@drawable/custom_appbar"
+    android:paddingHorizontal="4dp"
+    android:paddingTop="1dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.Toolbar
+        android:background="@drawable/custom_toolbar"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        app:titleTextAppearance="@style/TitleToolbar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+</com.google.android.material.appbar.AppBarLayout>
