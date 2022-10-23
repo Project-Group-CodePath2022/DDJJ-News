@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.group.ddjjnews.Utils.SpaceItemDecoration;
 import com.group.ddjjnews.adapters.BloodAdapter;
 import com.group.ddjjnews.databinding.FragmentRefreshBaseBinding;
 import com.group.ddjjnews.models.Blood;
@@ -52,6 +53,7 @@ public class ListBloodFragment extends RefreshBaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.binding.rcView.addItemDecoration(new SpaceItemDecoration(18, false));
         getRequestedBlood();
     }
 

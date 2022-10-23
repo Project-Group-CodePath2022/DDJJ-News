@@ -40,7 +40,6 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
     @Override
     public UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new UserHolder(UserItemAdminBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
     }
 
     @Override

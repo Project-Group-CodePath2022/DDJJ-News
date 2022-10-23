@@ -104,7 +104,9 @@ public class NewsCreationAdminFragment extends DialogFragment {
             binding.edTitle.setText(news.getKeyTitle());
             binding.edContent.setText(news.getKeyContent());
             binding.categorySpinner.setSelection(adapter.getPosition(news.getKeyCategory().getString("name")));
-            Glide.with(getContext()).load(news.getKeyImage().getUrl()).into(binding.takeImg);
+            try{
+                Glide.with(getContext()).load(news.getKeyImage().getUrl()).into(binding.takeImg);
+            }catch (Exception e){e.printStackTrace();}
             binding.btnCreateNews.setText("Update");
         }
     }
@@ -116,6 +118,8 @@ public class NewsCreationAdminFragment extends DialogFragment {
         params.put("content", binding.edContent.getText().toString());
         params.put("file", bytesFileImage);
         params.put("category", category);
+        params.put("newsId", news.getObjectId());
+
 
         News.updateNewsAdmin(params, (object, e) -> {
             if (e == null) {

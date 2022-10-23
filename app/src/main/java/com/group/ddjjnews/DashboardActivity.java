@@ -1,5 +1,4 @@
 package com.group.ddjjnews;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -16,6 +15,7 @@ import com.group.ddjjnews.fragments.admin.UserListAdminFragment;
 import com.group.ddjjnews.models.User;
 
 import java.util.Objects;
+
 
 public class DashboardActivity extends AppCompatActivity {
     ActivityDashboardBinding binding;
@@ -42,11 +42,9 @@ public class DashboardActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        String[] myModels = {"News", "Users", "Requests", "Notifications"};
-        // List<Fragment> myRelatedFragments = new ArrayList<>();
-        adapter.add(NewsListAdminFragment.newInstance());
-        adapter.add(UserListAdminFragment.newInstance());
-
+        String[] myModels = {"News", "Users"};
+        adapter.add(new NewsListAdminFragment());
+        adapter.add(new UserListAdminFragment());
 
         for (String myModel : myModels) {
             binding.dashTab.addTab(binding.dashTab.newTab().setText(myModel));
@@ -54,16 +52,8 @@ public class DashboardActivity extends AppCompatActivity {
         binding.dashPager.setAdapter(adapter); // Set adapter
     }
 
-    @Nullable
-    @Override
-    public Intent getSupportParentActivityIntent() {
-        finish();
-        return null;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 }

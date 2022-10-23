@@ -14,8 +14,8 @@ import java.util.List;
 public class Comment extends ParseObject {
     public static final String KEY_TEXT = "text";
     public static final String KEY_USER = "user";
-    public static final String CUSTOM_ENDPOINT_LIST = "list-comment-for";
-    public static final String CUSTOM_ENDPOINT_CREATE = "create-comment-for";
+    public static final String CUSTOM_ENDPOINT_LIST = "comments:list";
+    public static final String CUSTOM_ENDPOINT_CREATE = "comments:create";
 
     public Comment() {}
     public String getKeyText() { return getString(KEY_TEXT); }

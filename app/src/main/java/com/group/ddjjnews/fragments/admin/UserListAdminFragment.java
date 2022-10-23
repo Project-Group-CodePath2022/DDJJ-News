@@ -1,6 +1,5 @@
 package com.group.ddjjnews.fragments.admin;
-
-
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +32,7 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
     List<ParseObject> users = new ArrayList<>();
     FragmentRefreshFloatingBaseBinding binding;
     List<String> nameRoles = new ArrayList<>();
+    Context context;
 
 
     public static UserListAdminFragment newInstance() {
@@ -43,10 +43,16 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new UserAdapterAdmin(getContext(), users);
-        layoutManager = new LinearLayoutManager(getContext());
+        this.adapter = new UserAdapterAdmin(getContext(), users);
+        this.layoutManager = new LinearLayoutManager(getContext());
     }
 
     @Nullable
@@ -116,6 +122,8 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
                         users.add(User.fromHash((HashMap) o));
                     }
                     adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
                 }
                 sRefresh.setRefreshing(false);
             }
@@ -123,7 +131,7 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
     }
 
     private void showBSD(User user, int pos) {
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         bottomSheetDialog.setContentView(R.layout.bsd_user_admin);
 
         bottomSheetDialog.findViewById(R.id.edit).setOnClickListener(view -> {
@@ -139,7 +147,7 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
                 adapter.notifyItemRemoved(pos);
                 bottomSheetDialog.dismiss();
             } else {
-                Toast.makeText(requireActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
             }
         }));
         bottomSheetDialog.show();

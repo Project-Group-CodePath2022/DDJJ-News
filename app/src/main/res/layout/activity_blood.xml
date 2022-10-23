@@ -6,42 +6,22 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-        <com.google.android.material.appbar.AppBarLayout
-            android:fitsSystemWindows="true"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/bloodAppBar">
 
-            <androidx.appcompat.widget.Toolbar
-                android:background="@color/white"
-                android:id="@+id/bloodToolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight">
-            </androidx.appcompat.widget.Toolbar>
-            <com.google.android.material.tabs.TabLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/bloodTab"
-                app:tabMode="scrollable"
-                app:tabGravity="start"/>
-        </com.google.android.material.appbar.AppBarLayout>
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/bloodPager"
+        <include android:id="@+id/bloodAppBar" layout="@layout/toolbar"/>
+
+        <FrameLayout
+            android:id="@+id/bloodFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/bloodAppBar"
-            android:layout_marginTop="16dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingAction"
+            android:layout_above="@id/bloodBottomNavigation"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bloodBottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_baseline_add"
-            android:contentDescription="@string/desc_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/MyBottomNavigation"
+            app:menu="@menu/blood_bottom_menu" />
     </RelativeLayout>
 </layout>

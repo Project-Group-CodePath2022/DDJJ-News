@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,25 +17,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.google.android.material.tabs.TabLayout;
 import com.group.ddjjnews.R;
-import com.group.ddjjnews.SpaceItemDecoration;
-import com.group.ddjjnews.Utils.TimeFormatter;
+
+import com.group.ddjjnews.Utils.SpaceItemDecoration;
 import com.group.ddjjnews.adapters.GenericAdapter;
 import com.group.ddjjnews.adapters.ViewPagerAdapter;
-import com.group.ddjjnews.adapters.ViewPagerDynamicAdapter;
+
 import com.group.ddjjnews.databinding.DashItemBinding;
+import com.group.ddjjnews.databinding.EmptyStateBinding;
 import com.group.ddjjnews.databinding.FragmentNewsBinding;
+
 import com.group.ddjjnews.databinding.FragmentRefreshBaseBinding;
-import com.group.ddjjnews.databinding.NewsSavedItemBinding;
 import com.group.ddjjnews.models.Category;
 import com.group.ddjjnews.models.News;
 import com.group.ddjjnews.models.User;
-import com.parse.FunctionCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.livequery.ParseLiveQueryClient;
 import com.parse.livequery.SubscriptionHandling;
@@ -43,15 +38,12 @@ import com.parse.livequery.SubscriptionHandling;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 public class NewsFragment extends Fragment {
     FragmentNewsBinding binding;
-    ViewPagerDynamicAdapter adapter;
     ParseLiveQueryClient parseLiveQueryClient = null;
     ParseQuery<News> parseQuery;
     String websocketUrl = "wss://ddjjnews.b4a.io";
@@ -82,7 +74,8 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager());
-        all = NestedNewsFragment.newInstance(null);
+        if (all == null)
+            all = new NestedNewsFragment();
 
         viewPagerAdapter.add(all, "News");
         viewPagerAdapter.add(new CategoryListFragment(), "Categs");
@@ -101,9 +94,7 @@ public class NewsFragment extends Fragment {
         // Connect to Parse server
         SubscriptionHandling<News> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
 
-        subscriptionHandling.handleEvent(SubscriptionHandling.Event.LEAVE, (query, object) -> {
-            getActivity().runOnUiThread(() -> all.removeItem(object));
-        });
+        subscriptionHandling.handleEvent(SubscriptionHandling.Event.LEAVE, (query, object) -> getActivity().runOnUiThread(() -> all.removeItem(object)));
 
         subscriptionHandling.handleEvent(SubscriptionHandling.Event.ENTER, (query, object) -> {
             // RecyclerView updates need to be run on the UI thread
@@ -121,9 +112,9 @@ public class NewsFragment extends Fragment {
             menu.findItem(R.id.main_logout).setVisible(false);
         }
     }
-    public static class CategoryListFragment extends RefreshBaseFragment {
-        FragmentRefreshBaseBinding binding;
 
+    public static class CategoryListFragment extends RefreshBaseFragment {
+        protected FragmentRefreshBaseBinding binding;
         List<Category> items = new ArrayList<>();
 
         public CategoryListFragment() {}
@@ -141,19 +132,26 @@ public class NewsFragment extends Fragment {
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            this.adapter = new GenericAdapter<Category, DashItemBinding>(getContext(), items, DashItemBinding.class) {
+            this.layoutManager = new GridLayoutManager(getContext(), 2);
+
+            this.adapter = new GenericAdapter<Category, DashItemBinding, EmptyStateBinding>(getContext(), items, DashItemBinding.class, EmptyStateBinding.class) {
                 @Override
                 public void bindItem(DashItemBinding binding, Category item, int position) {
                     binding.title.setText(item.getKeyName());
                 }
+
+                @Override
+                public void bindEmpty(EmptyStateBinding binding) {
+                    binding.title.setText("No category");
+                    binding.subTitle.setText("Try refreshing");
+                }
             };
-            this.layoutManager = new GridLayoutManager(getContext(), 2);
         }
 
         @Override
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-            binding.rcView.addItemDecoration(new SpaceItemDecoration(18));
+            binding.rcView.addItemDecoration(new SpaceItemDecoration(16, true));
             displayCats();
         }
 
@@ -162,12 +160,14 @@ public class NewsFragment extends Fragment {
             displayCats();
         }
 
-        private void displayCats() {
+        public void displayCats() {
+            sRefresh.setRefreshing(true);
             Category.getAll(new HashMap<>(), (object, e) -> {
-                sRefresh.setRefreshing(true);
                 if (e == null) {
                     items.clear();
-                    items.addAll((Collection<? extends Category>) object);
+                    for (Object o: object) {
+                        items.add((Category) o);
+                    }
                     adapter.notifyDataSetChanged();
                 } else {
                     Log.d("news", e.toString(), e);

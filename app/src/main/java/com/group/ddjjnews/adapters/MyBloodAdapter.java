@@ -59,7 +59,7 @@ public class MyBloodAdapter extends RecyclerView.Adapter<MyBloodAdapter.BloodHol
             this.binding = binding;
         }
         public void bind(Blood item) {
-            binding.bloodTvForName.setText(item.getText());
+            binding.bloodTvForName.setText(item.getKeyForName());
             binding.bloodTvDesc.setText(item.getKeyDescription());
             binding.bloodTvCreatedAt.setText("Date: " + item.getCreatedAt().toString());
             binding.options.setOnClickListener(view -> listener.onOptionsItemClicked(item, getAdapterPosition()));

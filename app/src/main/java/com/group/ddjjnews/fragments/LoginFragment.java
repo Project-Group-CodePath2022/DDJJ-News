@@ -131,6 +131,7 @@ public class LoginFragment extends DialogFragment {
         }
         return true;
     }
+
     public void loginVIAFacebook() {
         Collection<String> permissions = Arrays.asList("public_profile", "email");
         ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {

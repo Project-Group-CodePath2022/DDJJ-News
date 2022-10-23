@@ -11,58 +11,78 @@
             <TextView
                 android:id="@+id/tv1"
                 android:layout_marginBottom="12dp"
-                android:text="News post"
+                android:text="Create News post"
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
             <ImageView
+                android:background="@drawable/photo_border"
                 android:id="@+id/takeImg"
                 android:layout_below="@id/tv1"
                 android:layout_marginTop="12dp"
                 android:layout_width="48dp"
                 android:layout_height="48dp" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_below="@id/tv1"
+                android:id="@+id/lTitle"
                 android:layout_toRightOf="@id/takeImg"
                 android:layout_alignBaseline="@id/takeImg"
                 android:layout_marginLeft="7dp"
-                android:id="@+id/edTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/dark_black"
-                android:hint="Title"/>
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Title">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"
+                    android:id="@+id/edTitle"
+                    android:inputType="text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/edDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lDesc"
                 android:layout_below="@id/takeImg"
-                android:inputType="text"
                 android:layout_marginTop="7dp"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/dark_black"
-                android:hint="Description"/>
-
-            <EditText
-                android:id="@+id/edContent"
                 android:layout_width="match_parent"
-                android:layout_height="144dp"
-                android:layout_below="@id/edDesc"
-                android:inputType="textMultiLine"
-                android:gravity="start"
-                android:padding="7dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Description">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edDesc"
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"
+                    android:inputType="text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_below="@id/lDesc"
+                android:id="@+id/lCon"
                 android:layout_marginTop="7dp"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/dark_black"
-                android:hint="Content (Markdown)"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Content (Markdown)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edContent"
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"
+                    android:inputType="textMultiLine"
+                    android:gravity="start"
+                    android:minHeight="240dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <Spinner
-                android:layout_below="@id/edContent"
+                android:layout_below="@id/lCon"
                 android:id="@+id/categorySpinner"
                 android:layout_marginTop="7dp"
                 android:spinnerMode="dropdown"
@@ -91,7 +111,8 @@
 
             <Button
                 android:id="@+id/btnCreateNews"
-                android:layout_width="wrap_content"
+                android:background="@drawable/rounded_corners"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:layout_below="@id/tvDone"

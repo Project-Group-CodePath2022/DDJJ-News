@@ -1,26 +1,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    <com.google.android.material.appbar.AppBarLayout
-        android:fitsSystemWindows="true"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/sAppBar">
-
-        <androidx.appcompat.widget.Toolbar
-            android:background="@color/white"
-            android:id="@+id/sToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight">
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <include android:id="@+id/settingsAppBar" layout="@layout/toolbar"/>
     <LinearLayout
-        android:layout_below="@id/sAppBar"
+        android:layout_below="@id/settingsAppBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

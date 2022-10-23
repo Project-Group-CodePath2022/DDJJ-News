@@ -19,15 +19,7 @@ import com.group.ddjjnews.models.User;
 
 public class SavedFragment extends Fragment {
     FragmentSavedBinding binding;
-
     public SavedFragment() {}
-
-    public static SavedFragment newInstance() {
-        SavedFragment fragment = new SavedFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,9 +37,7 @@ public class SavedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager());
-
         viewPagerAdapter.add(NestedSavedFragment.newInstance(NestedSavedFragment.TYPE_NEWS), "News");
         viewPagerAdapter.add(NestedSavedFragment.newInstance(NestedSavedFragment.TYPE_BLOG), "Blog");
         binding.pager.setAdapter(viewPagerAdapter); // Set adapter
@@ -61,7 +51,6 @@ public class SavedFragment extends Fragment {
         if (User.getCurrentUser() == null) {
             menu.findItem(R.id.main_logout).setVisible(false);
         }
-        menu.findItem(R.id.main_search).setVisible(false); // Hide search icon
     }
 
     @Override

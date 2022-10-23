@@ -5,6 +5,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:padding="12dp"
             android:layout_width="match_parent"
@@ -19,44 +20,112 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <Spinner
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_below="@id/tv1"
+                android:id="@+id/lUnit"
+                android:layout_marginTop="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Quantity">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"
+                    android:id="@+id/edUnit"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:layout_below="@id/lUnit"
                 android:id="@+id/edGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:autofillHints="" />
 
-            <EditText
-                android:id="@+id/edForName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_below="@id/edGroup"
-                android:inputType="text"
+                android:id="@+id/lName"
                 android:layout_marginTop="7dp"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/dark_black"
-                android:hint="Name of the person"
-                android:autofillHints="" />
-
-            <EditText
-                android:id="@+id/edDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/edForName"
-                android:inputType="text"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Name of the person">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"
+                    android:id="@+id/edForName"
+                    android:inputType="text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_below="@id/lName"
+                android:id="@+id/lDesc"
                 android:layout_marginTop="7dp"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/dark_black"
-                android:hint="All little description"
-                android:autofillHints="" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Description">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"
+                    android:id="@+id/edDesc"
+                    android:inputType="text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:layout_below="@id/lDesc"
+                android:id="@+id/btnAddLocation"
+                android:background="@drawable/circle"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="7dp"
+                android:layout_alignBaseline="@id/lAdr"
+                android:text="Send"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_below="@id/lDesc"
+                android:layout_toRightOf="@id/btnAddLocation"
+                android:id="@+id/lAdr"
+                android:layout_marginTop="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Hospital's address">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"
+                    android:id="@+id/edAddress"
+                    android:inputType="text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_below="@id/btnAddLocation"
+                android:layout_marginTop="7dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
 
             <Button
                 android:id="@+id/btnSendRequestBlood"
-                android:layout_width="wrap_content"
+                android:background="@drawable/rounded_corners"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_below="@id/edDesc"
+                android:layout_marginTop="12dp"
+                android:layout_below="@id/location"
                 android:text="Send"/>
         </RelativeLayout>
     </ScrollView>

@@ -19,8 +19,8 @@
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
 
-    <string name="login_fragment_text_welcome">DDJJ News Authentication</string>
-    <string name="login_fragment_second_text_welcome">We\'are happy to see you !</string>
+    <string name="login_fragment_text_welcome">Hello there! Welcome back</string>
+    <string name="login_fragment_second_text_welcome">Sign in to continue</string>
     <string name="login_fragment_email">Email</string>
     <string name="login_fragment_password">Password</string>
     <string name="login_fragment_btn_login">Log IN</string>

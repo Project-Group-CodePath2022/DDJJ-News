@@ -9,9 +9,9 @@
                     android:enabled="true" />
 
     <item
-        android:id="@+id/bottom_category"
-            android:title="Category"
-        android:icon="@drawable/ic_baseline_category_24"
+        android:id="@+id/bottom_search"
+            android:title="Search"
+        android:icon="@drawable/ic_baseline_search_24"
                 app:showAsAction="ifRoom"
                     android:enabled="true" />
 
@@ -19,6 +19,13 @@
         android:id="@+id/bottom_saved"
         android:title="Saved"
         android:icon="@drawable/ic_baseline_bookmark_border_24"
+        app:showAsAction="ifRoom"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/bottom_settings"
+        android:title="Settings"
+        android:icon="@drawable/ic_baseline_settings"
         app:showAsAction="ifRoom"
         android:enabled="true"/>
 

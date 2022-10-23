@@ -28,7 +28,7 @@ public class Category extends ParseObject {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_CREATE, params, (object, e) -> callback.done(object, e));
     }
 
-    public static void getAll(HashMap<String, Object> params, FunctionCallback<Object> callback) {
+    public static void getAll(HashMap<String, Object> params, FunctionCallback<List<Object>> callback) {
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_LIST, params, callback);
     }
 

@@ -22,9 +22,7 @@ public class User extends ParseUser {
     private static final String CUSTOM_ENDPOINT_LOG_IN = "log-in";
     private static final String CUSTOM_ENDPOINT_SIGN_UP = "sign-up";
     private static final String CUSTOM_ENDPOINT_DETAIL_OAUTH = "sign-up-facebook";
-
     public static final String CUSTOM_ENDPOINT_ROLE_LIST = "roles:list";
-
     private static final String CUSTOM_ENDPOINT_CREATE = "users:create";
     private static final String CUSTOM_ENDPOINT_DELETE = "users:delete";
     private static final String CUSTOM_ENDPOINT_LIST = "users:list";
@@ -32,7 +30,6 @@ public class User extends ParseUser {
 
     private static final String KEY_ACTIVE = "active";
     public static final String KEY_IS_ADMIN = "isadmin";
-
 
     public interface Callback {
         void done(User object, Exception e);

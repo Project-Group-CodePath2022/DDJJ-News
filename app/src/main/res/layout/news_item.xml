@@ -1,43 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="143dp">
-
-        <ImageView
-            android:id="@+id/imgImage"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        app:cardElevation="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:paddingVertical="7dp"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/desc_image" />
+            android:layout_height="153dp">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="16sp"
-            android:layout_below="@+id/imgImage" />
+            <ImageView
+                android:id="@+id/imgImage"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/desc_image" />
 
-        <TextView
-            android:id="@+id/tvCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:ellipsize="end"
-            android:layout_marginTop="7dp"
-            android:layout_alignParentBottom="true"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgImage"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/createdAt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:layout_toRightOf="@id/tvCategory"
-            android:paddingLeft="4dp"
-            android:layout_alignParentBottom="true" />
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:layout_marginTop="7dp"
+                android:layout_alignParentBottom="true"/>
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/createdAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:layout_toEndOf="@id/tvCategory"
+                android:paddingStart="4dp"
+                android:layout_alignParentBottom="true"
+                tools:ignore="RtlSymmetry" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

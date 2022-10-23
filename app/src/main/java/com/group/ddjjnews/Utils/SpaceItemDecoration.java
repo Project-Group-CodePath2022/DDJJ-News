@@ -1,4 +1,4 @@
-package com.group.ddjjnews;
+package com.group.ddjjnews.Utils;
 
 import android.graphics.Rect;
 import android.view.View;
@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
     int space;
-    public SpaceItemDecoration(int space) {
+    boolean ignoreFirst;
+    public SpaceItemDecoration(int space, boolean ignoreFirst) {
         this.space = space;
+        this.ignoreFirst = ignoreFirst;
     }
 
     @Override
@@ -17,9 +19,9 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
         outRect.left = space;
         outRect.right = space;
         outRect.bottom = (space + 7);
-//        if (parent.getChildLayoutPosition(view) == 0)
-//            outRect.top = space;
-//        else
-//            outRect.top = 0;
+        if (!ignoreFirst)
+            if (parent.getChildLayoutPosition(view) == 0)
+                outRect.top = space;
+
     }
 }

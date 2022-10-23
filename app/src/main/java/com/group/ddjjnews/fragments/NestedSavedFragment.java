@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.group.ddjjnews.DetailActivity;
 
 import com.group.ddjjnews.R;
+import com.group.ddjjnews.Utils.SpaceItemDecoration;
 import com.group.ddjjnews.Utils.TimeFormatter;
 import com.group.ddjjnews.adapters.GenericAdapter;
 import com.group.ddjjnews.databinding.FragmentNestedSavedBinding;
@@ -33,7 +35,6 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class NestedSavedFragment extends Fragment {
     FragmentNestedSavedBinding binding;
     private static final String KEY_TYPE = "type";
@@ -41,9 +42,8 @@ public class NestedSavedFragment extends Fragment {
     public static final String TYPE_BLOG = "blog";
 
     List<News> items = new ArrayList<>();
-    GenericAdapter<News, NewsSavedItemBinding> adapter;
+    GenericAdapter<News, NewsSavedItemBinding, ViewDataBinding> adapter;
     LinearLayoutManager layoutManager;
-
 
     public NestedSavedFragment() {}
 
@@ -58,7 +58,7 @@ public class NestedSavedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.adapter = new GenericAdapter<News, NewsSavedItemBinding>(getContext(), items, NewsSavedItemBinding.class) {
+        this.adapter = new GenericAdapter<News, NewsSavedItemBinding, ViewDataBinding>(getContext(), items, NewsSavedItemBinding.class, null) {
             @Override
             public void bindItem(NewsSavedItemBinding binding, News item, int position) {
                 if (item.getKeyImage() != null)
@@ -89,6 +89,7 @@ public class NestedSavedFragment extends Fragment {
         binding.rcNewsSaved.setLayoutManager(layoutManager);
         binding.rcNewsSaved.setAdapter(adapter);
         binding.rcNewsSaved.setHasFixedSize(true);
+        binding.rcNewsSaved.addItemDecoration(new SpaceItemDecoration(7, false));
     }
 
     @Override

@@ -47,8 +47,10 @@ public class BloodAdapter extends RecyclerView.Adapter<BloodAdapter.BloodHolder>
             super(binding.getRoot());
             this.binding = binding;
         }
+
         public void bind(Blood item) {
-            binding.bloodTvForName.setText(item.getText());
+            binding.bloodTvType.setText(item.getKeyGroupBlood());
+            binding.bloodTvForName.setText(item.getKeyForName());
             binding.bloodTvDesc.setText(item.getKeyDescription());
             binding.bloodTvCreatedAt.setText(TimeFormatter.getTimeDifference(item.getCreatedAt().toString()));
         }

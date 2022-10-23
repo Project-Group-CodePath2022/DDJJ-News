@@ -16,7 +16,6 @@ import java.util.HashMap;
 
 
 public class MyListBloodFragment extends ListBloodFragment {
-
     public static MyListBloodFragment newInstance() {
         MyListBloodFragment f = new MyListBloodFragment();
         Bundle bundle = new Bundle();

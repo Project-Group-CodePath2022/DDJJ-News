@@ -1,18 +1,16 @@
 package com.group.ddjjnews.fragments.admin;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -21,17 +19,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.group.ddjjnews.R;
 import com.group.ddjjnews.adapters.admin.NewsAdapterAdmin;
 import com.group.ddjjnews.databinding.FragmentRefreshFloatingBaseBinding;
+import com.group.ddjjnews.fragments.CommentsFragment;
 import com.group.ddjjnews.fragments.RefreshFloatingBaseFragment;
 import com.group.ddjjnews.models.Category;
 import com.group.ddjjnews.models.News;
-
-import com.group.ddjjnews.models.User;
-import com.parse.FunctionCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,7 +62,7 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((NewsAdapterAdmin)adapter).setListener((item, pos) -> showBSD(item, pos));
+        ((NewsAdapterAdmin)adapter).setListener(this::showBSD);
         setCategory();
         getAllNews();
     }
@@ -111,6 +105,15 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
     private void showBSD(News item, int pos) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(R.layout.bsd_news_admin);
+        bottomSheetDialog.findViewById(R.id.comments).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommentAdminList fr = (CommentAdminList) CommentAdminList.newInstance(item.getObjectId());
+                fr.setCancelable(true);
+                fr.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+                fr.show(getChildFragmentManager(), "caf");
+            }
+        });
         bottomSheetDialog.findViewById(R.id.edit).setOnClickListener(view -> {
             NewsCreationAdminFragment fr = NewsCreationAdminFragment.newInstance(item, pos);
             fr.setNameCategories(nameCategories);
@@ -121,26 +124,26 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
         CheckBox checkBox = bottomSheetDialog.findViewById(R.id.cbActive);
         checkBox.setChecked(item.getKeyActive());
         checkBox.setOnCheckedChangeListener((compoundButton, b) -> News.activeNewsAdmin(item.getObjectId(), b, (object, e) -> {
-            if (e == null)
+            if (e == null) {
                 checkBox.setChecked( ((News)object).getKeyActive());
-            else
-                Toast.makeText(getContext(), ""+e.toString(), Toast.LENGTH_SHORT).show();
+                adapter.notifyItemChanged(pos);
+            } else
+                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
         }));
 
-        bottomSheetDialog.findViewById(R.id.delete).setOnClickListener(view -> {
-            News.deleteNews(item.getObjectId(), (object, e) -> {
-                if (e == null) {
-                    news.remove(pos);
-                    adapter.notifyItemRemoved(pos);
-                    bottomSheetDialog.dismiss();
-                } else {
-                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        });
+        bottomSheetDialog.findViewById(R.id.delete).setOnClickListener(view -> News.deleteNews(item.getObjectId(), (object, e) -> {
+            if (e == null) {
+                news.remove(pos);
+                adapter.notifyItemRemoved(pos);
+                bottomSheetDialog.dismiss();
+            } else {
+                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }));
         bottomSheetDialog.show();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void getAllNews() {
         sRefresh.setRefreshing(true);
         News.getNewsAdmin(new HashMap<>(), (object, e) -> {
@@ -159,8 +162,14 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
         Category.getAll(new HashMap<>(), (object, e) -> {
             if (e == null){
                 nameCategories.clear();
-                nameCategories.addAll((Collection<? extends String>) object);
+                for (Object o: object) {
+                    nameCategories.add(((Category)o).getKeyName());
+                }
             }
         });
+    }
+
+    public static class CommentAdminList extends CommentsFragment {
+
     }
 }

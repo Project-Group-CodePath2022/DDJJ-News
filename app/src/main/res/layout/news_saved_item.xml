@@ -1,60 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
-        android:paddingStart="14dp"
-        android:paddingEnd="12dp"
-        android:paddingVertical="12dp"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        app:cardElevation="0dp"
+        app:cardCornerRadius="4dp"
         android:layout_width="match_parent"
-        android:layout_height="85dp">
-        <ImageView
-            android:id="@+id/imgImage"
-            android:padding="7dp"
-            android:scaleType="centerCrop"
-            android:layout_width="112dp"
-            android:layout_height="83dp"
-            android:contentDescription="@string/desc_image"/>
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:textSize="15sp"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingVertical="7dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:layout_marginStart="12dp"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:layout_toStartOf="@id/options"
-            android:layout_toEndOf="@id/imgImage" />
+            android:layout_height="85dp">
+            <ImageView
+                android:id="@+id/imgImage"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:layout_width="112dp"
+                android:layout_height="83dp"
+                android:contentDescription="@string/desc_image"/>
 
-        <TextView
-            android:id="@+id/tvCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:ellipsize="end"
-            android:layout_marginTop="7dp"
-            android:layout_marginStart="12dp"
-            android:layout_toEndOf="@id/imgImage"
-            android:layout_alignParentBottom="true"/>
+            <TextView
+                android:id="@+id/tvTitle"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="7dp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_toStartOf="@id/options"
+                android:layout_toEndOf="@id/imgImage" />
 
-        <TextView
-            android:id="@+id/tvDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:layout_toRightOf="@id/tvCategory"
-            android:paddingLeft="4dp"
-            android:layout_alignParentBottom="true" />
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:ellipsize="end"
+                android:layout_marginStart="7dp"
+                android:layout_toEndOf="@id/imgImage"
+                android:layout_alignParentBottom="true"/>
 
-        <ImageButton
-            android:id="@+id/options"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:padding="7dp"
-            android:src="@drawable/ic_baseline_more_vert_24"
-            android:background="@android:color/transparent"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/desc_image" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tvDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:layout_toEndOf="@id/tvCategory"
+                android:paddingStart="4dp"
+                android:layout_alignParentBottom="true"
+                tools:ignore="RtlSymmetry" />
+
+            <ImageButton
+                android:id="@+id/options"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="4dp"
+                android:src="@drawable/ic_baseline_more_vert_24"
+                android:background="@android:color/transparent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/desc_image" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

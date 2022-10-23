@@ -1,6 +1,7 @@
 package com.group.ddjjnews;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,12 +27,19 @@ public class SettingsActivity extends AppCompatActivity {
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
-        setSupportActionBar(findViewById(R.id.sToolbar)); // Set toolbar instead actionbar
+        setSupportActionBar(findViewById(R.id.settingsAppBar).findViewById(R.id.toolbar)); // Set toolbar instead actionbar
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Nullable
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        finish();
+        return null;
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

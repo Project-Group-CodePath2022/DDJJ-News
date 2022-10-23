@@ -29,7 +29,7 @@
                         android:layout_marginTop="7dp"
                         android:id="@+id/DetailNewsTitle"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -49,7 +49,7 @@
 
                     <TextView
                         android:layout_marginTop="16dp"
-                        android:textSize="15sp"
+                        android:textSize="16sp"
                         android:id="@+id/DetailNewsContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

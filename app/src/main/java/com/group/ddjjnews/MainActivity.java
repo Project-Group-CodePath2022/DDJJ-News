@@ -2,6 +2,7 @@ package com.group.ddjjnews;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -12,10 +13,10 @@ import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 
 import com.facebook.login.LoginManager;
 import com.group.ddjjnews.databinding.ActivityMainBinding;
@@ -27,6 +28,7 @@ import com.parse.ParseObject;
 
 import java.util.Objects;
 
+
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding binding;
     ActionBarDrawerToggle drawerToggle;
@@ -34,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
     Fragment newsFragment;
     Fragment savedFragment;
     User user;
+    int lastID;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,9 @@ public class MainActivity extends AppCompatActivity {
         user = (User) User.getCurrentUser();
         binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
 
-        setSupportActionBar(binding.mainToolbar); // Set toolbar instead actionbar
+        setSupportActionBar(binding.mainAppBar.findViewById(R.id.toolbar)); // Set toolbar instead actionbar
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         drawerToggle = new ActionBarDrawerToggle(this, binding.mainDrawer, R.string.nav_open, R.string.nav_close);
         binding.mainDrawer.addDrawerListener(drawerToggle);
@@ -60,9 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.drawer_request:
                     gotoRequestBlood();
                     break;
-                case R.id.drawer_alert:
-                    gotoAlert();
-                    break;
                 default:
                     break;
             }
@@ -72,35 +74,50 @@ public class MainActivity extends AppCompatActivity {
 
         hideShowDrawerItem();
         final FragmentManager fragmentManager = getSupportFragmentManager();
-
         // Feed news
-        newsFragment = NewsFragment.newInstance();
+        newsFragment = new NewsFragment();
         //  Feed, list saved blog and news post using tabs
-        savedFragment = SavedFragment.newInstance();
+        savedFragment = new SavedFragment();
         currentFragment = newsFragment; // Current fragment
 
         fragmentManager.beginTransaction().add(R.id.mainFrameLayout, savedFragment).hide(savedFragment).commit();
         fragmentManager.beginTransaction().add(R.id.mainFrameLayout, newsFragment).commit();
 
+        lastID = R.id.bottom_news;
+
         binding.mainBottomNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.bottom_news:
                     fragmentManager.beginTransaction().hide(currentFragment).show(newsFragment).commit();
-                    getSupportActionBar().setTitle("Breaking");
+                    getSupportActionBar().setTitle("Home");
                     currentFragment = newsFragment;
+                    lastID = item.getItemId();
                     break;
                 case R.id.bottom_saved:
                     fragmentManager.beginTransaction().hide(currentFragment).show(savedFragment).commit();
                     getSupportActionBar().setTitle("Saved posts");
                     currentFragment = savedFragment;
+                    lastID = item.getItemId();
                     break;
+                case R.id.bottom_settings:
+                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                    return true;
+                case R.id.bottom_search:
+                    binding.mainBottomNavigation.setSelected(false);
+                    startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                    return true;
                 default:
                     break;
             }
             return true;
         });
         // By default display news
-        binding.mainBottomNavigation.setSelectedItemId(R.id.bottom_news);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.mainBottomNavigation.setSelectedItemId(lastID);
     }
 
     @Override
@@ -121,11 +138,6 @@ public class MainActivity extends AppCompatActivity {
             User.logOut();
             restartActivity();
             return true;
-        } else if (itemId == R.id.main_search) {
-            gotoSearch();
-            return true;
-        } else if (itemId == R.id.main_settings) {
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -157,14 +169,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("type", type);
         intent.putExtra("item", item);
         startActivity(intent);
-    }
-
-    public void gotoSearch() {
-        startActivity(new Intent(MainActivity.this, SearchActivity.class));
-    }
-
-    public void gotoAlert() {
-        startActivity(new Intent(MainActivity.this, AlertActivity.class));
     }
 
     private void showLoginDialog() {

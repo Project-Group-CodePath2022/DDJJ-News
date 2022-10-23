@@ -24,7 +24,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(DetailActivity.this, R.layout.activity_detail);
 
-        setSupportActionBar(binding.detailToolbar);
+        setSupportActionBar(binding.detailAppBar.findViewById(R.id.toolbar));
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
