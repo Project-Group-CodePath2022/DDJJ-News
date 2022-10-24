@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import com.bumptech.glide.Glide;
@@ -54,7 +55,8 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void bindEmpty(EmptyStateBinding binding) {
-                binding.title.setText("can search by title");
+                binding.title.setText("Search by title");
+                binding.subTitle.setText("DDJJ");
             }
         };
 
@@ -75,10 +77,7 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         SearchView search = (SearchView) menu.findItem(R.id.search_view).getActionView();
-
-        search.setIconifiedByDefault(false);
         search.setIconified(false);
-
         search.setQueryHint("Search");
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -102,6 +101,7 @@ public class SearchActivity extends AppCompatActivity {
 
     @SuppressLint("NotifyDataSetChanged")
     private void search(String byTitle) {
+        Log.d("Search", "calling...");
         HashMap<String, Object> params = new HashMap<>();
         params.put("title", byTitle);
         News.getNews(params, (objects, e) -> {

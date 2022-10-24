@@ -3,12 +3,13 @@ package com.group.ddjjnews.fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.ViewDataBinding;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.group.ddjjnews.R;
 import com.group.ddjjnews.Utils.SpaceItemDecoration;
 import com.group.ddjjnews.Utils.TimeFormatter;
 import com.group.ddjjnews.adapters.GenericAdapter;
+import com.group.ddjjnews.databinding.EmptyStateBinding;
 import com.group.ddjjnews.databinding.FragmentNestedSavedBinding;
 
 import com.group.ddjjnews.databinding.NewsSavedItemBinding;
@@ -42,7 +44,7 @@ public class NestedSavedFragment extends Fragment {
     public static final String TYPE_BLOG = "blog";
 
     List<News> items = new ArrayList<>();
-    GenericAdapter<News, NewsSavedItemBinding, ViewDataBinding> adapter;
+    GenericAdapter<News, NewsSavedItemBinding, EmptyStateBinding> adapter;
     LinearLayoutManager layoutManager;
 
     public NestedSavedFragment() {}
@@ -58,7 +60,7 @@ public class NestedSavedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.adapter = new GenericAdapter<News, NewsSavedItemBinding, ViewDataBinding>(getContext(), items, NewsSavedItemBinding.class, null) {
+        this.adapter = new GenericAdapter<News, NewsSavedItemBinding, EmptyStateBinding>(getContext(), items, NewsSavedItemBinding.class, EmptyStateBinding.class) {
             @Override
             public void bindItem(NewsSavedItemBinding binding, News item, int position) {
                 if (item.getKeyImage() != null)
@@ -71,6 +73,12 @@ public class NestedSavedFragment extends Fragment {
                 binding.tvDetail.setText(" | " + TimeFormatter.getTimeDifference(item.getCreatedAt().toString()));
                 binding.tvTitle.setOnClickListener(view -> gotoDetail(item));
                 binding.options.setOnClickListener(view ->showBSD(item, position));
+            }
+
+            @Override
+            public void bindEmpty(EmptyStateBinding binding) {
+                binding.title.setText("You got no saved news");
+                binding.subTitle.setText("DDJJ");
             }
         };
         this.layoutManager = new LinearLayoutManager(getContext());
@@ -114,9 +122,14 @@ public class NestedSavedFragment extends Fragment {
         bottomSheetDialog.setContentView(R.layout.bsd_saved);
         bottomSheetDialog.findViewById(R.id.delete).setOnClickListener(view -> item.unpinInBackground(e -> {
             if (e == null) {
-                items.remove(pos);
-                adapter.notifyItemRemoved(pos);
-                bottomSheetDialog.dismiss();
+                try {
+                    items.remove(pos);
+                    adapter.notifyItemRemoved(pos);
+                    adapter.notifyItemRangeChanged(pos, 1);
+                    bottomSheetDialog.dismiss();
+                } catch (Exception ee){
+                    Log.e("NestedSaved", ee.toString());
+                }
             }
         }));
         bottomSheetDialog.show();

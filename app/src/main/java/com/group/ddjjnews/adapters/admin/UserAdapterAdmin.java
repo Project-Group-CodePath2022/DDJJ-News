@@ -2,6 +2,7 @@ package com.group.ddjjnews.adapters.admin;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
 
     public interface Listener {
         void onOptionsClicked(User item, int pos);
+        void onItemClicked(User item);
     }
 
     public UserAdapterAdmin(Context ctx, List<ParseObject> users) {
@@ -70,7 +72,14 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
                 binding.active.setImageResource(R.drawable.ic_baseline_check_circle);
             if (item.getCreatedAt() != null)
                 binding.createdAt.setText(item.getCreatedAt().toString());
-            binding.options.setOnClickListener(view -> listener.onOptionsClicked(item, getAdapterPosition()));
+            binding.options.setOnClickListener(view -> {
+                if (listener != null)
+                    listener.onOptionsClicked(item, getAdapterPosition());
+            });
+            binding.getRoot().setOnClickListener(view -> {
+                if (listener != null)
+                    listener.onItemClicked(item);
+            });
             binding.email.setText(item.getUsername());
         }
     }

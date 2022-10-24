@@ -69,7 +69,19 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((UserAdapterAdmin)adapter).setListener(this::showBSD);
+        ((UserAdapterAdmin)adapter).setListener(new UserAdapterAdmin.Listener() {
+            @Override
+            public void onOptionsClicked(User item, int pos) {
+                showBSD(item, pos);
+            }
+
+            @Override
+            public void onItemClicked(User item) {
+                UserDetailAdmin d = UserDetailAdmin.newInstance(item);
+                d.setCancelable(true);
+                d.show(getChildFragmentManager(), "detail_admin_user");
+            }
+        });
         setCategory();
         getAllUsers();
     }

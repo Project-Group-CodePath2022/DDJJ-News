@@ -35,6 +35,7 @@ public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.News
 
     public interface Listener {
         void onOptionsClicked(News item, int pos);
+        void onItemClicked(News item);
     }
     public NewsAdapterAdmin(Context ctx, List<ParseObject> news) {
         this.context = ctx;
@@ -79,7 +80,15 @@ public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.News
                 binding.active.setImageResource(R.drawable.ic_baseline_check_circle);
             binding.createdAt.setText(item.getCreatedAt().toString());
 
-            binding.options.setOnClickListener(view -> listener.onOptionsClicked(item, getAdapterPosition()));
+            binding.options.setOnClickListener(view -> {
+                if (listener != null)
+                    listener.onOptionsClicked(item, getAdapterPosition());
+            });
+
+            binding.getRoot().setOnClickListener(view -> {
+                if (listener != null)
+                    listener.onItemClicked(item);
+            });
 
             binding.title.setText(item.getKeyTitle());
         }

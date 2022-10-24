@@ -21,6 +21,7 @@ import com.group.ddjjnews.R;
 
 import com.group.ddjjnews.Utils.SpaceItemDecoration;
 import com.group.ddjjnews.adapters.GenericAdapter;
+import com.group.ddjjnews.adapters.NewsAdapter;
 import com.group.ddjjnews.adapters.ViewPagerAdapter;
 
 import com.group.ddjjnews.databinding.DashItemBinding;
@@ -133,6 +134,16 @@ public class NewsFragment extends Fragment {
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             this.layoutManager = new GridLayoutManager(getContext(), 2);
+
+            ((GridLayoutManager)layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    int type = adapter.getItemViewType(position);
+                    if (type == GenericAdapter.EMPTY)
+                        return 2;
+                    return 1;
+                }
+            });
 
             this.adapter = new GenericAdapter<Category, DashItemBinding, EmptyStateBinding>(getContext(), items, DashItemBinding.class, EmptyStateBinding.class) {
                 @Override

@@ -62,7 +62,20 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((NewsAdapterAdmin)adapter).setListener(this::showBSD);
+        ((NewsAdapterAdmin)adapter).setListener(new NewsAdapterAdmin.Listener() {
+            @Override
+            public void onOptionsClicked(News item, int pos) {
+                showBSD(item, pos);
+            }
+
+            @Override
+            public void onItemClicked(News item) {
+                NewsDetailAdmin d = NewsDetailAdmin.newInstance(item);
+                d.setCancelable(true);
+                d.show(getChildFragmentManager(), "detail_admin_news");
+            }
+        });
+
         setCategory();
         getAllNews();
     }
