@@ -72,6 +72,7 @@ public class NewsListAdminFragment extends RefreshFloatingBaseFragment {
             public void onItemClicked(News item) {
                 NewsDetailAdmin d = NewsDetailAdmin.newInstance(item);
                 d.setCancelable(true);
+                d.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
                 d.show(getChildFragmentManager(), "detail_admin_news");
             }
         });

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,6 +80,7 @@ public class UserListAdminFragment extends RefreshFloatingBaseFragment {
             public void onItemClicked(User item) {
                 UserDetailAdmin d = UserDetailAdmin.newInstance(item);
                 d.setCancelable(true);
+                d.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
                 d.show(getChildFragmentManager(), "detail_admin_user");
             }
         });

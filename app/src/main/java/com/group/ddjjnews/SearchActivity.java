@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -45,11 +46,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void bindItem(NewsItemDetailBinding binding, News item, int position) {
                 super.bindItem(binding, item, position);
-
-                Glide.with(SearchActivity.this)
-                        .load(item.getKeyImage().getUrl())
-                        .transform(new RoundedCorners(16))
-                        .into(binding.imgImage);
                 binding.tvTitle.setText(item.getKeyTitle());
             }
 
@@ -77,7 +73,8 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         SearchView search = (SearchView) menu.findItem(R.id.search_view).getActionView();
-        search.setIconified(false);
+        search.setFocusable(true);
+        search.setIconifiedByDefault(false);
         search.setQueryHint("Search");
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -92,6 +89,9 @@ public class SearchActivity extends AppCompatActivity {
                     search(newText);
                     return true;
                 }
+                binding.progress.setVisibility(View.GONE);
+                items.clear();
+                adapter.notifyDataSetChanged();
                 return false;
             }
         });
@@ -102,6 +102,7 @@ public class SearchActivity extends AppCompatActivity {
     @SuppressLint("NotifyDataSetChanged")
     private void search(String byTitle) {
         Log.d("Search", "calling...");
+        binding.progress.setVisibility(View.VISIBLE);
         HashMap<String, Object> params = new HashMap<>();
         params.put("title", byTitle);
         News.getNews(params, (objects, e) -> {
@@ -110,6 +111,7 @@ public class SearchActivity extends AppCompatActivity {
                 items.addAll((Collection<? extends News>) objects);
                 adapter.notifyDataSetChanged();
             }
+            binding.progress.setVisibility(View.GONE);
         });
     }
 }

@@ -1,5 +1,6 @@
 package com.group.ddjjnews.fragments.admin;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.request.target.Target;
 import com.group.ddjjnews.databinding.FragmentCommentsBinding;
 import com.group.ddjjnews.databinding.UserItemAdminDetailBinding;
 import com.group.ddjjnews.models.User;
+import com.parse.ParseDecoder;
+import com.parse.ParseObject;
+import com.parse.ParseRole;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.Objects;
+
+import io.noties.markwon.Markwon;
+import io.noties.markwon.image.AsyncDrawable;
+import io.noties.markwon.image.glide.GlideImagesPlugin;
 
 public class UserDetailAdmin extends DialogFragment {
     UserItemAdminDetailBinding binding;
@@ -56,7 +70,9 @@ public class UserDetailAdmin extends DialogFragment {
             binding.tvStatus.setText("active");
         else
             binding.tvStatus.setText("noactive");
-
+        if (item.get("role") != null) {
+            binding.tvRole.setText(((ParseRole) ParseObject.fromJSON(new JSONObject((HashMap) item.get("role")), "_Role", ParseDecoder.get())).getName());
+        }
     }
 
     @Override

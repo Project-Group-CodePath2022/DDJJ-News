@@ -33,6 +33,8 @@
                 android:id="@+id/edMessage"
                 android:layout_alignBottom="@+id/btnCommentSend"
                 android:layout_toLeftOf="@id/btnCommentSend"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"

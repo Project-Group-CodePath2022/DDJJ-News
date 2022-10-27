@@ -1,5 +1,6 @@
 package com.group.ddjjnews.fragments.admin;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.request.target.Target;
 import com.group.ddjjnews.databinding.NewsItemAdminDetailBinding;
 import com.group.ddjjnews.databinding.UserItemAdminDetailBinding;
 import com.group.ddjjnews.models.News;
 import com.group.ddjjnews.models.User;
 
 import java.util.Objects;
+
+import io.noties.markwon.Markwon;
+import io.noties.markwon.image.AsyncDrawable;
+import io.noties.markwon.image.glide.GlideImagesPlugin;
 
 public class NewsDetailAdmin extends DialogFragment {
     NewsItemAdminDetailBinding binding;
@@ -63,6 +71,26 @@ public class NewsDetailAdmin extends DialogFragment {
             binding.tvStatus.setText("active");
         else
             binding.tvStatus.setText("noactive");
+
+        binding.tvBy.setText(item.getKeyAuthor().getUsername());
+
+        Glide.with(requireContext()).load(item.getKeyImage().getUrl()).into(binding.imgImage);
+        final Markwon markwon1 = Markwon.builder(requireContext())
+                .usePlugin(GlideImagesPlugin.create(requireContext()))
+                .usePlugin(GlideImagesPlugin.create(Glide.with(getContext())))
+                .usePlugin(GlideImagesPlugin.create(new GlideImagesPlugin.GlideStore() {
+                    @NonNull
+                    @Override
+                    public RequestBuilder<Drawable> load(@NonNull AsyncDrawable drawable) {
+                        return Glide.with(requireContext()).load(drawable.getDestination());
+                    }
+
+                    @Override
+                    public void cancel(@NonNull Target<?> target) {
+                        Glide.with(requireContext()).clear(target);
+                    }
+                })).build();
+        markwon1.setMarkdown(binding.tvContent, item.getKeyContent());
 
     }
 

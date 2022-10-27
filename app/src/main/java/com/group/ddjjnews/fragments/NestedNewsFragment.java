@@ -72,11 +72,11 @@ public class NestedNewsFragment extends Fragment {
                 return 1;
             }
         });
-        binding.rcNews.addItemDecoration(new SpaceItemDecoration(20, true));
+
+        binding.rcNews.addItemDecoration(new SpaceItemDecoration(28, true));
         binding.rcNews.setLayoutManager(layoutManager);
         binding.rcNews.setOnScrollListener(endless);
         binding.rcNews.setAdapter(adapter);
-
         adapter.setListener(item -> ((MainActivity)getContext()).gotoDetail("news", item));
         getNewsPosts();
     }

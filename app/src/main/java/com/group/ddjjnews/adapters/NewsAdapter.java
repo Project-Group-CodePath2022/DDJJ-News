@@ -48,7 +48,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         if (news.size() == 0) return EMPTY;
-        if (((News)news.get(position)).isAlaune() && (position == 0 || ((position + 1) % 3) == 0)) {
+        if (position == 0 || (position % 7) == 0) {
             return ALAUNE_TYPE;
         } else {
             return DEFAULT_TYPE;
@@ -134,7 +134,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .transform(new RoundedCorners(16))
                         .into(itemBinding.imgImage);
             itemBinding.tvTitle.setText(item.getKeyTitle());
-            itemBinding.tvCreatedAt.setText("Date: " + TimeFormatter.getTimeDifference(item.getCreatedAt().toString()));
+            itemBinding.tvCreatedAt.setText(TimeFormatter.getTimeDifference(item.getCreatedAt().toString()));
             try {
                 itemBinding.tvCategory.setText(item.getKeyCategory().fetchIfNeeded().getString("name"));
             } catch (ParseException e) {

@@ -10,10 +10,12 @@
         <item name="colorSecondaryVariant">@color/orange</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:statusBarColor">@color/black_grey</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
 <!--        <item name="android:windowLightStatusBar">true</item>-->
+        <item name="android:textColor">@color/black_grey</item>
+        <item name="android:textColorHint">@color/grey_ccc</item>
         <item name="fontFamily">@font/roboto_light</item>
         <item name="android:windowContentTransitions">true</item>
     </style>

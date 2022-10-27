@@ -6,6 +6,7 @@ import com.parse.ParseCloud;
 import com.parse.ParseDecoder;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import org.json.JSONObject;
 
@@ -30,11 +31,14 @@ public class News extends ParseObject {
     public static final String KEY_CATEGORY = "category";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_ALAUNE = "alaune";
+    public static final String KEY_AUTHOR = "author";
 
     public News() {}
 
     public String getKeyTitle() { return getString(KEY_TITLE); }
     public boolean getKeyActive() { return getBoolean(KEY_ACTIVE); }
+    public ParseUser getKeyAuthor() { return (ParseUser) getParseObject(KEY_AUTHOR); }
+
     public ParseObject getKeyCategory() { return getParseObject(KEY_CATEGORY); }
     public String getKeyContent() { return getString(KEY_CONTENT); }
     public boolean isAlaune() { return getBoolean(KEY_ALAUNE); }

@@ -12,16 +12,14 @@
             <ImageView
                 android:id="@+id/imgImage"
                 android:layout_width="match_parent"
-                android:layout_height="136dp"
+                android:layout_height="144dp"
                 android:scaleType="centerCrop"
-
                 tools:src="@drawable/ic_launcher_foreground"
                 android:contentDescription="@string/desc_image"/>
-
             <TextView
                 android:id="@+id/hot"
                 android:text="@string/hot_fire"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="4dp"
                 android:textColor="@color/red_200"
                 android:textStyle="bold|italic"
@@ -32,6 +30,7 @@
                 android:id="@+id/tvCategory"
                 android:layout_below="@id/hot"
                 android:layout_marginTop="7dp"
+                android:textColor="@color/red"
                 android:padding="4dp"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
@@ -39,9 +38,10 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="1"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imgImage"
@@ -53,7 +53,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:padding="7dp"
-                android:textSize="14sp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/red_200"
                 android:singleLine="true" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

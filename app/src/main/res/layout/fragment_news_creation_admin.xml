@@ -45,24 +45,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lDesc"
-                android:layout_below="@id/takeImg"
-                android:layout_marginTop="7dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Description">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edDesc"
-                    android:textColorHint="@color/black"
-                    android:textColor="@color/black"
-                    android:inputType="text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_below="@id/lDesc"
+                android:layout_below="@id/lTitle"
                 android:id="@+id/lCon"
                 android:layout_marginTop="7dp"
                 android:layout_width="match_parent"

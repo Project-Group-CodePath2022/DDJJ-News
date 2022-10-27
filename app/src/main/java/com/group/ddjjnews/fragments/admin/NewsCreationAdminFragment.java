@@ -114,7 +114,6 @@ public class NewsCreationAdminFragment extends DialogFragment {
     private void updateNews() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("title", binding.edTitle.getText().toString());
-        params.put("description", binding.edDesc.getText().toString());
         params.put("content", binding.edContent.getText().toString());
         params.put("file", bytesFileImage);
         params.put("category", category);
@@ -135,7 +134,6 @@ public class NewsCreationAdminFragment extends DialogFragment {
     private void createNew() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("title", binding.edTitle.getText().toString());
-        params.put("description", binding.edDesc.getText().toString());
         params.put("content", binding.edContent.getText().toString());
         params.put("file", bytesFileImage);
         params.put("category", category);
@@ -155,7 +153,6 @@ public class NewsCreationAdminFragment extends DialogFragment {
         if (
             binding.edTitle.getText().toString().trim().isEmpty() ||
             binding.edContent.getText().toString().trim().isEmpty() ||
-            binding.edDesc.getText().toString().trim().isEmpty() ||
             category == null ||
             binding.takeImg.getDrawable() == null
         ) {

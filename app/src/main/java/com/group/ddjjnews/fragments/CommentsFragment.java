@@ -103,6 +103,8 @@ public class CommentsFragment extends DialogFragment {
 
     private void getLastComment() {
         Comment.getAllFor(newsId, (objects, e) -> {
+            Toast.makeText(this.context, "Comments!", Toast.LENGTH_SHORT).show();
+
             if (e == null) {
                 items.clear();
                 for (Object obj: objects) {
