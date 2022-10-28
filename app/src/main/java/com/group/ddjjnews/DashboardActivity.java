@@ -56,4 +56,11 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    @Nullable
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        finish();
+        return null;
+    }
 }

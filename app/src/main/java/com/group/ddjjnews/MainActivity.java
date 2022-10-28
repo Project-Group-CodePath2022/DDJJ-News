@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.mainAppBar.findViewById(R.id.toolbar)); // Set toolbar instead actionbar
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         drawerToggle = new ActionBarDrawerToggle(this, binding.mainDrawer, R.string.nav_open, R.string.nav_close);
         binding.mainDrawer.addDrawerListener(drawerToggle);

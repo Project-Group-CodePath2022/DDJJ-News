@@ -19,9 +19,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.group.ddjjnews.Utils.IndeterminateDialog;
 import com.group.ddjjnews.databinding.FragmentNewsCreationAdminBinding;
 import com.group.ddjjnews.models.News;
 
@@ -138,12 +140,25 @@ public class NewsCreationAdminFragment extends DialogFragment {
         params.put("file", bytesFileImage);
         params.put("category", category);
 
+        binding.chDOne.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b)
+                    params.put("notify", "true");
+                else
+                    params.put("notify", "false");
+            }
+        });
+        IndeterminateDialog d = IndeterminateDialog.newInstance("News", "Saving...");
+        d.show(getChildFragmentManager(), "scap");
         News.createNewsAdmin(params, (object, e) -> {
             if (e == null) {
                 this.dismiss();
+                d.dismiss();
                 ((NewsListAdminFragment)getParentFragment()).addItem((News) object);
                 Toast.makeText(getContext(), "Successfully saved!", Toast.LENGTH_SHORT).show();
             } else {
+                d.dismiss();
                 Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
             }
         });
