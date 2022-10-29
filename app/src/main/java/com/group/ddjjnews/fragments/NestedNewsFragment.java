@@ -29,11 +29,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class NestedNewsFragment extends Fragment {
-    FragmentNestedNewsBinding binding;
-    List<ParseObject> newsPosts = new ArrayList<>();
-    NewsAdapter adapter;
-    GridLayoutManager layoutManager;
-    EndlessRecyclerViewScrollListener endless;
+    protected FragmentNestedNewsBinding binding;
+    protected List<ParseObject> newsPosts = new ArrayList<>();
+    protected NewsAdapter adapter;
+    protected GridLayoutManager layoutManager;
+    protected EndlessRecyclerViewScrollListener endless;
 
     public NestedNewsFragment() {}
 
@@ -57,7 +57,7 @@ public class NestedNewsFragment extends Fragment {
         endless = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Toast.makeText(getContext(), "onLoadMore: " + page, Toast.LENGTH_SHORT).show();
+                paginate(page);
             }
         };
 
@@ -96,7 +96,7 @@ public class NestedNewsFragment extends Fragment {
         }
     }
 
-    private void getNewsPosts() {
+    protected void getNewsPosts() {
         HashMap<String, Object> params = new HashMap<>();
         binding.swipeContainer.setRefreshing(true);
         News.getNews(params, (objects, e) -> {
@@ -107,6 +107,17 @@ public class NestedNewsFragment extends Fragment {
                 endless.resetState();
             }
             binding.swipeContainer.setRefreshing(false);
+        });
+    }
+
+    protected void paginate(int page) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("page", page);
+        News.getNews(params, (objects, e) -> {
+            if (e == null) {
+                newsPosts.addAll((Collection<? extends ParseObject>) objects);
+                adapter.notifyDataSetChanged();
+            }
         });
     }
 }

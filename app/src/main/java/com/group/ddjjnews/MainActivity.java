@@ -181,4 +181,10 @@ public class MainActivity extends AppCompatActivity {
         loginFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
         loginFragment.show(fm, "authentication_fragment");
     }
+
+    public void gotoCategory(String category) {
+        Intent intent = new Intent(MainActivity.this, CategoryDetailActivity.class);
+        intent.putExtra("category", category);
+        startActivity(intent);
+    }
 }

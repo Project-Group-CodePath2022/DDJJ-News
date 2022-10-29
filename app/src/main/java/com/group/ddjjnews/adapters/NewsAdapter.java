@@ -92,7 +92,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.binding = itemBinding;
         }
         public void bind() {
-            binding.title.setText("Happy to see you again!");
+            binding.title.setText("News");
             binding.subTitle.setText("DDJJ News");
         }
     }

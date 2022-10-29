@@ -122,6 +122,8 @@ public class CommentsFragment extends DialogFragment {
         Comment.createFor(newsId, text, (object, e) -> {
             if (e == null) {
                 Toast.makeText(this.context, "Message added!", Toast.LENGTH_SHORT).show();
+                items.add((Comment) object);
+                adapter.notifyDataSetChanged();
                 binding.edMessage.setText("");
             } else {
                  Toast.makeText(this.context, e.getMessage(), Toast.LENGTH_SHORT).show();

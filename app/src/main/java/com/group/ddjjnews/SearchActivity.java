@@ -3,6 +3,7 @@ package com.group.ddjjnews;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -12,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +24,7 @@ import com.group.ddjjnews.databinding.EmptyStateBinding;
 import com.group.ddjjnews.databinding.NewsItemDetailBinding;
 
 import com.group.ddjjnews.models.News;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,6 +50,7 @@ public class SearchActivity extends AppCompatActivity {
             public void bindItem(NewsItemDetailBinding binding, News item, int position) {
                 super.bindItem(binding, item, position);
                 binding.tvTitle.setText(item.getKeyTitle());
+                binding.tvTitle.setOnClickListener(view -> gotoDetail("news", item));
             }
 
             @Override
@@ -62,6 +66,13 @@ public class SearchActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
+    public void gotoDetail(String type, ParseObject item) {
+        Intent intent = new Intent(SearchActivity.this, DetailActivity.class);
+        intent.putExtra("type", type);
+        intent.putExtra("item", item);
+        startActivity(intent);
+    }
+
     @Nullable
     @Override
     public Intent getSupportParentActivityIntent() {
@@ -72,9 +83,11 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
-        SearchView search = (SearchView) menu.findItem(R.id.search_view).getActionView();
-        search.setFocusable(true);
+        MenuItem s = menu.findItem(R.id.search_view);
+        s.expandActionView();
+        SearchView search = (SearchView) s.getActionView();
         search.setIconifiedByDefault(false);
+        search.clearFocus();
         search.setQueryHint("Search");
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

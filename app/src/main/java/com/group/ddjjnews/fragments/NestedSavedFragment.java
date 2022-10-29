@@ -42,20 +42,20 @@ public class NestedSavedFragment extends Fragment {
     private static final String KEY_TYPE = "type";
     public static final String TYPE_NEWS = "news";
     public static final String TYPE_BLOG = "blog";
-
-    List<News> items = new ArrayList<>();
     GenericAdapter<News, NewsSavedItemBinding, EmptyStateBinding> adapter;
+    List<News> items = new ArrayList<>();
     LinearLayoutManager layoutManager;
 
-    public NestedSavedFragment() {}
+    public NestedSavedFragment(){}
 
     public static NestedSavedFragment newInstance(String type) {
-        NestedSavedFragment fragment = new NestedSavedFragment();
-        Bundle args = new Bundle();
-        args.putString(KEY_TYPE, type);
-        fragment.setArguments(args);
-        return fragment;
+        NestedSavedFragment f = new NestedSavedFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_TYPE, type);
+        f.setArguments(bundle);
+        return f;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

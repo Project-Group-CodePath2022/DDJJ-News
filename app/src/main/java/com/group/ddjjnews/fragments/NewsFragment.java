@@ -1,5 +1,6 @@
 package com.group.ddjjnews.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.group.ddjjnews.MainActivity;
 import com.group.ddjjnews.R;
 
 import com.group.ddjjnews.Utils.SpaceItemDecoration;
@@ -117,7 +119,7 @@ public class NewsFragment extends Fragment {
     public static class CategoryListFragment extends RefreshBaseFragment {
         protected FragmentRefreshBaseBinding binding;
         List<Category> items = new ArrayList<>();
-
+        Context context;
         public CategoryListFragment() {}
 
         @Nullable
@@ -128,6 +130,12 @@ public class NewsFragment extends Fragment {
             this.rcItems = binding.rcView;
             this.sRefresh = binding.sRefresh;
             return binding.getRoot();
+        }
+
+        @Override
+        public void onAttach(@NonNull Context context) {
+            super.onAttach(context);
+            this.context = context;
         }
 
         @Override
@@ -149,6 +157,7 @@ public class NewsFragment extends Fragment {
                 @Override
                 public void bindItem(DashItemBinding binding, Category item, int position) {
                     binding.title.setText(item.getKeyName());
+                    binding.getRoot().setOnClickListener(view -> ((MainActivity)context).gotoCategory(item.getKeyName()));
                 }
 
                 @Override
