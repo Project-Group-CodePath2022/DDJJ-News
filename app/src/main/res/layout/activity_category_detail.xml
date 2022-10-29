@@ -6,11 +6,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include android:id="@+id/searchAppBar" layout="@layout/toolbar"/>
+        <include android:id="@+id/catAppBar" layout="@layout/toolbar"/>
 
         <FrameLayout
             android:id="@+id/catDetail"
-            android:layout_below="@id/searchAppBar"
+            android:layout_below="@id/catAppBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </RelativeLayout>

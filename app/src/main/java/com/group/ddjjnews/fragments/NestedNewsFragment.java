@@ -57,6 +57,7 @@ public class NestedNewsFragment extends Fragment {
         endless = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Toast.makeText(getContext(), ""+page, Toast.LENGTH_SHORT).show();
                 paginate(page);
             }
         };

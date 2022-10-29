@@ -23,10 +23,11 @@ public class CategoryDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category_detail);
 
         binding = DataBindingUtil.setContentView(CategoryDetailActivity.this, R.layout.activity_category_detail);
-        setSupportActionBar(binding.searchAppBar.findViewById(R.id.toolbar)); // Set toolbar instead actionbar
+        setSupportActionBar(binding.catAppBar.findViewById(R.id.toolbar)); // Set toolbar instead actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         Intent intent = getIntent();
         if (intent != null && intent.getStringExtra("category") != null) {
@@ -58,7 +59,6 @@ public class CategoryDetailActivity extends AppCompatActivity {
     static public class NewsByCategory extends NestedNewsFragment {
         String category;
 
-
         public static NewsByCategory newInstance(String category) {
             NewsByCategory f = new NewsByCategory();
             Bundle bundle = new Bundle();
@@ -78,6 +78,8 @@ public class CategoryDetailActivity extends AppCompatActivity {
         @Override
         protected void getNewsPosts() {
             HashMap<String, Object> params = new HashMap<>();
+            params.put("category", category);
+
             binding.swipeContainer.setRefreshing(true);
             News.getNews(params, (objects, e) -> {
                 if (e == null) {
