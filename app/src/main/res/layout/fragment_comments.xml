@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textSize="20sp"
+            android:paddingHorizontal="16dp"
+            android:gravity="center_vertical"
+            android:id="@+id/tvC"
+            android:text="Comments"
+            android:textStyle="bold"
+            android:minHeight="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/tvC"
+            android:id="@+id/rcComments"
+            android:layout_above="@id/rlSend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/rlSend"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_height="wrap_content" >
+            <EditText
+                android:id="@+id/edMessage"
+                android:layout_alignBottom="@+id/btnCommentSend"
+                android:layout_toLeftOf="@id/btnCommentSend"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:elevation="7dp"
+                android:hint="Write here"
+                android:minLines="1"
+                android:maxLines="4"
+                android:inputType="textShortMessage"
+                android:imeOptions="actionSend"
+                android:background="@drawable/editext_custom"
+                android:layout_marginHorizontal="4dp"
+                android:paddingHorizontal="7dp"
+                android:autofillHints="" />
+
+            <ImageButton
+                android:id="@+id/btnCommentSend"
+                android:background="@drawable/circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/desc_image"
+                android:src="@drawable/ic_baseline_send"
+                android:layout_margin="4dp"
+                tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

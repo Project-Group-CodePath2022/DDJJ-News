@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/edit"
+        android:padding="7dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/ic_baseline_edit_24"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="7dp"
+            android:contentDescription="@string/desc_image" />
+        <TextView
+            android:padding="7dp"
+            android:text="Edit this"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/delete"
+        android:padding="7dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/ic_baseline_delete_24"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="7dp"
+            android:contentDescription="@string/desc_image" />
+        <TextView
+            android:padding="7dp"
+            android:text="Delete this"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.group.ddjjnews.adapters.admin;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -13,14 +14,29 @@ import com.group.ddjjnews.R;
 
 import com.group.ddjjnews.databinding.NewsItemAdminBinding;
 import com.group.ddjjnews.models.News;
+import com.parse.ParseDecoder;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseRole;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.NewsHolder> {
     Context context;
     List<ParseObject> news;
+    private Listener listener;
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public interface Listener {
+        void onOptionsClicked(News item, int pos);
+        void onItemClicked(News item);
+    }
     public NewsAdapterAdmin(Context ctx, List<ParseObject> news) {
         this.context = ctx;
         this.news = news;
@@ -30,7 +46,6 @@ public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.News
     @Override
     public NewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new NewsHolder(NewsItemAdminBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
     }
 
     @Override
@@ -52,7 +67,8 @@ public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.News
         }
 
         public void bind(News item) {
-            if (item.getKeyImage() != null)
+
+             if (item.getKeyImage() != null)
                 Glide.with(context)
                         .load(item.getKeyImage().getUrl())
                         .transform(new RoundedCorners(12))
@@ -63,6 +79,16 @@ public class NewsAdapterAdmin extends RecyclerView.Adapter<NewsAdapterAdmin.News
             else
                 binding.active.setImageResource(R.drawable.ic_baseline_check_circle);
             binding.createdAt.setText(item.getCreatedAt().toString());
+
+            binding.options.setOnClickListener(view -> {
+                if (listener != null)
+                    listener.onOptionsClicked(item, getAdapterPosition());
+            });
+
+            binding.getRoot().setOnClickListener(view -> {
+                if (listener != null)
+                    listener.onItemClicked(item);
+            });
 
             binding.title.setText(item.getKeyTitle());
         }

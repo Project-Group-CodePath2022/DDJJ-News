@@ -16,13 +16,11 @@ import android.widget.Toast;
 
 import com.group.ddjjnews.MainActivity;
 
-import com.group.ddjjnews.SpaceItemDecoration;
+import com.group.ddjjnews.Utils.SpaceItemDecoration;
 import com.group.ddjjnews.Utils.EndlessRecyclerViewScrollListener;
 import com.group.ddjjnews.adapters.NewsAdapter;
 import com.group.ddjjnews.databinding.FragmentNestedNewsBinding;
 import com.group.ddjjnews.models.News;
-import com.parse.FunctionCallback;
-
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -31,41 +29,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class NestedNewsFragment extends Fragment {
-    public static final String TAG = "NestedNewsFragment";
-    private static final String ARG_PARAM1 = "category";
-    private static final int DISPLAY_LIMIT = 21;
-    FragmentNestedNewsBinding binding;
-
-    List<ParseObject> newsPosts = new ArrayList<>();
-    NewsAdapter adapter;
-    GridLayoutManager layoutManager;
-    int page = 0;
-
-    private String mParam1;
-
-    public interface CallOk {
-        void done(boolean ok);
-    }
+    protected FragmentNestedNewsBinding binding;
+    protected List<ParseObject> newsPosts = new ArrayList<>();
+    protected NewsAdapter adapter;
+    protected GridLayoutManager layoutManager;
+    protected EndlessRecyclerViewScrollListener endless;
 
     public NestedNewsFragment() {}
-
-    public static NestedNewsFragment newInstance(String param1) {
-        NestedNewsFragment fragment = new NestedNewsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new NewsAdapter(getContext(), newsPosts);
         layoutManager = new GridLayoutManager(getContext(), 2);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override
@@ -78,83 +54,71 @@ public class NestedNewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        EndlessRecyclerViewScrollListener endless = new EndlessRecyclerViewScrollListener(layoutManager) {
+        endless = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                HashMap<String, Object> params = new HashMap<>();
-                if (mParam1 != null)
-                    params.put(ARG_PARAM1, mParam1);
-                params.put("limit", DISPLAY_LIMIT);
-                params.put("skip", (page * DISPLAY_LIMIT));
-                News.getNews(params, (objects, e) -> {
-                    if(e != null) return;
-                    newsPosts.addAll((Collection<? extends ParseObject>) objects);
-                    adapter.notifyDataSetChanged();
-                });
+                Toast.makeText(getContext(), ""+page, Toast.LENGTH_SHORT).show();
+                paginate(page);
             }
         };
 
-        binding.swipeContainer.setOnRefreshListener(() -> getNewsPosts(null, (objects, e) -> {
-            if (e == null) {
-                endless.resetState();
-                page = 0;
-                newsPosts.clear();
-                newsPosts.addAll((Collection<? extends ParseObject>) objects);
-                adapter.notifyDataSetChanged();
-            }
-            binding.swipeContainer.setRefreshing(false);
-        }));
+        binding.swipeContainer.setOnRefreshListener(() -> getNewsPosts());
 
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 int type = adapter.getItemViewType(position);
-                if (type == NewsAdapter.ALAUNE_TYPE)
+                if (type == NewsAdapter.ALAUNE_TYPE || type == NewsAdapter.EMPTY)
                     return 2;
                 return 1;
             }
         });
-        binding.rcNews.addItemDecoration(new SpaceItemDecoration(21));
+
+        binding.rcNews.addItemDecoration(new SpaceItemDecoration(28, true));
         binding.rcNews.setLayoutManager(layoutManager);
         binding.rcNews.setOnScrollListener(endless);
         binding.rcNews.setAdapter(adapter);
-
         adapter.setListener(item -> ((MainActivity)getContext()).gotoDetail("news", item));
+        getNewsPosts();
+    }
+
+    public void addItem(News n) {
+        newsPosts.add(0, n);
+        adapter.notifyItemInserted(0);
+    }
+
+    public void removeItem(News n) {
+        for (int i = 0; i < newsPosts.size(); i++) {
+            if (newsPosts.get(i).getObjectId().equals(n.getObjectId())){
+                newsPosts.remove(i);
+                adapter.notifyItemRemoved(i);
+                return;
+            }
+        }
+    }
+
+    protected void getNewsPosts() {
+        HashMap<String, Object> params = new HashMap<>();
         binding.swipeContainer.setRefreshing(true);
-        getNewsPosts(null, (objects, e) -> {
+        News.getNews(params, (objects, e) -> {
             if (e == null) {
                 newsPosts.clear();
                 newsPosts.addAll((Collection<? extends ParseObject>) objects);
                 adapter.notifyDataSetChanged();
+                endless.resetState();
             }
             binding.swipeContainer.setRefreshing(false);
         });
     }
 
-    public void searchByTitle(String query, CallOk callOk ) {
-        if (binding != null)
-            binding.swipeContainer.setRefreshing(true);
-        getNewsPosts(query, (objects, e) -> {
+    protected void paginate(int page) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("page", page);
+        News.getNews(params, (objects, e) -> {
             if (e == null) {
-                newsPosts.clear();
                 newsPosts.addAll((Collection<? extends ParseObject>) objects);
                 adapter.notifyDataSetChanged();
-                callOk.done(true);
-            } else {
-               callOk.done(false);
             }
-            if (binding != null)
-                binding.swipeContainer.setRefreshing(false);
         });
-    }
-
-    private void getNewsPosts(String query, FunctionCallback<Object> callback) {
-        HashMap<String, Object> params = new HashMap<>();
-        if (mParam1 != null)
-            params.put(ARG_PARAM1, mParam1);
-        if (query != null)
-            params.put("title", query);
-        params.put("limit", DISPLAY_LIMIT);
-        News.getNews(params, callback);
     }
 }

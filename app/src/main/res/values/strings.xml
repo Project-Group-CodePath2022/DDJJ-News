@@ -3,17 +3,24 @@
     <string name="app_dash_name">Dashboard</string>
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="activity_blood_name">Donation blood</string>
+    <string name="activity_settings">Settings</string>
 
     <!-- Paste BOTH strings as required -->
     <string name="back4app_app_id" tools:ignore="Typos">g5fzhBeMP4sFCISPv4Dl8wBbZN066oEy1XnpQbL3</string>
     <string name="back4app_client_key">6yOW0KeEZcHrs5Pc6rtQs7XELT0LNVxCiuzjd5bn</string>
     <string name="firebase_sender_id">423628107738</string>
 
+
+    <string name="facebook_app_id">1130396354519445</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">074dcad36f4794d4c6db8efd5759800b</string>
+
+
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
 
-    <string name="login_fragment_text_welcome">DDJJ News Authentication</string>
-    <string name="login_fragment_second_text_welcome">We\'are happy to see you !</string>
+    <string name="login_fragment_text_welcome">Hello there! Welcome back</string>
+    <string name="login_fragment_second_text_welcome">Sign in to continue</string>
     <string name="login_fragment_email">Email</string>
     <string name="login_fragment_password">Password</string>
     <string name="login_fragment_btn_login">Log IN</string>
@@ -24,4 +31,16 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hot_fire">Hot fire</string>
+    <string name="or_using">Or using</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Messages Preferences -->
+    <string name="general">Generals</string>
+    <string name="black_mode">Black mode</string>
+    <string name="languages">Change your language</string>
+
+    <!-- Sync Preferences -->
+    <string name="notifications">Notifications</string>
+    <string name="news_title">When new news added</string>
+    <string name="req_blood">When others request for blood donation</string>
 </resources>

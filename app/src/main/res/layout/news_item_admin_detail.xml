@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:padding="12dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@drawable/photo_border"
+                android:id="@+id/imgImage"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:layout_width="200dp"
+                android:layout_height="126dp"
+                android:contentDescription="@string/desc_image"/>
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textSize="14sp"
+                    android:text="ObjectId"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="7dp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textSize="14sp"
+                    android:text="Title"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="7dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textSize="14sp"
+                    android:text="Date created"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvCreated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="7dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textSize="14sp"
+                    android:text="Last updated"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvUpdated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="7dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textSize="14sp"
+                    android:text="Author"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="7dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textSize="14sp"
+                    android:text="Status"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="7dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:textSize="14sp"
+                    android:text="Content"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="7dp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

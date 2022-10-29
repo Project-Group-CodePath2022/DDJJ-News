@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
-        android:padding="12dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingVertical="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:textSize="16sp"
+            android:textSize="15sp"
+            android:maxLines="1"
             android:id="@+id/blood_tvForName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:id="@+id/blood_tvDesc"
             android:ellipsize="end"
             android:maxLines="2"
@@ -32,11 +35,13 @@
 
         <ImageButton
             android:id="@+id/options"
-            android:src="@drawable/ic_baseline_drag_indicator"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_baseline_more_vert_24"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="7dp"
             android:contentDescription="@string/desc_image" />
     </RelativeLayout>
 </layout>

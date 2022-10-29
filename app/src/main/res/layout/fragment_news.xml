@@ -4,28 +4,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.google.android.material.appbar.AppBarLayout
-            android:elevation="0dp"
-            android:fitsSystemWindows="true"
-            android:layout_height="wrap_content"
+        <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
-            android:id="@+id/mainNewsAppBar">
-
-            <com.google.android.material.tabs.TabLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/newsTab"
-                app:tabMode="scrollable"
-                app:tabGravity="start"/>
-        </com.google.android.material.appbar.AppBarLayout>
-
+            android:layout_height="wrap_content"
+            android:id="@+id/newsTab"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            style="@style/MyTabLayout"/>
         <androidx.viewpager.widget.ViewPager
-            android:layout_marginHorizontal="7dp"
             android:id="@+id/newsPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/mainNewsAppBar"
-            android:layout_marginTop="16dp"
+            android:layout_below="@id/newsTab"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </RelativeLayout>
 </layout>

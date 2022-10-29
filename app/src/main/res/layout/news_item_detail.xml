@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:paddingStart="12dp"
+        android:paddingVertical="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="12dp"
+            android:maxLines="2"
+            android:ellipsize="end" />
+    </RelativeLayout>
+</layout>

@@ -1,102 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.LoginFragment" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.LoginFragment">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <RelativeLayout
+
+        <LinearLayout
+            android:orientation="vertical"
             android:padding="12dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@mipmap/logo_round"/>
+
             <TextView
                 android:id="@+id/tvTextWelcome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_marginTop="24dp"
+                android:textSize="30sp"
+
+                android:shadowDx="@integer/material_motion_duration_long_1"
+                android:shadowDy="@integer/material_motion_duration_long_2"
+                android:textStyle="bold"
+                android:layout_marginTop="7dp"
                 android:text="@string/login_fragment_text_welcome"/>
 
             <TextView
                 android:id="@+id/tvSecondTextWelcome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:textSize="16sp"
-                android:textColor="@color/black"
                 android:layout_marginTop="7dp"
-                android:layout_marginBottom="16dp"
                 android:layout_below="@id/tvTextWelcome"
                 android:text="@string/login_fragment_second_text_welcome" />
 
-            <EditText
-                android:id="@+id/edEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvSecondTextWelcome"
-                android:inputType="textEmailAddress"
-                android:layout_marginTop="7dp"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/dark_black"
-                android:hint="@string/login_fragment_email"
-                android:autofillHints="emailAddress" />
-
-            <EditText
-                android:id="@+id/edPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/edEmail"
-                android:inputType="textPassword"
-                android:layout_marginTop="7dp"
-                android:textColorHint="@color/grey"
-                android:textColor="@color/dark_black"
-                android:hint="@string/login_fragment_password"
-                android:autofillHints="password" />
-
-            <Button
-                android:id="@+id/btnJoinUs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_below="@id/edPassword"
-                android:text="@string/login_fragment_btn_register"/>
-
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_below="@id/btnJoinUs"
-                android:text="@string/login_fragment_btn_login"/>
-
-            <TextView
-                android:id="@+id/tvTextUsingOAUTH"
-                android:textColor="@color/green"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btnLogin"
+            <LinearLayout
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:text="Or using" />
+                android:layout_marginBottom="7dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:passwordToggleEnabled="true"
+                    android:hint="@string/login_fragment_email">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:textColor="@color/black"
+                        android:id="@+id/edEmail"
+                        android:inputType="textEmailAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:passwordToggleEnabled="true"
+                    android:hint="@string/login_fragment_password">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:textColor="@color/black"
+                        android:id="@+id/edPassword"
+                        android:inputType="textPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Forget password?"
+                    android:textSize="12dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="7dp"
+                    android:elevation="0dp"
+                    android:background="@android:color/transparent"/>
+                <Button
+                    android:background="@drawable/rounded_corners"
+                    android:id="@+id/btnJoinUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_below="@id/edPassword"
+                    android:text="@string/login_fragment_btn_register"/>
+
+                <Button
+                    android:background="@drawable/rounded_corners"
+                    android:id="@+id/btnLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_below="@id/btnJoinUs"
+                    android:text="@string/login_fragment_btn_login"/>
+
+                <TextView
+                    android:id="@+id/tvTextUsingOAUTH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btnLogin"
+                    android:layout_marginTop="7dp"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"
+                    android:text="@string/or_using" />
+
+            </LinearLayout>
+
+            
 
             <LinearLayout
                 android:id="@+id/oauth"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="7dp"
-                android:layout_below="@id/tvTextUsingOAUTH">
+                android:gravity="center">
                 <ImageButton
                     android:id="@+id/oauthGoogle"
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:layout_marginHorizontal="7dp"
-                    android:src="@drawable/common_google_signin_btn_icon_dark"
+                    android:src="@drawable/common_google_signin_btn_icon_light"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/desc_image" />
 
                 <ImageButton
@@ -104,15 +134,18 @@
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:layout_marginHorizontal="7dp"
-                    android:contentDescription="@string/desc_image" />
+                    android:contentDescription="@string/desc_image"
+                    android:background="@android:color/transparent" />
 
                 <ImageButton
                     android:id="@+id/oauthFacebook"
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:layout_marginHorizontal="7dp"
+                    android:src="@drawable/com_facebook_button_icon"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/desc_image" />
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 </layout>

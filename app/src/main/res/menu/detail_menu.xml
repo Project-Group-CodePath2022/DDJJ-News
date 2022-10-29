@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/detail_comments"
+        android:title="Save"
+        android:icon="@drawable/ic_baseline_comment_24"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/detail_save"
         android:title="Save"
-        android:icon="@drawable/ic_baseline_save"
+        android:icon="@drawable/ic_baseline_save_alt_24"
         app:showAsAction="always"/>
 </menu>

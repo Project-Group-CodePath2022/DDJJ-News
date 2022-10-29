@@ -4,6 +4,8 @@
     package="com.group.ddjjnews">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -16,29 +18,59 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DDJJNews"
         tools:targetApi="31">
         <activity
-            android:name=".BloodActivity"
+            android:name=".CategoryDetailActivity"
+            android:label="Category"
             android:parentActivityName=".MainActivity"
-            android:label="@string/activity_blood_name"
             android:exported="false" />
+        <activity
+            android:name=".DetailBloodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".BloodActivity"
+            android:exported="false"
+            android:label="@string/activity_blood_name"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DetailActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DashboardActivity"
-            android:parentActivityName=".MainActivity"
             android:exported="false"
-            android:label="@string/app_dash_name" />
-        <activity
-            android:name=".AuthenticationActivity"
-            android:exported="false" />
+            android:label="@string/app_dash_name"
+            android:parentActivityName=".MainActivity" />
 
         <service
             android:name="com.parse.fcm.ParseFirebaseMessagingService"
@@ -60,8 +92,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -84,6 +116,17 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1130396354519445"
+            android:exported="true" />
     </application>
 
 </manifest>

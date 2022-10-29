@@ -5,13 +5,35 @@
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 
-    <style name="TextInactive" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="android:textColor">@color/grey</item>
+    <style name="SearchViewMy" parent="Widget.AppCompat.Light.SearchView">
+        <item name="searchHintIcon">@null</item>
     </style>
 
-    <style name="MyBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
-        <item name="android:background">@color/white</item>
-        <item name="itemTextColor">?attr/colorPrimary</item>
-        <item name="itemTextAppearanceInactive">@style/TextInactive</item>
+    <style name="MyBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="elevation">7dp</item>
+        <item name="android:background">@drawable/custom_bottom</item>
+        <item name="itemBackground">@drawable/custom_item_bottom</item>
+        <item name="tabTextAppearance">@style/TabText</item>
+    </style>
+
+    <style name="MyTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabPaddingStart">7dp</item>
+        <item name="tabPaddingEnd">15.25dp</item>
+        <item name="tabPaddingTop">5dp</item>
+        <item name="tabPaddingBottom">5dp</item>
+        <item name="tabIndicatorHeight">1.25dp</item>
+        <item name="tabTextAppearance">@style/TabText</item>
+        <item name="tabMaxWidth">250dp</item>
+    </style>
+
+    <style name="TabText" parent="@style/TextAppearance.Design.Tab">
+        <item name="android:textSize">13sp</item>
+        <item name="fontFamily">@font/roboto_light</item>
+    </style>
+
+    <style name="TitleToolbar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">18.15sp</item>
+        <item name="fontFamily">@font/roboto_light</item>
+        <item name="elevation">7dp</item>
     </style>
 </resources>

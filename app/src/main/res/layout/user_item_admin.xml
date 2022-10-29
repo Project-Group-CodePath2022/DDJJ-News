@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
-        android:padding="12dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingVertical="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/imgImage"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/desc_image"
-            android:src="@drawable/ic_launcher_background"/>
+            android:src="@mipmap/ic_launcher"/>
 
         <TextView
             android:id="@+id/email"
-            android:layout_width="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
             android:layout_marginStart="7dp"
-            android:textSize="16sp"
+            android:padding="4dp"
+            android:textSize="15sp"
             android:maxLines="1"
             android:ellipsize="end"
+            android:layout_toStartOf="@id/options"
             android:layout_toEndOf="@id/imgImage" />
 
         <ImageView
@@ -28,7 +33,6 @@
             android:layout_height="16dp"
             android:layout_marginTop="7dp"
             android:layout_marginStart="7dp"
-
             android:layout_toEndOf="@id/imgImage"
             android:layout_below="@id/email"
             android:contentDescription="@string/desc_image" />
@@ -39,19 +43,31 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:layout_marginStart="7dp"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:layout_toEndOf="@id/active"
+            android:layout_toStartOf="@id/options"
             android:layout_below="@id/email" />
+
         <TextView
             android:id="@+id/role"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:layout_marginTop="7dp"
             android:layout_marginStart="7dp"
             android:layout_alignParentEnd="true"
             android:layout_alignBaseline="@id/createdAt"
+            android:layout_toStartOf="@id/options"
             android:layout_below="@id/email" />
 
+        <ImageButton
+            android:id="@+id/options"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:background="@android:color/transparent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/desc_image" />
     </RelativeLayout>
 </layout>

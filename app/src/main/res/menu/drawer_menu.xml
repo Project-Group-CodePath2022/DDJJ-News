@@ -6,11 +6,7 @@
 
     <item android:id="@+id/drawer_dashboard" android:title="Dashboard" android:icon="@drawable/ic_baseline_dashboard"/>
 
-    <item android:id="@+id/drawer_settings" android:title="Settings" android:icon="@drawable/ic_baseline_settings"/>
-
     <item android:id="@+id/drawer_request" android:title="Donation blood"/>
-
-    <item android:id="@+id/drawer_alert" android:title="Alert" />
 
     <item android:id="@+id/drawer_about" android:title="About us" android:icon="@drawable/ic_icons8_about"/>
 </menu>

@@ -31,10 +31,8 @@ public class Blood extends ParseObject {
 
     public Blood() {}
 
-    public String getText() {
-        String w = String.format("Request group ( %s ) blood, for %s ", getString(KEY_GROUP_BLOOD), getString(KEY_FOR_NAME));
-        return w;
-    }
+    public String getKeyGroupBlood() {return getString(KEY_GROUP_BLOOD);}
+    public String getKeyForName() {return getString(KEY_FOR_NAME);}
 
     public String getKeyDescription() {
         return getString(KEY_DESCRIPTION);
@@ -55,5 +53,11 @@ public class Blood extends ParseObject {
         HashMap<String, String> params = new HashMap<>();
         params.put("bloodId", bloodId);
         ParseCloud.callFunctionInBackground(CUSTOM_ENDPOINT_GET, params, (object, e) -> callback.done((Collection<? extends Blood>)object, e));
+    }
+
+    public static void deleteBlood(String id, Callback callback) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("bloodId", id);
+        ParseCloud.callFunctionInBackground("delete-blood", params, (object, e) -> callback.done((Blood) object, e));
     }
 }

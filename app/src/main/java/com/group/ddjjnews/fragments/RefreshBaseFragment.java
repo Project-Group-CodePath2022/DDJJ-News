@@ -9,27 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.group.ddjjnews.Utils.EndlessRecyclerViewScrollListener;
-import com.group.ddjjnews.databinding.FragmentLoginBinding;
 
-
-public abstract class RefreshBaseFragment extends Fragment {
+public class RefreshBaseFragment extends Fragment {
     protected LinearLayoutManager layoutManager;
-    protected RecyclerView.Adapter adapter;
+    public RecyclerView.Adapter adapter;
     protected RecyclerView rcItems;
     protected SwipeRefreshLayout sRefresh;
     protected EndlessRecyclerViewScrollListener scrollListener;
 
     public RefreshBaseFragment() {}
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -46,6 +37,6 @@ public abstract class RefreshBaseFragment extends Fragment {
         sRefresh.setOnRefreshListener(() -> handleRefresh(sRefresh));
     }
 
-    protected abstract void loadMore(int page, int totalItemsCount, RecyclerView view);
-    protected abstract void handleRefresh(SwipeRefreshLayout swipeCont);
+    protected void loadMore(int page, int totalItemsCount, RecyclerView view){}
+    protected void handleRefresh(SwipeRefreshLayout swipeCont){}
 }
